@@ -2,36 +2,40 @@ const path = require('path')
 
 module.exports.messagesDefault = {
 
-    200: { error: false, message: "Sucesso" },
-    400: { error: true, message: "Falha" },
+    200: { error: false, message: "Sucesso." },
+    400: { error: true, message: "Falha." },
 
     // Faixa 1000 a 1999 = Mensagens genéricas (1000 a 1500 = coisas de sucesso  / 1501 a 2000 = coisas de falha)
-    1000: { error: false, message: "Nenhum registro encontrado" },
-    1001: { error: false, message: "Registro salvo com sucesso" },      // "Salvar" entende-se tanto em inclusão/alteração
-    1002: { error: false, message: "Registro excluído com sucesso" },
-    // 1003: { error: false, message: "xxxxxx" },
+    1000: { error: false, message: "Nenhum registro encontrado." },
+    1001: { error: false, message: "Registro salvo com sucesso." },      // "Salvar" entende-se tanto em inclusão/alteração
+    1002: { error: false, message: "Registro excluído com sucesso." },
+    1003: { error: false, message: "Nenhum registro encontrado para ser alterado." },
     // 1004: { error: false, message: "xxxxxx" },
     // 1005: { error: false, message: "xxxxxx" },
 
-    1501: { error: true, message: "Falha ao salvar o registro" },       // "Salvar" entende-se tanto em inclusão/alteração
-    1502: { error: true, message: "Falha ao excluir o registro" },
+    1501: { error: true, message: "Falha ao salvar o registro." },       // "Salvar" entende-se tanto em inclusão/alteração
+    1502: { error: true, message: "Falha ao excluir o registro." },
     // 1503: { error: true, message: "xxxxxx" },
     // 1504: { error: true, message: "xxxxxx" },
     // 1505: { error: true, message: "xxxxxx" },
     /* ... ir criando aqui novas mensagens genéricas de acordo com a necessidade e com o tempo... */
 
     // Faixa 2000 a 2999 = Mensagens específicas da regra de negócio da API em questão (2000 a 2500 = coisas de sucesso  / 2501 a 3000 = coisas de falha)
-    // 2000: { error: false, message: "xxxxxx" },
+    2000: { error: false, message: "Cadastro atual no banco de dados está diferente do registro solicitado." },
     // 2001: { error: false, message: "xxxxxx" },
     // 2002: { error: false, message: "xxxxxx" },
 
-    // 2501: { error: true, message: "xxxxxx" },
-    // 2502: { error: true, message: "xxxxxx" },
-    // 2503: { error: true, message: "xxxxxx" },
+    2501: { error: true, message: "Login ou senha do profissional não foram informados." },
+    2502: { error: true, message: 'Campo "nome" do profissional é obrigatório.' },
+    2503: { error: true, message: 'Campo "celular" do profissional é obrigatório.' },
+    2504: { error: true, message: 'Campo "e-mail" do profissional é obrigatório.' },
+    2505: { error: true, message: "Já existe um profissional cadastrado para este email." },
+    2506: { error: true, message: 'Campo "e-mail" é inválido.' },
+    // 2507: { error: true, message: "xxxxxx" },
 
 
     // 9999 = Reservado para "Retorno desconhecido"
-    9999: { error: true, message: "Retorno desconhecido" },
+    9999: { error: true, message: "Retorno desconhecido." },
 }
 
 
