@@ -113,10 +113,17 @@
             <Form>frmTemplateForm_Main</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="U_frmUsuarios_Main.pas">
-            <Form>frmUsuarios_Main</Form>
+        <DCCReference Include="Uteis.pas"/>
+        <DCCReference Include="Libs\Conexao_API\U_ConexaoAPI_V.pas">
+            <Form>frmConexaoAPI_V</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Libs\Conexao_API\U_Thr_API.pas"/>
+        <DCCReference Include="Libs\Conexao_API\U_ConexaoAPI_M.pas"/>
+        <DCCReference Include="Libs\Conexao_API\U_ConexaoAPI_C.pas"/>
+        <DCCReference Include="Libs\Profissional\U_Profissional_M.pas"/>
+        <DCCReference Include="Libs\Profissional\U_Profissional_C.pas"/>
+        <DCCReference Include="Libs\U_ObjectList.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

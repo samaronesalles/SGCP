@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Grids;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Grids, Vcl.Buttons, System.ImageList, Vcl.ImgList;
 
 type
   TfrmTemplateForm_Main = class(TForm)
@@ -13,8 +13,13 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     StringGridMain: TStringGrid;
+    ImageList_Icons: TImageList;
+    SpeedButton_Add: TSpeedButton;
+    SpeedButton_Search: TSpeedButton;
+    SpeedButton_Delete: TSpeedButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,6 +37,36 @@ implementation
 procedure TfrmTemplateForm_Main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action:= caFree;
+end;
+
+procedure TfrmTemplateForm_Main.FormShow(Sender: TObject);
+var
+  Row                                          : integer;
+
+begin
+  inherited;
+
+  Row:= 0;
+
+  StringGridMain.Cells[0, Row]:= 'Código';
+  StringGridMain.Cells[1, Row]:= 'Paciente';
+  StringGridMain.Cells[2, Row]:= 'Profssional';
+  StringGridMain.Cells[3, Row]:= 'Data';
+  StringGridMain.Cells[4, Row]:= 'Hora agendada';
+  StringGridMain.Cells[5, Row]:= 'Hora realizada';
+
+  for Row:= 1 to 10 do begin
+    StringGridMain.Cells[0, Row]:= IntToStr(Row);
+    StringGridMain.Cells[1, Row]:= 'Fernanda';
+    StringGridMain.Cells[2, Row]:= 'Maria';
+    StringGridMain.Cells[3, Row]:= '15/04/2024';
+    StringGridMain.Cells[4, Row]:= '08:30';
+    StringGridMain.Cells[5, Row]:= '09:40';
+  end;
+
+  StringGridMain.ColCount:= 6;
+  StringGridMain.RowCount:= Row;
+
 end;
 
 procedure TfrmTemplateForm_Main.StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);

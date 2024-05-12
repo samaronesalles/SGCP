@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.Themes,
-  Vcl.ExtCtrls, Vcl.WinXCalendars, System.TypInfo;
+  Vcl.ExtCtrls, Vcl.WinXCalendars, System.TypInfo, Vcl.StdCtrls;
 
 type
   TfrmMain = class(TForm)
@@ -16,8 +16,6 @@ type
     Pacientes1: TMenuItem;
     erapeutas1: TMenuItem;
     N1: TMenuItem;
-    Usurios1: TMenuItem;
-    N2: TMenuItem;
     Sair1: TMenuItem;
     Agendamentos1: TMenuItem;
     Atendimentos1: TMenuItem;
@@ -29,12 +27,14 @@ type
     WindowsDark1: TMenuItem;
     Timer_login: TTimer;
     Janelas1: TMenuItem;
+    Button_Teste: TButton;
+    Memo_Teste: TMemo;
     procedure Sair1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Windows1Click(Sender: TObject);
     procedure WindowsDark1Click(Sender: TObject);
     procedure Timer_loginTimer(Sender: TObject);
-    procedure Usurios1Click(Sender: TObject);
+    procedure Button_TesteClick(Sender: TObject);
   private
     { Private declarations }
     FDefaultStyleName : String;
@@ -46,6 +46,8 @@ type
   public
     { Public declarations }
 
+    BufferStr                                           : String;
+
     property DefaultStyleName                           : String Read FdefaultStyleName Write SetDefaultStyleName;
   end;
 
@@ -54,7 +56,7 @@ var
 
 implementation
 
-uses U_frmLogin, U_frmUsuarios_Main;
+uses U_frmLogin, Uteis, U_ConexaoAPI_V, U_ConexaoAPI_M;
 
 {$R *.dfm}
 
@@ -114,6 +116,58 @@ begin
   LockWindowUpdate(0);
 end;
 
+procedure TfrmMain.Button_TesteClick(Sender: TObject);
+var
+  C                 : Longint;
+  dados, St         : String;
+  Lista             : TStringlist;
+
+  id, di, nome, celular, email, username, password : String;
+
+begin
+
+  Lista:= Nil;
+
+  Try
+    Lista:= TStringlist.Create;
+
+    dados:= frmConexaoAPI_V.Execute(taProfissional_Lista, 'Processando. Aguarde!');
+
+    Lista.Text:= Uteis.ReturnValor_EmJSON(dados, 'data');
+
+    if lista.Count = 0 then begin
+      Memo_Teste.Lines.Text:= 'Nenhum profissional encontrado';
+      exit;
+    end;
+
+    for C:= 0 to lista.Count - 1 do begin
+      St:= lista.Strings[C];
+
+      id:= Uteis.ReturnValor_EmJSON(St, 'id');
+      di:= Uteis.ReturnValor_EmJSON(St, 'di');
+      nome:= Uteis.ReturnValor_EmJSON(St, 'nome');
+      celular:= Uteis.ReturnValor_EmJSON(St, 'celular');
+      email:= Uteis.ReturnValor_EmJSON(St, 'email');
+      username:= Uteis.ReturnValor_EmJSON(St, 'username');
+      password:= Uteis.ReturnValor_EmJSON(St, 'password');
+
+      Memo_Teste.Lines.Add('PROFISSIONAL ' + IntToStr(c + 1) + ':');
+      Memo_Teste.Lines.Add('  id: ' + id);
+      Memo_Teste.Lines.Add('  di: ' + di);
+      Memo_Teste.Lines.Add('  nome: ' + nome);
+      Memo_Teste.Lines.Add('  celular: ' + celular);
+      Memo_Teste.Lines.Add('  email: ' + email);
+      Memo_Teste.Lines.Add('  username: ' + username);
+      Memo_Teste.Lines.Add('  password: ' + password);
+      Memo_Teste.Lines.Add('');
+    end;
+
+  Finally
+    Lista.Free();
+  End;
+
+end;
+
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
 
@@ -136,16 +190,16 @@ begin
 
   Timer_login.Enabled:= false;
 
+  if not Uteis.temConexaoDeInternet() then begin
+    uteis.SayError('Não foi encontrado conexão com internet. Verifique');
+    Application.Terminate;
+  end;
+
   resultLogin:= frmLogin.Execute();
 
   if resultLogin = mrAbort then
     Application.Terminate;
 
-end;
-
-procedure TfrmMain.Usurios1Click(Sender: TObject);
-begin
-  ShowChild(Self, TfrmUsuarios_Main, frmUsuarios_Main);
 end;
 
 procedure TfrmMain.SetDefaultStyleName(styleNam: String);

@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.ImageList, Vcl.ImgList;
 
 type
   TfrmLogin = class(TForm)
@@ -14,6 +14,9 @@ type
     Label1: TLabel;
     Edit_Senha: TEdit;
     Label2: TLabel;
+    ImageList_Icons: TImageList;
+    Label3: TLabel;
+    Edit1: TEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button_SairClick(Sender: TObject);
     procedure Button_EntrarClick(Sender: TObject);

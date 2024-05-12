@@ -25,28 +25,36 @@ object frmMain: TfrmMain
     ExplicitTop = 547
     ExplicitWidth = 927
   end
+  object Button_Teste: TButton
+    Left = 8
+    Top = 73
+    Width = 75
+    Height = 25
+    Caption = 'Testar'
+    TabOrder = 1
+    OnClick = Button_TesteClick
+  end
+  object Memo_Teste: TMemo
+    Left = 8
+    Top = 104
+    Width = 721
+    Height = 353
+    TabOrder = 2
+  end
   object MainMenu: TMainMenu
     Left = 56
     Top = 8
     object Cadastros1: TMenuItem
       Caption = '&Cadastros'
+      object erapeutas1: TMenuItem
+        Caption = '&Profissional'
+        ShortCut = 16468
+      end
       object Pacientes1: TMenuItem
         Caption = '&Pacientes'
         ShortCut = 16464
       end
-      object erapeutas1: TMenuItem
-        Caption = '&Terapeutas'
-        ShortCut = 16468
-      end
       object N1: TMenuItem
-        Caption = '-'
-      end
-      object Usurios1: TMenuItem
-        Caption = '&Usu'#225'rios'
-        ShortCut = 16469
-        OnClick = Usurios1Click
-      end
-      object N2: TMenuItem
         Caption = '-'
       end
       object Sair1: TMenuItem
