@@ -13,7 +13,7 @@ router.post('/profissionais', profissionaisVallication.saveCad, profissionaisVal
 router.get('/profissionais/lista', profissionaisController.lista)
 router.put('/profissionais/:id/:di', profissionaisVallication.edicaoCad, profissionaisVallication.saveCad, profissionaisController.editar)
 router.delete('/profissionais/:id/:di', profissionaisVallication.exclusaoCad, profissionaisController.delete)
-
+router.post('/profissionais/login', profissionaisVallication.login, profissionaisController.autenticaLogin)
 
 // Endpoints "Pacientes"...
 

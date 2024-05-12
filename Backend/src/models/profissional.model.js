@@ -8,6 +8,7 @@ class Profissional extends Model {
             nome: DataTypes.STRING,
             celular: DataTypes.STRING,
             email: DataTypes.STRING,
+            ativo: DataTypes.BOOLEAN,
             username: DataTypes.STRING,
             password: DataTypes.STRING
         }, {

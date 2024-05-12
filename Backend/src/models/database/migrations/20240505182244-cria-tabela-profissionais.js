@@ -26,6 +26,11 @@ module.exports = {
                 unique: true,
                 type: Sequelize.STRING,
             },
+            ativo: {
+                allowNull: true,
+                default: true,
+                type: Sequelize.BOOLEAN,
+            },
             username: {
                 allowNull: true,
                 type: Sequelize.STRING,

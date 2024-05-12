@@ -80,3 +80,14 @@ module.exports.exclusaoCad = async function (req, res, next) {
 
     next()
 }
+
+module.exports.login = function (req, res, next) {
+
+    if (uteis.strEmpty(req.body.email))
+        return res.status(400).json(mensagens.resultDefault(2504))
+
+    if (!camposLoginValidos(req.body.username, req.body.password))
+        return res.status(400).json(mensagens.resultDefault(2501))
+
+    next()
+}

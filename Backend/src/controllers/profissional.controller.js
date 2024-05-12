@@ -9,13 +9,14 @@ module.exports = {
 
     async novo(req, res) {
         try {
-            const { nome, celular, email, username, password } = req.body
+            const { nome, celular, email, ativo, username, password } = req.body
 
             const dados = {
                 di: uteis.new_uuid(),
                 nome: nome,
                 celular: uteis.onlyNumbersOnString(celular || ''),
                 email: email,
+                ativo: ativo,
                 username: username,
                 password: uteis.encrypt(password)
             }
@@ -51,7 +52,7 @@ module.exports = {
     async editar(req, res) {
         try {
             const { id, di } = req.params
-            const { nome, celular, email, username, password } = req.body
+            const { nome, celular, email, ativo, username, password } = req.body
 
             const profissionalEncontrado = await ProfissionalRepository.retornePeloID(id)
 
@@ -60,6 +61,7 @@ module.exports = {
                 nome: nome,
                 celular: uteis.onlyNumbersOnString(celular || ''),
                 email: email,
+                ativo: ativo,
                 username: username,
                 password: uteis.encrypt(password)
             }
@@ -93,6 +95,27 @@ module.exports = {
 
         } catch (error) {
             return res.status(400).json(mensagens.resultError(error))
+        }
+    },
+
+    async autenticaLogin(req, res) {
+        try {
+            const { email, username, password } = req.body
+
+            const profissional = await ProfissionalRepository.retornePeloEmail(email)
+
+            if (!profissional)
+                return res.status(200).json(mensagens.resultDefault(2507))
+
+            let pass = profissional.password
+            pass = await uteis.decrypt(pass)
+
+            if ((profissional.username !== username) || (pass !== password))
+                return res.status(200).json(mensagens.resultDefault(2507))
+
+            return res.status(200).json(mensagens.resultDefault(2001))
+        } catch (error) {
+            return res.status(400).json(mensagens.resultDefault(2507))
         }
     }
 }

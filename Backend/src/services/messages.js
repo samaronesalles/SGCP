@@ -18,12 +18,16 @@ module.exports.messagesDefault = {
     // 1503: { error: true, message: "xxxxxx" },
     // 1504: { error: true, message: "xxxxxx" },
     // 1505: { error: true, message: "xxxxxx" },
+
     /* ... ir criando aqui novas mensagens genéricas de acordo com a necessidade e com o tempo... */
+
 
     // Faixa 2000 a 2999 = Mensagens específicas da regra de negócio da API em questão (2000 a 2500 = coisas de sucesso  / 2501 a 3000 = coisas de falha)
     2000: { error: false, message: "Cadastro atual no banco de dados está diferente do registro solicitado." },
-    // 2001: { error: false, message: "xxxxxx" },
+    2001: { error: false, message: "Login realizado com sucesso" },
     // 2002: { error: false, message: "xxxxxx" },
+    // 2003: { error: false, message: "xxxxxx" },
+    // 2004: { error: false, message: "xxxxxx" },
 
     2501: { error: true, message: "Login ou senha do profissional não foram informados." },
     2502: { error: true, message: 'Campo "nome" do profissional é obrigatório.' },
@@ -31,7 +35,10 @@ module.exports.messagesDefault = {
     2504: { error: true, message: 'Campo "e-mail" do profissional é obrigatório.' },
     2505: { error: true, message: "Já existe um profissional cadastrado para este email." },
     2506: { error: true, message: 'Campo "e-mail" é inválido.' },
-    // 2507: { error: true, message: "xxxxxx" },
+    2507: { error: true, message: "Email, Usuário ou Senha do usuário inválidos. Verifique!" },
+    // 2508: { error: true, message: "xxxxxx" },
+    // 2509: { error: true, message: "xxxxxx" },
+    // 2500: { error: true, message: "xxxxxx" },
 
 
     // 9999 = Reservado para "Retorno desconhecido"

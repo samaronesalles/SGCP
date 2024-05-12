@@ -3,7 +3,7 @@ const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js')
 
 const ProfissionalModel = require(path.resolve(__dirname, '../', 'profissional.model.js'))
 
-const atributos_Profissional = ['id', 'di', 'nome', 'celular', 'email', 'username', 'password']
+const atributos_Profissional = ['id', 'di', 'nome', 'celular', 'email', 'ativo', 'username', 'password']
 
 module.exports.retornePeloID = async function (id) {
     return await ProfissionalModel.findByPk(id, {
