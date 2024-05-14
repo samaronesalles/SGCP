@@ -3,7 +3,7 @@ unit Uteis;
 interface
 
 uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
-     Vcl.Forms, Vcl.Controls, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Dialogs, System.JSON,
+     Vcl.Forms, Vcl.Controls, Vcl.Grids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Dialogs, System.JSON,
      Winapi.WinInet;
 
 function  temConexaoDeInternet: Boolean;
@@ -28,6 +28,9 @@ function  Substitua(VAR Texto: String; ValorOriginal, NovoValor: String): Boolea
 function  StrReplace(Texto, ValorOriginal, NovoValor: String): String;
 
 procedure bSleep (MiliSegundos: Longint);
+
+procedure StringGridDeleteRow (AStringGrid: TStringGrid; ARow: integer);
+procedure StringGridDelete_AllRows (AStringGrid: TStringGrid);
 
 implementation
 
@@ -323,6 +326,37 @@ begin
     Result:= 'true'
   Else
     Result:= 'false';
+end;
+
+procedure StringGridDeleteRow (AStringGrid: TStringGrid; ARow: integer);
+var
+  nRow: integer;
+
+begin
+
+  with AStringGrid do
+    begin
+      for nRow:= ARow to RowCount - 2 do
+        Rows[nRow].Assign(Rows[nRow + 1]);
+
+//      Rows[RowCount - 1].Clear;
+//      RowCount:= RowCount - 1
+    end;
+
+end;
+
+procedure StringGridDelete_AllRows (AStringGrid: TStringGrid);
+var
+  nRow: integer;
+
+begin
+
+  if AStringGrid.RowCount = AStringGrid.FixedRows then
+    Exit;
+
+  for nRow:= AStringGrid.RowCount - 1 downto AStringGrid.FixedRows do
+    StringGridDeleteRow (AStringGrid, nRow);
+
 end;
 
 end.

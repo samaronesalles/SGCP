@@ -27,14 +27,12 @@ type
     WindowsDark1: TMenuItem;
     Timer_login: TTimer;
     Janelas1: TMenuItem;
-    Button_Teste: TButton;
-    Memo_Teste: TMemo;
     procedure Sair1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Windows1Click(Sender: TObject);
     procedure WindowsDark1Click(Sender: TObject);
     procedure Timer_loginTimer(Sender: TObject);
-    procedure Button_TesteClick(Sender: TObject);
+    procedure erapeutas1Click(Sender: TObject);
   private
     { Private declarations }
     FDefaultStyleName : String;
@@ -56,7 +54,7 @@ var
 
 implementation
 
-uses U_frmLogin, Uteis, U_ConexaoAPI_V, U_ConexaoAPI_M;
+uses U_frmLogin, Uteis, U_Profissional_V;
 
 {$R *.dfm}
 
@@ -116,56 +114,9 @@ begin
   LockWindowUpdate(0);
 end;
 
-procedure TfrmMain.Button_TesteClick(Sender: TObject);
-var
-  C                 : Longint;
-  dados, St         : String;
-  Lista             : TStringlist;
-
-  id, di, nome, celular, email, username, password : String;
-
+procedure TfrmMain.erapeutas1Click(Sender: TObject);
 begin
-
-  Lista:= Nil;
-
-  Try
-    Lista:= TStringlist.Create;
-
-    dados:= frmConexaoAPI_V.Execute(taProfissional_Lista, 'Processando. Aguarde!');
-
-    Lista.Text:= Uteis.ReturnValor_EmJSON(dados, 'data');
-
-    if lista.Count = 0 then begin
-      Memo_Teste.Lines.Text:= 'Nenhum profissional encontrado';
-      exit;
-    end;
-
-    for C:= 0 to lista.Count - 1 do begin
-      St:= lista.Strings[C];
-
-      id:= Uteis.ReturnValor_EmJSON(St, 'id');
-      di:= Uteis.ReturnValor_EmJSON(St, 'di');
-      nome:= Uteis.ReturnValor_EmJSON(St, 'nome');
-      celular:= Uteis.ReturnValor_EmJSON(St, 'celular');
-      email:= Uteis.ReturnValor_EmJSON(St, 'email');
-      username:= Uteis.ReturnValor_EmJSON(St, 'username');
-      password:= Uteis.ReturnValor_EmJSON(St, 'password');
-
-      Memo_Teste.Lines.Add('PROFISSIONAL ' + IntToStr(c + 1) + ':');
-      Memo_Teste.Lines.Add('  id: ' + id);
-      Memo_Teste.Lines.Add('  di: ' + di);
-      Memo_Teste.Lines.Add('  nome: ' + nome);
-      Memo_Teste.Lines.Add('  celular: ' + celular);
-      Memo_Teste.Lines.Add('  email: ' + email);
-      Memo_Teste.Lines.Add('  username: ' + username);
-      Memo_Teste.Lines.Add('  password: ' + password);
-      Memo_Teste.Lines.Add('');
-    end;
-
-  Finally
-    Lista.Free();
-  End;
-
+  ShowChild(Self, TfrmProfissionais_V, frmProfissionais_V);
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);

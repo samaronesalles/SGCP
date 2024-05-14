@@ -14,7 +14,9 @@ uses
   U_ConexaoAPI_C in 'Libs\Conexao_API\U_ConexaoAPI_C.pas',
   U_Profissional_M in 'Libs\Profissional\U_Profissional_M.pas',
   U_Profissional_C in 'Libs\Profissional\U_Profissional_C.pas',
-  U_ObjectList in 'Libs\U_ObjectList.pas';
+  U_ObjectList in 'Libs\U_ObjectList.pas',
+  U_MeusTipos in 'Libs\U_MeusTipos.pas',
+  U_Profissional_V in 'Libs\Profissional\U_Profissional_V.pas' {frmProfissionais_V};
 
 {$R *.res}
 

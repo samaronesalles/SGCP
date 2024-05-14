@@ -124,6 +124,11 @@
         <DCCReference Include="Libs\Profissional\U_Profissional_M.pas"/>
         <DCCReference Include="Libs\Profissional\U_Profissional_C.pas"/>
         <DCCReference Include="Libs\U_ObjectList.pas"/>
+        <DCCReference Include="Libs\U_MeusTipos.pas"/>
+        <DCCReference Include="Libs\Profissional\U_Profissional_V.pas">
+            <Form>frmProfissionais_V</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

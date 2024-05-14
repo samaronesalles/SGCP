@@ -1,0 +1,8 @@
+BUGS CONHECIDOS:
+	[ ] Em "U_Thr_API", o método "idHttpSendReq" não está sabendo detectar erro 404 quando o servidor está Offline.
+	[ ] Em "U_Profissional_M", o método "Profissional_List_M.toList()" quando detecta que "ListaJsons.Count = 0", seu retorno está vindo com a lista com "count" com valor absurdo, ao invés de vazio;
+	[ ] Em "U_Profissional_V", Nas condições do problema acima, é retornado access violation, inclusive ao tentar fechar a tela.
+
+IMPLEMENTAÇÕES IMPORTANTES PENDENTES:
+	[ ] Fazer login com algum usuário válido;
+	[ ] 

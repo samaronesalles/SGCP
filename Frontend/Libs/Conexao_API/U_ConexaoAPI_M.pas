@@ -6,11 +6,6 @@ uses
   System.SysUtils, System.Classes;
 
 type
-  TTipoAcaoAPI = (taNenhuma,
-                  taProfissional_Lista
-                 );
-
-type
   TConexaoAPI_M = class(TObject)
   private
     FStatusCode                                                                 : Longint;

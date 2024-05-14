@@ -4,8 +4,8 @@ object frmConexaoAPI_V: TfrmConexaoAPI_V
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Comunica'#231#227'o com API'
-  ClientHeight = 166
-  ClientWidth = 521
+  ClientHeight = 157
+  ClientWidth = 515
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,8 +19,8 @@ object frmConexaoAPI_V: TfrmConexaoAPI_V
   object Label_mensagem: TLabel
     Left = 0
     Top = 0
-    Width = 521
-    Height = 127
+    Width = 515
+    Height = 118
     Align = alClient
     Alignment = taCenter
     Caption = 'Salvando informa'#231#245'es. Aguarde!'
@@ -36,14 +36,12 @@ object frmConexaoAPI_V: TfrmConexaoAPI_V
   end
   object ProgressBar: TProgressBar
     Left = 0
-    Top = 127
-    Width = 521
+    Top = 118
+    Width = 515
     Height = 39
     Align = alBottom
     Style = pbstMarquee
     TabOrder = 0
-    ExplicitTop = 136
-    ExplicitWidth = 527
   end
   object TimerStartUp: TTimer
     OnTimer = TimerStartUpTimer

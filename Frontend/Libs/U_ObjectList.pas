@@ -9,12 +9,18 @@ type
   TObjectList = class(TList)
   private
   public
+    constructor Create;
     destructor Destroy; override;
   end;
 
 implementation
 
 { TObjectList }
+
+constructor TObjectList.Create;
+begin
+  Self.Clear();
+end;
 
 destructor TObjectList.Destroy;
 var

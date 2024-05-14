@@ -25,22 +25,6 @@ object frmMain: TfrmMain
     ExplicitTop = 547
     ExplicitWidth = 927
   end
-  object Button_Teste: TButton
-    Left = 8
-    Top = 73
-    Width = 75
-    Height = 25
-    Caption = 'Testar'
-    TabOrder = 1
-    OnClick = Button_TesteClick
-  end
-  object Memo_Teste: TMemo
-    Left = 8
-    Top = 104
-    Width = 721
-    Height = 353
-    TabOrder = 2
-  end
   object MainMenu: TMainMenu
     Left = 56
     Top = 8
@@ -49,6 +33,7 @@ object frmMain: TfrmMain
       object erapeutas1: TMenuItem
         Caption = '&Profissional'
         ShortCut = 16468
+        OnClick = erapeutas1Click
       end
       object Pacientes1: TMenuItem
         Caption = '&Pacientes'

@@ -4,14 +4,17 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, U_ConexaoAPI_M;
+  Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, U_MeusTipos, U_ConexaoAPI_M;
 
 type
   TConexaoAPI_C = class(TObject)
   private
     FAcao                                                : TTipoAcaoAPI;
+    FEndpoint                                            : String;
+    FMethod                                              : String;
+    FRequisicao                                          : String;
   public
-    constructor Create(Acao: TTipoAcaoAPI);
+    constructor Create(Acao: TTipoAcaoAPI; Endpoint, MetodoHttp, Requisicao: String);
     destructor Destroy; override;
 
     function processar: TConexaoAPI_M;
@@ -24,9 +27,12 @@ uses Uteis, U_Thr_API,
 
 { TConexaoAPI_C }
 
-constructor TConexaoAPI_C.Create(Acao: TTipoAcaoAPI);
+constructor TConexaoAPI_C.Create(Acao: TTipoAcaoAPI; Endpoint, MetodoHttp, Requisicao: String);
 begin
   Self.FAcao:= Acao;
+  Self.FEndpoint:= Endpoint;
+  Self.FMethod:= MetodoHttp;
+  Self.FRequisicao:= Requisicao;
 end;
 
 destructor TConexaoAPI_C.Destroy;
@@ -49,15 +55,17 @@ begin
 
   Try
     Thr_API:= TThr_API.Create(TRUE);
+
+    Thr_API.Method:= Self.FMethod;
+    Thr_API.Endpoint:= Self.FEndpoint;
+    Thr_API.Requisicao:= Self.FRequisicao;
+
     Thr_API.Retorno:= Nil;
 
-    case Self.FAcao of
-      taProfissional_Lista: Begin
-        Thr_API.Method:= 'GET';
-        Thr_API.Endpoint:= Endpoint_Profissionais_Lista;
-        Thr_API.Requisicao:= '';
-      End;
-    end;
+// Algum processamento específico para cada ação...
+//    case Self.FAcao of
+//      taProfissional_Lista:
+//    end;
 
     Thr_API.Resume();
 

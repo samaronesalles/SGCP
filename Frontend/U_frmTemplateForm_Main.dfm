@@ -28,7 +28,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       1268
       50)
     object ButtonSair: TButton
-      Left = 1164
+      Left = 1173
       Top = 14
       Width = 85
       Height = 25
@@ -37,7 +37,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       ImageIndex = 3
       Images = ImageList_Icons
       TabOrder = 0
-      ExplicitLeft = 1158
+      OnClick = ButtonSairClick
     end
   end
   object Panel1: TPanel
@@ -61,7 +61,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       FixedColor = clGray
       FixedCols = 0
       RowCount = 2
-      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect, goFixedRowDefAlign]
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goRangeSelect, goColSizing, goRowSelect, goFixedRowDefAlign]
       ParentCtl3D = False
       TabOrder = 0
       OnDrawCell = StringGridMainDrawCell
@@ -87,7 +87,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       1268
       41)
     object SpeedButton_Add: TSpeedButton
-      Left = 1164
+      Left = 1173
       Top = 7
       Width = 25
       Height = 25
@@ -97,10 +97,9 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       Images = ImageList_Icons
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 1170
     end
     object SpeedButton_Search: TSpeedButton
-      Left = 1194
+      Left = 1203
       Top = 7
       Width = 25
       Height = 25
@@ -110,10 +109,9 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       Images = ImageList_Icons
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 1200
     end
     object SpeedButton_Delete: TSpeedButton
-      Left = 1224
+      Left = 1233
       Top = 7
       Width = 25
       Height = 25
@@ -123,7 +121,6 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       Images = ImageList_Icons
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 1230
     end
   end
   object ImageList_Icons: TImageList
@@ -734,5 +731,10 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000}
+  end
+  object TimerStartUp: TTimer
+    OnTimer = TimerStartUpTimer
+    Left = 80
+    Top = 688
   end
 end

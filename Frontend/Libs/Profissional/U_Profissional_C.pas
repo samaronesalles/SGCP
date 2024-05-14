@@ -14,12 +14,6 @@ type
     destructor Destroy; override;
   End;
 
-const
-  Endpoint_Profissionais_Novo = 'profissionais';
-  Endpoint_Profissionais_Editar = 'profissionais/[id]/[di]';
-  Endpoint_Profissionais_Lista = 'profissionais/lista';
-  Endpoint_Profissionais_Delete = 'profissionais/[id]/[di]';
-
 implementation
 
 uses Uteis;

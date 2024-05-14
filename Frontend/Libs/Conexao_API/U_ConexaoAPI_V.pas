@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, U_ConexaoAPI_M;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, U_MeusTipos,
+  U_ConexaoAPI_M;
 
 type
   TfrmConexaoAPI_V = class(TForm)
@@ -17,13 +18,19 @@ type
     { Private declarations }
 
     FAcao                               : TTipoAcaoAPI;
+    FEndpoint                           : String;
+    FMethod                             : String;
+    FRequisicao                         : String;
 
   public
     { Public declarations }
 
     property Acao                       : TTipoAcaoAPI Write FAcao;
+    property Endpoint                   : String Write FEndpoint;
+    property Method                     : String Write FMethod;
+    property Requisicao                 : String Write FRequisicao;
 
-    function Execute(Acao: TTipoAcaoAPI; mensagem: string): string;
+    function Execute(Acao: TTipoAcaoAPI; Endpoint, Method, Requisicao, Mensagem: string): TConexaoAPI_M;
   end;
 
 var
@@ -37,7 +44,7 @@ uses U_frmMain, Uteis, U_ConexaoAPI_C;
 
 { TfrmConexaoAPI_V }
 
-function TfrmConexaoAPI_V.Execute(Acao: TTipoAcaoAPI; mensagem: string): string;
+function TfrmConexaoAPI_V.Execute(Acao: TTipoAcaoAPI; Endpoint, Method, Requisicao, Mensagem: string): TConexaoAPI_M;
 var
   BkpBufferStr                              : String;
 
@@ -45,18 +52,28 @@ begin
 
   Try
     BkpBufferStr:= frmMain.BufferStr;
-    frmMain.BufferStr:= '';
 
-    if frmConexaoAPI_V = Nil then
-      frmConexaoAPI_V:= TfrmConexaoAPI_V.Create(Application);
+    Try
+      Result:= Nil;
+      frmMain.BufferStr:= '';
 
-    frmConexaoAPI_V.Acao:= Acao;
-    frmConexaoAPI_V.Label_mensagem.Caption:= mensagem;
+      if frmConexaoAPI_V = Nil then
+        frmConexaoAPI_V:= TfrmConexaoAPI_V.Create(Application);
 
-    frmConexaoAPI_V.ShowModal;
+      frmConexaoAPI_V.Acao:= Acao;
+      frmConexaoAPI_V.Endpoint:= Endpoint;
+      frmConexaoAPI_V.Method:= Method;
+      frmConexaoAPI_V.Requisicao:= Requisicao;
 
-    Result:= frmMain.BufferStr;
+      frmConexaoAPI_V.Label_mensagem.Caption:= mensagem;
 
+      frmConexaoAPI_V.ShowModal;
+
+      Result:= TConexaoAPI_M.ToObject(frmMain.BufferStr);
+    Except
+      Result.Free();
+      Result:= Nil;
+    End;
   Finally
     frmMain.BufferStr:= BkpBufferStr;
   End;
@@ -67,6 +84,9 @@ procedure TfrmConexaoAPI_V.FormCreate(Sender: TObject);
 begin
 
   Self.FAcao:= taNenhuma;
+  Self.FEndpoint:= '';
+  Self.FMethod:= '';
+  Self.FRequisicao:= '';
 
 end;
 
@@ -85,17 +105,28 @@ begin
   frmMain.BufferStr:= '';
 
   Try
-    if NOT Uteis.temConexaoDeInternet() then begin
-      Uteis.SayError('Não foi encontrada conexão com internet. Verifique!');
-      Exit;
-    end;
+    Try
+      If NOT Uteis.temConexaoDeInternet() Then Begin
+        Uteis.SayError('Não foi encontrada conexão com internet. Verifique!');
+        Exit;
+      End;
 
-    ConexaoAPI_C:= TConexaoAPI_C.Create(Self.FAcao);
+      ConexaoAPI_C:= TConexaoAPI_C.Create(Self.FAcao, Self.FEndpoint, Self.FMethod, Self.FRequisicao);
 
-    Retorno:= ConexaoAPI_C.processar();
+      Retorno:= ConexaoAPI_C.processar();
+      If Retorno = Nil Then
+        raise Exception.Create('');
 
-    frmMain.BufferStr:= Retorno.ToJSON();
+      If Retorno.Erro Then
+        raise Exception.Create(Retorno.Data);
 
+      frmMain.BufferStr:= Retorno.ToJSON();
+    Except
+      On E: Exception Do Begin
+        Uteis.SayError('Ocorreu um erro durante comunicação com a API. Entre em contato com o suporte');
+        frmMain.BufferStr:= '';
+      End;
+    End;
   Finally
     ConexaoAPI_C.Free();
     Retorno.Free();

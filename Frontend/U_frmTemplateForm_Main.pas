@@ -17,9 +17,12 @@ type
     SpeedButton_Add: TSpeedButton;
     SpeedButton_Search: TSpeedButton;
     SpeedButton_Delete: TSpeedButton;
+    TimerStartUp: TTimer;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
     procedure FormShow(Sender: TObject);
+    procedure TimerStartUpTimer(Sender: TObject);
+    procedure ButtonSairClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -31,8 +34,15 @@ var
 
 implementation
 
+uses Uteis;
+
 {$R *.dfm}
 
+
+procedure TfrmTemplateForm_Main.ButtonSairClick(Sender: TObject);
+begin
+  Close;
+end;
 
 procedure TfrmTemplateForm_Main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -46,26 +56,26 @@ var
 begin
   inherited;
 
-  Row:= 0;
-
-  StringGridMain.Cells[0, Row]:= 'Código';
-  StringGridMain.Cells[1, Row]:= 'Paciente';
-  StringGridMain.Cells[2, Row]:= 'Profssional';
-  StringGridMain.Cells[3, Row]:= 'Data';
-  StringGridMain.Cells[4, Row]:= 'Hora agendada';
-  StringGridMain.Cells[5, Row]:= 'Hora realizada';
-
-  for Row:= 1 to 10 do begin
-    StringGridMain.Cells[0, Row]:= IntToStr(Row);
-    StringGridMain.Cells[1, Row]:= 'Fernanda';
-    StringGridMain.Cells[2, Row]:= 'Maria';
-    StringGridMain.Cells[3, Row]:= '15/04/2024';
-    StringGridMain.Cells[4, Row]:= '08:30';
-    StringGridMain.Cells[5, Row]:= '09:40';
-  end;
-
-  StringGridMain.ColCount:= 6;
-  StringGridMain.RowCount:= Row;
+//  Row:= 0;
+//
+//  StringGridMain.Cells[0, Row]:= 'Código';
+//  StringGridMain.Cells[1, Row]:= 'Paciente';
+//  StringGridMain.Cells[2, Row]:= 'Profssional';
+//  StringGridMain.Cells[3, Row]:= 'Data';
+//  StringGridMain.Cells[4, Row]:= 'Hora agendada';
+//  StringGridMain.Cells[5, Row]:= 'Hora realizada';
+//
+//  for Row:= 1 to 10 do begin
+//    StringGridMain.Cells[0, Row]:= IntToStr(Row);
+//    StringGridMain.Cells[1, Row]:= 'Fernanda';
+//    StringGridMain.Cells[2, Row]:= 'Maria';
+//    StringGridMain.Cells[3, Row]:= '15/04/2024';
+//    StringGridMain.Cells[4, Row]:= '08:30';
+//    StringGridMain.Cells[5, Row]:= '09:40';
+//  end;
+//
+//  StringGridMain.ColCount:= 6;
+//  StringGridMain.RowCount:= Row;
 
 end;
 
@@ -125,6 +135,13 @@ begin
   yCalc:= Rect.Top + (Rect.Bottom - Rect.Top - yCalc) div 2;
 
   lCanvas.TextRect (Rect, Rect.Left + 3, yCalc, texto);
+
+end;
+
+procedure TfrmTemplateForm_Main.TimerStartUpTimer(Sender: TObject);
+begin
+
+  TimerStartUp.Enabled:= FALSE;
 
 end;
 
