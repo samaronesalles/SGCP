@@ -171,7 +171,7 @@ begin
       If RespostaAPI = Nil Then
         Exit;
 
-      If RespostaAPI.StatusCode <> 200 Then
+      If RespostaAPI.StatusCode_HTTP <> 200 Then
         Exit;
 
       Profissional:= TProfissional_M.ToObject(RespostaAPI.Data);
@@ -189,6 +189,8 @@ begin
 
       Result:= TRUE;
     Except
+      On E: Exception Do
+        Raise;
     End;
   Finally
     RespostaAPI.Free();
@@ -217,7 +219,7 @@ begin
       If RespostaAPI = Nil Then
         Exit;
 
-      If RespostaAPI.StatusCode <> 200 Then
+      If RespostaAPI.StatusCode_HTTP <> 200 Then
         Exit;
 
       Result:= TRUE;
@@ -309,7 +311,7 @@ begin
       If RespostaAPI = Nil Then
         Exit;
 
-      If RespostaAPI.StatusCode <> 200 Then
+      If RespostaAPI.StatusCode_HTTP <> 200 Then
         Exit;
 
       JsonLista:= RespostaAPI.Data;

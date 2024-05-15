@@ -24,6 +24,14 @@ function  ConverteTextoToJson(Texto : String) : String;
 function  ConverteTextoToJson_ByOpcoes(Texto : String; NullSeVazio : Boolean) : String;
 function  ConverteBooleanToJson(Valor : Boolean) : String;
 
+function  UpperKEY (Ch: Char): Char;
+function  LowerKEY (Ch: Char): Char;
+
+procedure OnlyNumbersAccepted (Var Key: Char; AceitarPontoOuVirgula: Boolean; AceitarNegativo: Boolean);
+procedure OnlyNumeroLetrasAccepted (Var Key: Char);
+function  OnlyNumbersOnString ( Valor : String ) : String;
+function  OnlyLetrasOnString ( Valor : String ) : String;
+
 function  Substitua(VAR Texto: String; ValorOriginal, NovoValor: String): Boolean;
 function  StrReplace(Texto, ValorOriginal, NovoValor: String): String;
 
@@ -356,6 +364,117 @@ begin
 
   for nRow:= AStringGrid.RowCount - 1 downto AStringGrid.FixedRows do
     StringGridDeleteRow (AStringGrid, nRow);
+
+end;
+
+function UpperKEY (Ch: Char): Char;
+var
+  St     : String;
+
+begin
+  St:= ' ';
+  St[1]:= Ch;
+
+  St:= AnsiUpperCase(St);
+
+  Result:= St[1];
+end;
+
+
+function LowerKEY (Ch: Char): Char;
+var
+  St     : String;
+
+begin
+  St:= ' ';
+  St[1]:= Ch;
+
+  St:= AnsiLowerCase(St);
+
+  Result:= St[1];
+end;
+
+procedure OnlyNumbersAccepted (Var Key: Char; AceitarPontoOuVirgula: Boolean; AceitarNegativo: Boolean);
+var
+  St      : String;
+
+begin
+
+  St:= '0123456789' + Chr(8);
+
+  If AceitarPontoOuVirgula then
+    St:= St + '.,';
+
+  If AceitarNegativo Then
+    St:= St + '-';
+
+  If Pos(Key, St) = 0 Then
+    Key:= #0;
+
+end;
+
+procedure OnlyNumeroLetrasAccepted (Var Key: Char);
+var
+  St      : String;
+
+begin
+
+  Key:= UpperKEY(Key);
+  St:= '0123456789 ABCDEFGHIJKLMNOPQRSTUVXYWZ' + Chr(8);
+
+  If Pos(Key, St) = 0 Then
+    Key:= #0;
+
+end;
+
+function OnlyNumbersOnString (Valor: String): String;
+var
+  C      : Longint;
+  St     : String;
+
+begin
+
+  Result:= '';
+
+  St:= Valor;
+  if Length(St) = 0 then
+    Exit;
+
+  C:= 1;
+  repeat
+    if Pos(St[C], '0123456789') = 0 then
+      Delete(St, C, 1)
+    else
+      Inc(C);
+  until C > Length(St);
+
+  Result:= St;
+
+end;
+
+
+function OnlyLetrasOnString ( Valor : String ) : String;
+var
+  C      : Longint;
+  St     : String;
+
+begin
+
+  Result:= '';
+
+  St:= Valor;
+  If Length(St) = 0 Then
+    Exit;
+
+  C:= 1;
+  repeat
+    If Pos(St[C], ' ABCDEFGHIJKLMNOPQRSTUVXYWZabcdefghijklmnopqrstuvxywz') = 0 Then
+      Delete(St, C, 1)
+    Else
+      Inc(C);
+  until C > Length(St);
+
+  Result:= St;
 
 end;
 

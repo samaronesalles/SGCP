@@ -16,7 +16,10 @@ uses
   U_Profissional_C in 'Libs\Profissional\U_Profissional_C.pas',
   U_ObjectList in 'Libs\U_ObjectList.pas',
   U_MeusTipos in 'Libs\U_MeusTipos.pas',
-  U_Profissional_V in 'Libs\Profissional\U_Profissional_V.pas' {frmProfissionais_V};
+  U_Profissional_V in 'Libs\Profissional\U_Profissional_V.pas' {frmProfissionais_V},
+  U_frmTemplateForm_Detail in 'U_frmTemplateForm_Detail.pas' {frmTemplateForm_Detail},
+  U_ProfissionalDetail_V in 'Libs\Profissional\U_ProfissionalDetail_V.pas' {frmProfissionalDetail_V},
+  U_ExceptionTratado in 'Libs\U_ExceptionTratado.pas';
 
 {$R *.res}
 

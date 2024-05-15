@@ -129,6 +129,15 @@
             <Form>frmProfissionais_V</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="U_frmTemplateForm_Detail.pas">
+            <Form>frmTemplateForm_Detail</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Libs\Profissional\U_ProfissionalDetail_V.pas">
+            <Form>frmProfissionalDetail_V</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Libs\U_ExceptionTratado.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

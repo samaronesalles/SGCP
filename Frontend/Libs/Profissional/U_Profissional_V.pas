@@ -12,6 +12,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure TimerStartUpTimer(Sender: TObject);
+    procedure SpeedButton_AddClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -36,7 +37,7 @@ var
 
 implementation
 
-uses Uteis;
+uses Uteis, U_ProfissionalDetail_V;
 
 {$R *.dfm}
 
@@ -115,6 +116,33 @@ end;
 procedure TfrmProfissionais_V.RetorneTodosProfissionais;
 begin
   GLB_ListaProfissionais.RetornoLista();
+end;
+
+procedure TfrmProfissionais_V.SpeedButton_AddClick(Sender: TObject);
+var
+  NovoProfissional                     : TProfissional_M;
+
+begin
+
+  NovoProfissional:= Nil;
+
+  Try
+    NovoProfissional:= frmProfissionalDetail_V.Execute_Novo();
+
+    if NovoProfissional = Nil then
+      raise Exception.Create('');
+
+    if NovoProfissional.Id <= 0 then
+      raise Exception.Create('');
+
+    GLB_ListaProfissionais.Add(NovoProfissional);
+
+    Refresh_StringGrid();
+      
+  Except
+    NovoProfissional.Free;
+  End;
+
 end;
 
 procedure TfrmProfissionais_V.TimerStartUpTimer(Sender: TObject);

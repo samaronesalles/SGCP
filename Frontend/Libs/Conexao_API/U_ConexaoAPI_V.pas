@@ -14,6 +14,8 @@ type
     TimerStartUp: TTimer;
     procedure TimerStartUpTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
 
@@ -38,7 +40,7 @@ var
 
 implementation
 
-uses U_frmMain, Uteis, U_ConexaoAPI_C;
+uses U_frmMain, Uteis, U_ExceptionTratado, U_ConexaoAPI_C;
 
 {$R *.dfm}
 
@@ -80,6 +82,12 @@ begin
 
 end;
 
+procedure TfrmConexaoAPI_V.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  frmConexaoAPI_V:= Nil;
+  Action:= caFree;
+end;
+
 procedure TfrmConexaoAPI_V.FormCreate(Sender: TObject);
 begin
 
@@ -88,6 +96,11 @@ begin
   Self.FMethod:= '';
   Self.FRequisicao:= '';
 
+end;
+
+procedure TfrmConexaoAPI_V.FormShow(Sender: TObject);
+begin
+  Self.TimerStartUp.Enabled:= TRUE;
 end;
 
 procedure TfrmConexaoAPI_V.TimerStartUpTimer(Sender: TObject);
@@ -117,14 +130,23 @@ begin
       If Retorno = Nil Then
         raise Exception.Create('');
 
-      If Retorno.Erro Then
-        raise Exception.Create(Retorno.Data);
+      if Retorno.Erro Then begin
+        if Retorno.StatusCode_Interno > 0 Then
+          raise ExceptionTratado.Create(Retorno.Data)
+        else
+          raise Exception.Create(Retorno.Data);
+      end;
 
       frmMain.BufferStr:= Retorno.ToJSON();
     Except
       On E: Exception Do Begin
-        Uteis.SayError('Ocorreu um erro durante comunicação com a API. Entre em contato com o suporte');
         frmMain.BufferStr:= '';
+
+        if (E is ExceptionTratado) then
+          Uteis.SayError(E.Message)
+        else
+          Uteis.SayError('Ocorreu um erro durante comunicação com a API. Entre em contato com o suporte');
+
       End;
     End;
   Finally

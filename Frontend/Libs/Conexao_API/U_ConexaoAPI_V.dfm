@@ -14,7 +14,9 @@ object frmConexaoAPI_V: TfrmConexaoAPI_V
   Font.Style = []
   FormStyle = fsStayOnTop
   Position = poScreenCenter
+  OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object Label_mensagem: TLabel
     Left = 0
@@ -42,8 +44,11 @@ object frmConexaoAPI_V: TfrmConexaoAPI_V
     Align = alBottom
     Style = pbstMarquee
     TabOrder = 0
+    ExplicitTop = 109
+    ExplicitWidth = 509
   end
   object TimerStartUp: TTimer
+    Enabled = False
     OnTimer = TimerStartUpTimer
     Left = 16
     Top = 64
