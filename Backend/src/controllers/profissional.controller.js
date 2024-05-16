@@ -74,6 +74,8 @@ module.exports = {
                 plain: true
             });
 
+            profissionalEncontrado.password = uteis.decrypt(password)
+
             return res.status(200).json(mensagens.resultExternal(1001, false, profissionalEncontrado))
 
         } catch (error) {
@@ -105,6 +107,9 @@ module.exports = {
             const profissional = await ProfissionalRepository.retornePeloEmail(email)
 
             if (!profissional)
+                return res.status(200).json(mensagens.resultDefault(2507))
+
+            if (!profissional.ativo)
                 return res.status(200).json(mensagens.resultDefault(2507))
 
             let pass = profissional.password
