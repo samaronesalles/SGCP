@@ -13,6 +13,7 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure TimerStartUpTimer(Sender: TObject);
     procedure SpeedButton_AddClick(Sender: TObject);
+    procedure StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
   private
     { Private declarations }
 
@@ -102,7 +103,7 @@ begin
     StringGridMain.Cells[COL_NOME, Row]:= Profissional.Nome;
     StringGridMain.Cells[COL_CELULAR, Row]:= Profissional.Celular;
     StringGridMain.Cells[COL_EMAIL, Row]:= Profissional.Email;
-    StringGridMain.Cells[COL_ATIVO, Row]:= Uteis.Iff(Profissional.Ativo, 'Sim', 'Não');
+    StringGridMain.Cells[COL_ATIVO, Row]:= Uteis.Iff(Profissional.Ativo, 'Ativo', 'Inativo');
     StringGridMain.Cells[COL_IDX_LISTA, Row]:= IntToStr(C);
 
     Inc(Row);
@@ -142,6 +143,21 @@ begin
   Except
     NovoProfissional.Free;
   End;
+
+end;
+
+procedure TfrmProfissionais_V.StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
+var
+  CorFont, CorLinha              : TColor;
+
+begin
+  inherited;
+
+  CorFont:= clRed;
+  CorLinha:= Self.GetCorCell(StringGridMain, ACol, ARow);
+
+  if AnsiUpperCase(StringGridMain.Cells[COL_ATIVO, ARow]) = 'INATIVO' then
+    Self.SetCorRowgrid(StringGridMain, CorFont, CorLinha, ACol, ARow, Rect, State);
 
 end;
 

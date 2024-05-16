@@ -17,7 +17,6 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
   Position = poMainFormCenter
   Visible = True
   OnClose = FormClose
-  OnShow = FormShow
   TextHeight = 16
   object PanelButtons: TPanel
     Left = 0
@@ -26,13 +25,15 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
     Height = 70
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 642
+    ExplicitWidth = 1256
     DesignSize = (
       1262
       70)
     object ButtonSair: TButton
-      Left = 1140
+      Left = 1160
       Top = 21
-      Width = 100
+      Width = 90
       Height = 30
       Anchors = [akTop, akRight]
       BiDiMode = bdLeftToRight
@@ -43,6 +44,63 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       TabOrder = 0
       OnClick = ButtonSairClick
     end
+    object PanelLegenda: TPanel
+      Left = 1
+      Top = -3
+      Width = 288
+      Height = 76
+      BevelOuter = bvNone
+      TabOrder = 1
+      object Label1: TLabel
+        Left = 9
+        Top = 8
+        Width = 68
+        Height = 19
+        Caption = 'Legenda:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -17
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Bevel1: TBevel
+        Left = 9
+        Top = 27
+        Width = 69
+        Height = 1
+      end
+      object Shape1: TShape
+        Left = 9
+        Top = 36
+        Width = 15
+        Height = 15
+        Brush.Color = clBlack
+        Shape = stCircle
+      end
+      object Shape2: TShape
+        Left = 147
+        Top = 36
+        Width = 15
+        Height = 15
+        Brush.Color = clRed
+        Shape = stCircle
+      end
+      object Label2: TLabel
+        Left = 30
+        Top = 34
+        Width = 105
+        Height = 16
+        Caption = 'xxxxxxxxxxxxxxx'
+      end
+      object Label3: TLabel
+        Left = 168
+        Top = 34
+        Width = 105
+        Height = 16
+        Caption = 'xxxxxxxxxxxxxxx'
+      end
+    end
   end
   object Panel1: TPanel
     Left = 0
@@ -51,6 +109,8 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
     Height = 610
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 1256
+    ExplicitHeight = 601
     object StringGridMain: TStringGrid
       Left = 1
       Top = 1
@@ -67,6 +127,8 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       ParentCtl3D = False
       TabOrder = 0
       OnDrawCell = StringGridMainDrawCell
+      ExplicitWidth = 1254
+      ExplicitHeight = 599
       ColWidths = (
         130
         130
@@ -82,11 +144,12 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
     Height = 41
     Align = alTop
     TabOrder = 2
+    ExplicitWidth = 1256
     DesignSize = (
       1262
       41)
     object SpeedButton_Add: TSpeedButton
-      Left = 1155
+      Left = 1165
       Top = 7
       Width = 25
       Height = 25
@@ -96,10 +159,9 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       Images = ImageList_Icons
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 1173
     end
     object SpeedButton_Search: TSpeedButton
-      Left = 1185
+      Left = 1195
       Top = 7
       Width = 25
       Height = 25
@@ -109,10 +171,9 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       Images = ImageList_Icons
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 1203
     end
     object SpeedButton_Delete: TSpeedButton
-      Left = 1215
+      Left = 1225
       Top = 7
       Width = 25
       Height = 25
@@ -122,7 +183,6 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       Images = ImageList_Icons
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 1233
     end
   end
   object ImageList_Icons: TImageList
@@ -130,8 +190,8 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
     DrawingStyle = dsTransparent
     Height = 24
     Width = 24
-    Left = 40
-    Top = 688
+    Left = 1168
+    Top = 64
     Bitmap = {
       494C010104000800040018001800FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000003000000001002000000000000048
@@ -736,7 +796,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
   end
   object TimerStartUp: TTimer
     OnTimer = TimerStartUpTimer
-    Left = 80
-    Top = 688
+    Left = 1208
+    Top = 64
   end
 end
