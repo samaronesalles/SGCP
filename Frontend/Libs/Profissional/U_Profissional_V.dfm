@@ -25,6 +25,11 @@ inherited frmProfissionais_V: TfrmProfissionais_V
       end
     end
   end
+  inherited Panel1: TPanel
+    inherited StringGridMain: TStringGrid
+      OnDblClick = StringGridMainDblClick
+    end
+  end
   inherited Panel2: TPanel
     inherited SpeedButton_Add: TSpeedButton
       OnClick = SpeedButton_AddClick

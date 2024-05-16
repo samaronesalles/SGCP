@@ -14,10 +14,11 @@ type
     procedure TimerStartUpTimer(Sender: TObject);
     procedure SpeedButton_AddClick(Sender: TObject);
     procedure StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
+    procedure StringGridMainDblClick(Sender: TObject);
   private
     { Private declarations }
 
-    GLB_ListaProfissionais                    : TProfissional_List_M;
+    FGLB_ListaProfissionais                    : TProfissional_List_M;
 
     procedure RetorneTodosProfissionais;
     procedure Refresh_StringGrid;
@@ -46,14 +47,14 @@ procedure TfrmProfissionais_V.FormCloseQuery(Sender: TObject; var CanClose: Bool
 begin
   inherited;
 
-  GLB_ListaProfissionais.Free();
+  Self.FGLB_ListaProfissionais.Free();
 end;
 
 procedure TfrmProfissionais_V.FormCreate(Sender: TObject);
 begin
   inherited;
 
-  GLB_ListaProfissionais:= Nil;
+  Self.FGLB_ListaProfissionais:= Nil;
 
   StringGridMain.Cells[COL_ID, 0]:= 'Código';
   StringGridMain.ColWidths[COL_ID]:= 60;
@@ -86,12 +87,12 @@ begin
 
   Uteis.StringGridDelete_AllRows(StringGridMain);
 
-  If GLB_ListaProfissionais.Count = 0 Then
+  If Self.FGLB_ListaProfissionais.Count = 0 Then
     Exit;
 
   Row:= StringGridMain.FixedRows;
-  for C:= 0 to GLB_ListaProfissionais.Count - 1 do begin
-    Profissional:= TProfissional_M(GLB_ListaProfissionais[C]);
+  for C:= 0 to Self.FGLB_ListaProfissionais.Count - 1 do begin
+    Profissional:= TProfissional_M(Self.FGLB_ListaProfissionais[C]);
 
     If Profissional = Nil Then
       Continue;
@@ -116,7 +117,8 @@ end;
 
 procedure TfrmProfissionais_V.RetorneTodosProfissionais;
 begin
-  GLB_ListaProfissionais.RetornoLista();
+  Self.FGLB_ListaProfissionais.Clear();
+  Self.FGLB_ListaProfissionais.RetornoLista();
 end;
 
 procedure TfrmProfissionais_V.SpeedButton_AddClick(Sender: TObject);
@@ -136,13 +138,44 @@ begin
     if NovoProfissional.Id <= 0 then
       raise Exception.Create('');
 
-    GLB_ListaProfissionais.Add(NovoProfissional);
+    Self.FGLB_ListaProfissionais.Add(NovoProfissional);
 
     Refresh_StringGrid();
-      
+
   Except
     NovoProfissional.Free;
   End;
+
+end;
+
+procedure TfrmProfissionais_V.StringGridMainDblClick(Sender: TObject);
+var
+  Posicao                        : Longint;
+  ItemLista, ItemEditado         : TProfissional_M;
+
+begin
+
+  ItemEditado:= Nil;
+
+  Posicao:= Str2Num(StringGridMain.Cells[COL_IDX_LISTA, StringGridMain.Row]);
+
+  if Posicao < 0 then
+    Exit;
+
+  if Self.FGLB_ListaProfissionais = Nil then
+    Exit;
+
+  if Self.FGLB_ListaProfissionais.Count = 0 then
+    Exit;
+
+  ItemLista:= Self.FGLB_ListaProfissionais[Posicao];
+
+  If frmProfissionalDetail_V.Execute_Editar(ItemLista) then
+    Self.FGLB_ListaProfissionais[Posicao]:= ItemLista
+  else
+    RetorneTodosProfissionais();
+
+  Refresh_StringGrid();
 
 end;
 
@@ -166,7 +199,7 @@ begin
 
   inherited;
 
-  GLB_ListaProfissionais:= TProfissional_List_M.Create();
+  Self.FGLB_ListaProfissionais:= TProfissional_List_M.Create();
 
   Self.RetorneTodosProfissionais();
   Self.Refresh_StringGrid();

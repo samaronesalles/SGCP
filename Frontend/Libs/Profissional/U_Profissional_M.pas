@@ -163,7 +163,12 @@ begin
   Try
     Try
       Novo:= Self.FId <= 0;
-      Endpoint:= Uteis.iff(Novo, Self.endpoint_Novo(Metodo), Self.endpoint_Edicao(Metodo));
+
+      if Novo then
+        Endpoint:= Self.endpoint_Novo(Metodo)
+      else
+        Endpoint:= Self.endpoint_Edicao(Metodo);
+
       Requisicao:= Self.ToJSON();
 
       RespostaAPI:= frmConexaoAPI_V.Execute(taProfissional_Save, Endpoint, Metodo, Requisicao, 'Salvando profissional. Aguarde!');

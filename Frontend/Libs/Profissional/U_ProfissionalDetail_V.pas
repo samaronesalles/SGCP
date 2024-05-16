@@ -34,13 +34,16 @@ type
   private
     { Private declarations }
 
-    GLB_Profissional_M                       : TProfissional_M;
+    FGLB_Profissional_M                       : TProfissional_M;
+    FJson_BkpProfissionalEditado              : String;
 
     function ValidaCamposObrigatorios: Boolean;
   public
     { Public declarations }
+    property GLB_Profissional_M               : TProfissional_M Read FGLB_Profissional_M;
 
     function Execute_Novo: TProfissional_M;
+    function Execute_Editar(VAR Profissional: TProfissional_M): Boolean;
   end;
 
 var
@@ -53,6 +56,9 @@ uses U_frmMain, Uteis;
 {$R *.dfm}
 
 procedure TfrmProfissionalDetail_V.ButtonProsseguirClick(Sender: TObject);
+var
+  Novo                             : Boolean;
+
 begin
 
   if NOT ButtonProsseguir.Enabled then
@@ -63,27 +69,32 @@ begin
       ButtonProsseguir.Enabled:= FALSE;
       ButtonCancelar.Enabled:= FALSE;
 
+      Novo:= Str2Num(EditCodigo.Text) = 0;
+
       if NOT Self.ValidaCamposObrigatorios() then
         Exit;
 
-      Self.GLB_Profissional_M:= TProfissional_M.Create();
+      Self.FGLB_Profissional_M:= TProfissional_M.Create();
 
-      Self.GLB_Profissional_M.Id:= Str2Num(EditCodigo.Text);
-      Self.GLB_Profissional_M.Di:= Label_di.Caption;
-      Self.GLB_Profissional_M.Nome:= EditNome.Text;
-      Self.GLB_Profissional_M.Celular:= Uteis.OnlyNumbersOnString(MaskEditCelular.Text);
-      Self.GLB_Profissional_M.Email:= EditEmail.Text;
-      Self.GLB_Profissional_M.Ativo:= Uteis.iff(ComboBoxAtivo.ItemIndex = 0, TRUE, FALSE);
-      Self.GLB_Profissional_M.Username:= EditUsuario.Text;
-      Self.GLB_Profissional_M.Password:= EditSenha.Text;
+      Self.FGLB_Profissional_M.Id:= Str2Num(EditCodigo.Text);
+      Self.FGLB_Profissional_M.Di:= Label_di.Caption;
+      Self.FGLB_Profissional_M.Nome:= EditNome.Text;
+      Self.FGLB_Profissional_M.Celular:= Uteis.OnlyNumbersOnString(MaskEditCelular.Text);
+      Self.FGLB_Profissional_M.Email:= EditEmail.Text;
+      Self.FGLB_Profissional_M.Ativo:= Uteis.iff(ComboBoxAtivo.ItemIndex = 0, TRUE, FALSE);
+      Self.FGLB_Profissional_M.Username:= EditUsuario.Text;
+      Self.FGLB_Profissional_M.Password:= EditSenha.Text;
 
-      if NOT Self.GLB_Profissional_M.Save() Then
+      If ((NOT Novo) AND (Self.FJson_BkpProfissionalEditado = Self.FGLB_Profissional_M.ToJSON())) Then
+        ModalResult:= mrCancel;
+
+      if NOT Self.FGLB_Profissional_M.Save() Then
         Exit;
 
-      Self.EditCodigo.Text:= IntToStr(Self.GLB_Profissional_M.id);
-      Self.Label_di.Caption:= Self.GLB_Profissional_M.Di;
+      Self.EditCodigo.Text:= IntToStr(Self.FGLB_Profissional_M.id);
+      Self.Label_di.Caption:= Self.FGLB_Profissional_M.Di;
 
-      frmMain.BufferStr:= Self.GLB_Profissional_M.ToJSON();
+      frmMain.BufferStr:= Self.FGLB_Profissional_M.ToJSON();
 
       ModalResult:= mrOk;
     Except
@@ -140,6 +151,60 @@ begin
 
 end;
 
+function TfrmProfissionalDetail_V.Execute_Editar(VAR Profissional: TProfissional_M): Boolean;
+var
+  ResultadoModal                            : TModalResult;
+
+begin
+
+  Try
+    Try
+      Result:= FALSE;
+
+      if Profissional = Nil then
+        Exit;
+
+      if Profissional.Id <= 0 then
+        Exit;
+
+      if frmProfissionalDetail_V = Nil then
+        frmProfissionalDetail_V:= TfrmProfissionalDetail_V.Create(Self);
+
+      frmProfissionalDetail_V.EditCodigo.Text:= IntToStr(Profissional.Id);
+      frmProfissionalDetail_V.Label_di.Caption:= Profissional.Di;
+      frmProfissionalDetail_V.EditNome.Text:= Profissional.Nome;
+      frmProfissionalDetail_V.ComboBoxAtivo.ItemIndex:= Uteis.iff(Profissional.Ativo, 0, 1);
+      frmProfissionalDetail_V.EditEmail.Text:= Profissional.Email;
+      SetValorToMaskEdit(frmProfissionalDetail_V.MaskEditCelular, Uteis.OnlyNumbersOnString(Profissional.Celular));
+      frmProfissionalDetail_V.EditUsuario.Text:= Profissional.Username;
+      frmProfissionalDetail_V.EditSenha.Text:= Profissional.Password;
+
+      frmProfissionalDetail_V.FJson_BkpProfissionalEditado:= Profissional.ToJSON();
+
+      ResultadoModal:= frmProfissionalDetail_V.ShowModal;
+
+      if ResultadoModal = mrCancel then begin
+        Result:= TRUE;
+        Exit;
+      end;
+
+      if ResultadoModal <> mrOk then
+        Exit;
+
+      Profissional.Free();
+      Profissional:= TProfissional_M.ToObject(frmMain.BufferStr);
+
+      Result:= TRUE;
+    Except
+      Profissional.Free();
+      Result:= FALSE;
+    End;
+  Finally
+    frmProfissionalDetail_V.Free();
+  End;
+
+end;
+
 procedure TfrmProfissionalDetail_V.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   frmProfissionalDetail_V:= Nil;
@@ -162,8 +227,10 @@ procedure TfrmProfissionalDetail_V.FormCreate(Sender: TObject);
 begin
   inherited;
 
-  Self.GLB_Profissional_M:= Nil;
+  Self.FGLB_Profissional_M:= Nil;
   Self.Label_di.Caption:= '';
+
+  Self.FJson_BkpProfissionalEditado:= '';
 
 end;
 

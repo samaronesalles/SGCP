@@ -3,8 +3,8 @@ unit Uteis;
 interface
 
 uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
-     Vcl.Forms, Vcl.Controls, Vcl.Grids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Dialogs, System.JSON,
-     Winapi.WinInet;
+     Vcl.Forms, Vcl.Controls, Vcl.Grids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
+     Vcl.Dialogs, System.JSON, Winapi.WinInet;
 
 function  temConexaoDeInternet: Boolean;
 function  iff(Condicao: Boolean; ValorQuando_TRUE, ValorQuando_FALSE: OleVariant): OleVariant;
@@ -26,6 +26,8 @@ function  ConverteBooleanToJson(Valor : Boolean) : String;
 
 function  UpperKEY (Ch: Char): Char;
 function  LowerKEY (Ch: Char): Char;
+
+procedure SetValorToMaskEdit(edit: TMaskedit; valor: String);
 
 procedure OnlyNumbersAccepted (Var Key: Char; AceitarPontoOuVirgula: Boolean; AceitarNegativo: Boolean);
 procedure OnlyNumeroLetrasAccepted (Var Key: Char);
@@ -477,5 +479,21 @@ begin
   Result:= St;
 
 end;
+
+procedure SetValorToMaskEdit(edit: TMaskedit; valor: String);
+var
+  mask                             : String;
+
+begin
+
+  mask:= edit.EditMask;
+
+  edit.EditMask:= '';
+  edit.Text:= valor;
+
+  edit.EditMask:= Mask;
+
+end;
+
 
 end.

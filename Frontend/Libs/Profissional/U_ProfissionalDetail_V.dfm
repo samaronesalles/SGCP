@@ -16,13 +16,13 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       513
       56)
     inherited ButtonProsseguir: TButton
-      Left = 385
+      Left = 398
       OnClick = ButtonProsseguirClick
-      ExplicitLeft = 379
+      ExplicitLeft = 398
     end
     inherited ButtonCancelar: TButton
-      Left = 270
-      ExplicitLeft = 264
+      Left = 283
+      ExplicitLeft = 283
     end
   end
   inherited pnDetalhe: TPanel
@@ -147,7 +147,7 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
     object MaskEditCelular: TMaskEdit
       Left = 395
       Top = 146
-      Width = 98
+      Width = 102
       Height = 24
       EditMask = '!\(99\) 99999-9999;1;_'
       MaxLength = 15
@@ -168,6 +168,7 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       Top = 298
       Width = 217
       Height = 24
+      PasswordChar = '*'
       TabOrder = 6
       OnKeyPress = EditNomeKeyPress
     end
