@@ -15,6 +15,8 @@ type
     procedure SpeedButton_AddClick(Sender: TObject);
     procedure StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
     procedure StringGridMainDblClick(Sender: TObject);
+    procedure SpeedButton_DeleteClick(Sender: TObject);
+    procedure SpeedButton_SearchClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -146,6 +148,46 @@ begin
     NovoProfissional.Free;
   End;
 
+end;
+
+procedure TfrmProfissionais_V.SpeedButton_DeleteClick(Sender: TObject);
+var
+  Posicao                        : Longint;
+  ItemLista, ItemEditado         : TProfissional_M;
+
+begin
+
+  ItemEditado:= Nil;
+
+  Posicao:= Str2Num(StringGridMain.Cells[COL_IDX_LISTA, StringGridMain.Row]);
+
+  if Posicao < 0 then
+    Exit;
+
+  if Self.FGLB_ListaProfissionais = Nil then
+    Exit;
+
+  if Self.FGLB_ListaProfissionais.Count = 0 then
+    Exit;
+
+  ItemLista:= Self.FGLB_ListaProfissionais[Posicao];
+
+  if Uteis.SayQuestion('Exclusão de profissional', 'Deseja realmente excluir o profissional "' + ItemLista.Nome + '"?', TMsgDlgType.mtConfirmation, mbYesNo, mrNo, 0) <> mrYes then
+    Exit;
+
+  if NOT ItemLista.Delete() then
+    RetorneTodosProfissionais()
+  else
+    Self.FGLB_ListaProfissionais.Delete(Posicao);
+
+  Refresh_StringGrid();
+
+end;
+
+procedure TfrmProfissionais_V.SpeedButton_SearchClick(Sender: TObject);
+begin
+  inherited;
+  Uteis.SayInfo('Em desenvolvimento');
 end;
 
 procedure TfrmProfissionais_V.StringGridMainDblClick(Sender: TObject);

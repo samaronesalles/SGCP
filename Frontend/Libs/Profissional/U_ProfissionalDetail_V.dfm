@@ -3,7 +3,7 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
   ClientHeight = 409
   ClientWidth = 513
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
+  OnShow = FormShow
   ExplicitWidth = 525
   ExplicitHeight = 447
   TextHeight = 16
@@ -16,13 +16,13 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       513
       56)
     inherited ButtonProsseguir: TButton
-      Left = 398
+      Left = 392
       OnClick = ButtonProsseguirClick
-      ExplicitLeft = 398
+      ExplicitLeft = 386
     end
     inherited ButtonCancelar: TButton
-      Left = 283
-      ExplicitLeft = 283
+      Left = 277
+      ExplicitLeft = 271
     end
   end
   inherited pnDetalhe: TPanel
@@ -104,6 +104,7 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       Font.Name = 'Arial'
       Font.Style = []
       ParentFont = False
+      Visible = False
     end
     object EditCodigo: TEdit
       Left = 16
@@ -120,7 +121,6 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       Width = 401
       Height = 24
       TabOrder = 1
-      OnKeyPress = EditNomeKeyPress
     end
     object ComboBoxAtivo: TComboBox
       Left = 432
@@ -131,7 +131,7 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       ItemIndex = 0
       TabOrder = 2
       Text = 'SIM'
-      OnKeyPress = EditNomeKeyPress
+      OnKeyDown = ComboBoxAtivoKeyDown
       Items.Strings = (
         'SIM'
         'N'#195'O')
@@ -142,7 +142,6 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       Width = 361
       Height = 24
       TabOrder = 3
-      OnKeyPress = EditNomeKeyPress
     end
     object MaskEditCelular: TMaskEdit
       Left = 395
@@ -153,7 +152,6 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       MaxLength = 15
       TabOrder = 4
       Text = '(  )      -    '
-      OnKeyPress = EditNomeKeyPress
     end
     object EditUsuario: TEdit
       Left = 16
@@ -161,7 +159,6 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       Width = 217
       Height = 24
       TabOrder = 5
-      OnKeyPress = EditNomeKeyPress
     end
     object EditSenha: TEdit
       Left = 16
@@ -170,7 +167,6 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       Height = 24
       PasswordChar = '*'
       TabOrder = 6
-      OnKeyPress = EditNomeKeyPress
     end
   end
   inherited ImageList_Icons: TImageList

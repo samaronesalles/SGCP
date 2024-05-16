@@ -17,7 +17,7 @@ type
     procedure ButtonCancelarClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
 
-    procedure GoNextField;
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
 
@@ -48,17 +48,24 @@ begin
   Action:= caFree;
 end;
 
+procedure TfrmTemplateForm_Detail.FormCreate(Sender: TObject);
+begin
+  KeyPreview:= TRUE;
+end;
+
 procedure TfrmTemplateForm_Detail.FormKeyPress(Sender: TObject; var Key: Char);
 begin
+
+  if key = #13 then begin
+    SelectNext(ActiveControl as TWinControl, TRUE, TRUE);
+    Key:= #0;
+  end;
+
   if Key = #27 then begin
     Key:= #0;
     ButtonCancelar.OnClick(Self);
   end;
-end;
 
-procedure TfrmTemplateForm_Detail.GoNextField;
-begin
-  SelectNext(ActiveControl as TWinControl, True, True);
 end;
 
 end.

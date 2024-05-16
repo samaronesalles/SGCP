@@ -6,12 +6,18 @@ uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
      Vcl.Forms, Vcl.Controls, Vcl.Grids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
      Vcl.Dialogs, System.JSON, Winapi.WinInet;
 
+function  ReturnMachineName: String;
+function  MicroDesenvolvimento: Boolean;
+function  MicroDesenv_Temporario: Boolean;
+
 function  temConexaoDeInternet: Boolean;
 function  iff(Condicao: Boolean; ValorQuando_TRUE, ValorQuando_FALSE: OleVariant): OleVariant;
 
 Procedure SayError(Texto: String);
 Procedure SayInfo(Texto: String);
 function  SayQuestion(const aCaption: String; const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons; DefButton: Integer; HelpCtx: Longint): Integer;
+
+function  Hoje: String;
 
 function  BooleanToStr(BoolVar: Boolean): String;
 function  CharToBoolean (St: String): Boolean;
@@ -64,6 +70,34 @@ end;
 Procedure SayInfo(Texto: String);
 begin
   MessageDlg(Texto, MTInformation, [MBOK], 0);
+end;
+
+function Hoje: String;
+var
+  A,D,M                              : Word;
+  A_S,D_S,M_S                        : String[4];
+  Dt                                 : TSystemTime;
+
+begin
+
+  GetLocalTime(Dt);
+
+  D:= Dt.wDay;
+  A:= Dt.wYear;
+  M:= Dt.WMonth;
+
+  A_S:= Inttostr(A);
+  M_S:= Inttostr(M);
+  D_S:= InttoStr(D);
+
+  if D < 10 Then
+    D_S:= '0' + Inttostr(D);
+
+  if M < 10 Then
+    M_S:= '0' + Inttostr(M);
+
+  Hoje:= D_S + '/' + M_S + '/' + A_S;
+
 end;
 
 { Exemplo: if SayQuestion( 'Please confirm', 'Do you want to format your harddisk now?', mtConfirmation, mbYesNoCancel, mrno, 0 ) = mrYes then }
@@ -495,5 +529,31 @@ begin
 
 end;
 
+function ReturnMachineName: String;
+var
+  Buffer                                   : Array[0..255] of char;
+  Size                                     : DWord;
+begin
+
+  Size:= 256;
+
+  If GetComputerName(Buffer, Size) Then
+    Result:= AnsiUpperCase(Buffer)
+  Else
+    Result:= '';
+
+end;
+
+function MicroDesenvolvimento: Boolean;
+begin
+  Result:= ((Trim(ReturnMachineName()) = 'SAMARONE-NOTE') AND (FileExists('C:\DELPHI\MICRDESENSAMA.CFG')));
+end;
+
+function MicroDesenv_Temporario: Boolean;
+const
+  DiaDeValidade = '15/05/2024';
+begin
+  Result:= ((MicroDesenvolvimento()) AND (Hoje() = DiaDeValidade));
+end;
 
 end.

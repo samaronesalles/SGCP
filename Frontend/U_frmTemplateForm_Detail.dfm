@@ -14,6 +14,7 @@ object frmTemplateForm_Detail: TfrmTemplateForm_Detail
   KeyPreview = True
   Position = poScreenCenter
   OnClose = FormClose
+  OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   TextHeight = 16
   object pnBotoes: TPanel
@@ -23,11 +24,13 @@ object frmTemplateForm_Detail: TfrmTemplateForm_Detail
     Height = 56
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 348
+    ExplicitWidth = 673
     DesignSize = (
       679
       56)
     object ButtonProsseguir: TButton
-      Left = 563
+      Left = 557
       Top = 13
       Width = 105
       Height = 30
@@ -36,9 +39,10 @@ object frmTemplateForm_Detail: TfrmTemplateForm_Detail
       ImageIndex = 5
       Images = ImageList_Icons
       TabOrder = 0
+      ExplicitLeft = 551
     end
     object ButtonCancelar: TButton
-      Left = 448
+      Left = 442
       Top = 13
       Width = 100
       Height = 30
@@ -50,6 +54,7 @@ object frmTemplateForm_Detail: TfrmTemplateForm_Detail
       ParentBiDiMode = False
       TabOrder = 1
       OnClick = ButtonCancelarClick
+      ExplicitLeft = 436
     end
   end
   object pnDetalhe: TPanel
@@ -60,7 +65,7 @@ object frmTemplateForm_Detail: TfrmTemplateForm_Detail
     Align = alClient
     TabOrder = 1
     ExplicitWidth = 673
-    ExplicitHeight = 334
+    ExplicitHeight = 348
   end
   object ImageList_Icons: TImageList
     ColorDepth = cd32Bit

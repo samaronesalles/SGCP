@@ -32,6 +32,10 @@ type
 
     function  GetCorCell(Grid: TStringGrid; ACol, ARow: Integer): TColor;
     procedure SetCorRowgrid(Grid: TStringGrid; CorFont, CorLinha: TColor; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
+    procedure SpeedButton_DeleteClick(Sender: TObject);
+    procedure StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure SpeedButton_SearchClick(Sender: TObject);
+    procedure SpeedButton_AddClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -108,6 +112,21 @@ begin
 
 end;
 
+procedure TfrmTemplateForm_Main.SpeedButton_AddClick(Sender: TObject);
+begin
+  Application.ProcessMessages();
+end;
+
+procedure TfrmTemplateForm_Main.SpeedButton_DeleteClick(Sender: TObject);
+begin
+  Application.ProcessMessages();
+end;
+
+procedure TfrmTemplateForm_Main.SpeedButton_SearchClick(Sender: TObject);
+begin
+  Application.ProcessMessages();
+end;
+
 procedure TfrmTemplateForm_Main.StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
 const
   CorFonteLinhaPar               = clBlack;
@@ -130,6 +149,34 @@ begin
   end;
 
   SetCorRowgrid(TStringGrid(Sender), CorFont, CorLinha, ACol, ARow, Rect, State);
+
+end;
+
+procedure TfrmTemplateForm_Main.StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  if Key = VK_INSERT then begin
+    SpeedButton_Add.OnClick(Self);
+    Exit;
+  end;
+
+
+  if Key = VK_F3 then begin
+    SpeedButton_Search.OnClick(Self);
+    Exit;
+  end;
+
+  if ssCtrl in Shift then begin
+    if UpperKEY(Chr(Key)) = 'F' then begin
+      SpeedButton_Search.OnClick(Self);
+      Exit;
+    end;
+  end;
+
+  if Key = VK_DELETE then begin
+    SpeedButton_Delete.OnClick(Self);
+    Exit;
+  end;
 
 end;
 

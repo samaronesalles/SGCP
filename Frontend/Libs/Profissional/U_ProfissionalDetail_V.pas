@@ -28,9 +28,10 @@ type
     Label_di: TLabel;
     procedure ButtonProsseguirClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure EditNomeKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ComboBoxAtivoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
 
@@ -107,16 +108,6 @@ begin
 
 end;
 
-procedure TfrmProfissionalDetail_V.EditNomeKeyPress(Sender: TObject; var Key: Char);
-begin
-
-  if Key = #13 then begin
-    GoNextField();
-    exit;
-  end;
-
-end;
-
 function TfrmProfissionalDetail_V.Execute_Novo: TProfissional_M;
 var
   BkpBufferStr                              : String;
@@ -148,6 +139,17 @@ begin
     frmMain.BufferStr:= BkpBufferStr;
     frmProfissionalDetail_V.Free();
   End;
+
+end;
+
+procedure TfrmProfissionalDetail_V.ComboBoxAtivoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+
+  if (Key = VK_TAB) then begin
+    Key:= VK_RETURN;
+    Perform(WM_NEXTDLGCTL, 0, 0);
+  end;
 
 end;
 
@@ -232,6 +234,16 @@ begin
 
   Self.FJson_BkpProfissionalEditado:= '';
 
+  if Uteis.MicroDesenv_Temporario() then begin
+    Self.Label_di.Visible:= TRUE;
+  end;
+
+end;
+
+procedure TfrmProfissionalDetail_V.FormShow(Sender: TObject);
+begin
+  inherited;
+  Self.EditNome.SetFocus();
 end;
 
 function TfrmProfissionalDetail_V.ValidaCamposObrigatorios: Boolean;
@@ -239,24 +251,24 @@ begin
 
   Result:= FALSE;
 
-  if Trim(EditNome.Text) = '' then begin
+  if Trim(Self.EditNome.Text) = '' then begin
     Uteis.SayInfo('Campo "Nome" é obrigatório! Verifique.');
 
-    EditNome.SetFocus();
+    Self.EditNome.SetFocus();
     exit;
   end;
 
-  if Trim(Uteis.OnlyNumbersOnString(MaskEditCelular.Text)) = '' then begin
+  if Trim(Uteis.OnlyNumbersOnString(Self.MaskEditCelular.Text)) = '' then begin
     Uteis.SayInfo('Campo "Celular" é obrigatório! Verifique.');
 
-    MaskEditCelular.SetFocus();
+    Self.MaskEditCelular.SetFocus();
     exit;
   end;
 
-  if Trim(EditEmail.Text) = '' then begin
+  if Trim(Self.EditEmail.Text) = '' then begin
     Uteis.SayInfo('Campo "E-mail" é obrigatório! Verifique.');
 
-    EditEmail.SetFocus();
+    Self.EditEmail.SetFocus();
     exit;
   end;
 

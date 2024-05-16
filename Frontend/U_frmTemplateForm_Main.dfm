@@ -31,7 +31,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       1262
       70)
     object ButtonSair: TButton
-      Left = 1160
+      Left = 1154
       Top = 21
       Width = 90
       Height = 30
@@ -43,6 +43,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       ParentBiDiMode = False
       TabOrder = 0
       OnClick = ButtonSairClick
+      ExplicitLeft = 1148
     end
     object PanelLegenda: TPanel
       Left = 1
@@ -127,6 +128,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       ParentCtl3D = False
       TabOrder = 0
       OnDrawCell = StringGridMainDrawCell
+      OnKeyDown = StringGridMainKeyDown
       ExplicitWidth = 1254
       ExplicitHeight = 599
       ColWidths = (
@@ -149,7 +151,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       1262
       41)
     object SpeedButton_Add: TSpeedButton
-      Left = 1165
+      Left = 1159
       Top = 7
       Width = 25
       Height = 25
@@ -159,9 +161,11 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       Images = ImageList_Icons
       ParentShowHint = False
       ShowHint = True
+      OnClick = SpeedButton_AddClick
+      ExplicitLeft = 1165
     end
     object SpeedButton_Search: TSpeedButton
-      Left = 1195
+      Left = 1189
       Top = 7
       Width = 25
       Height = 25
@@ -171,9 +175,11 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       Images = ImageList_Icons
       ParentShowHint = False
       ShowHint = True
+      OnClick = SpeedButton_SearchClick
+      ExplicitLeft = 1195
     end
     object SpeedButton_Delete: TSpeedButton
-      Left = 1225
+      Left = 1219
       Top = 7
       Width = 25
       Height = 25
@@ -183,6 +189,8 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       Images = ImageList_Icons
       ParentShowHint = False
       ShowHint = True
+      OnClick = SpeedButton_DeleteClick
+      ExplicitLeft = 1225
     end
   end
   object ImageList_Icons: TImageList
