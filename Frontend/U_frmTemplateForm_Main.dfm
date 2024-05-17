@@ -17,7 +17,6 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
   Position = poMainFormCenter
   Visible = True
   OnClose = FormClose
-  OnCreate = FormCreate
   TextHeight = 16
   object PanelButtons: TPanel
     Left = 0
@@ -32,7 +31,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       1262
       70)
     object ButtonSair: TButton
-      Left = 1160
+      Left = 1154
       Top = 21
       Width = 85
       Height = 30
@@ -44,6 +43,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       ParentBiDiMode = False
       TabOrder = 0
       OnClick = ButtonSairClick
+      ExplicitLeft = 1148
     end
     object PanelLegenda: TPanel
       Left = 1
@@ -103,7 +103,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       end
     end
     object ButtonLimparFiltro: TButton
-      Left = 1040
+      Left = 1034
       Top = 21
       Width = 108
       Height = 30
@@ -115,6 +115,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       ParentBiDiMode = False
       TabOrder = 2
       Visible = False
+      ExplicitLeft = 1028
     end
   end
   object Panel1: TPanel
@@ -165,7 +166,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       1262
       41)
     object SpeedButton_Add: TSpeedButton
-      Left = 1160
+      Left = 1154
       Top = 7
       Width = 25
       Height = 25
@@ -176,9 +177,10 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       ParentShowHint = False
       ShowHint = True
       OnClick = SpeedButton_AddClick
+      ExplicitLeft = 1160
     end
     object SpeedButton_Search: TSpeedButton
-      Left = 1190
+      Left = 1184
       Top = 7
       Width = 25
       Height = 25
@@ -189,9 +191,10 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       ParentShowHint = False
       ShowHint = True
       OnClick = SpeedButton_SearchClick
+      ExplicitLeft = 1190
     end
     object SpeedButton_Delete: TSpeedButton
-      Left = 1220
+      Left = 1214
       Top = 7
       Width = 25
       Height = 25
@@ -202,6 +205,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       ParentShowHint = False
       ShowHint = True
       OnClick = SpeedButton_DeleteClick
+      ExplicitLeft = 1220
     end
   end
   object ImageList_Icons: TImageList
