@@ -3,7 +3,7 @@ unit U_Profissional_M;
 interface
 
 uses
-  System.SysUtils, System.Classes, U_ObjectList;
+  System.Classes, System.SysUtils, System.StrUtils, System.Generics.Collections, U_ObjectList;
 
 type
   TProfissional_M = class(TObject)
@@ -38,17 +38,19 @@ type
     function Delete: Boolean;
 
     function ToJSON: String;
-    class function ToObject(JSON: String): TProfissional_M;
+    class function ToObject(const JSON: String): TProfissional_M;
   End;
 
   TProfissional_List_M = class(TObjectList)
   private
-    function endpoint_lista(VAR MetodoHttp: String): String;
+    function endpoint_lista(var MetodoHttp: String): String;
   public
     function RetornoLista: Boolean;
+    function FiltraLista(const nome: String): TList<integer>;
 
     function ToJSON: String;
-    class function toList(JSON: String): TProfissional_List_M;
+
+    class function toList(const JSON: String): TProfissional_List_M;
   end;
 
 implementation
@@ -68,7 +70,6 @@ begin
   Self.FUsername:= '';
   Self.FPassword:= '';
 end;
-
 
 destructor TProfissional_M.Destroy;
 begin
@@ -252,7 +253,7 @@ begin
 
 end;
 
-class function TProfissional_M.ToObject(JSON: String): TProfissional_M;
+class function TProfissional_M.ToObject(const JSON: String): TProfissional_M;
 var
   Retorno                                            : TProfissional_M;
 
@@ -279,6 +280,7 @@ begin
   End;
 
 end;
+
 
 { TProfissional_List_M }
 
@@ -372,7 +374,7 @@ begin
 end;
 
 // "JSON" deverá receber uma stringlist contendo em cada elemento um obejeto "{}"
-class function TProfissional_List_M.toList(JSON: String): TProfissional_List_M;
+class function TProfissional_List_M.toList(const JSON: String): TProfissional_List_M;
 var
   Retorno                                            : TProfissional_List_M;
   ListaJsons                                         : TStringlist;
@@ -415,6 +417,28 @@ begin
   Finally
     ListaJsons.Free();
   End;
+
+end;
+
+// Retorna lista de "id"s que foram encontrados com o nome.
+function TProfissional_List_M.FiltraLista(const nome: String): TList<integer>;
+var
+  C                                                 : Integer;
+  Profissional                                      : TProfissional_M;
+
+begin
+
+  try
+    Result:= TList<integer>.Create;
+
+    for Profissional in Self do begin
+      if AnsiContainsText(Profissional.Nome, Nome) then
+        Result.Add(Profissional.Id);
+    end;
+
+  except
+    raise;
+  end;
 
 end;
 

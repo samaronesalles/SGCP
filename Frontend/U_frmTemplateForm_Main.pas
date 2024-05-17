@@ -25,6 +25,7 @@ type
     Shape2: TShape;
     Label2: TLabel;
     Label3: TLabel;
+    ButtonLimparFiltro: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
     procedure TimerStartUpTimer(Sender: TObject);
@@ -36,6 +37,7 @@ type
     procedure StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure SpeedButton_SearchClick(Sender: TObject);
     procedure SpeedButton_AddClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,6 +62,18 @@ end;
 procedure TfrmTemplateForm_Main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action:= caFree;
+end;
+
+procedure TfrmTemplateForm_Main.FormCreate(Sender: TObject);
+begin
+
+  SpeedButton_Delete.Left:= 1220;
+  SpeedButton_Search.Left:= 1190;
+  SpeedButton_Add.Left:= 1160;
+
+  ButtonSair.Left:= 1160;
+  ButtonLimparFiltro.Left:= 1040;
+
 end;
 
 function TfrmTemplateForm_Main.GetCorCell(Grid: TStringGrid; ACol, ARow: Integer): TColor;

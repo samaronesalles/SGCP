@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_frmTemplateForm_Main, System.ImageList, Vcl.ImgList,
-  Vcl.Buttons, Vcl.Grids, Vcl.StdCtrls, Vcl.ExtCtrls, U_Profissional_M;
+  Vcl.Buttons, Vcl.Grids, Vcl.StdCtrls, Vcl.ExtCtrls, System.Generics.Collections,
+  U_Profissional_M;
 
 type
   TfrmProfissionais_V = class(TfrmTemplateForm_Main)
@@ -17,10 +18,12 @@ type
     procedure StringGridMainDblClick(Sender: TObject);
     procedure SpeedButton_DeleteClick(Sender: TObject);
     procedure SpeedButton_SearchClick(Sender: TObject);
+    procedure ButtonLimparFiltroClick(Sender: TObject);
   private
     { Private declarations }
 
     FGLB_ListaProfissionais                    : TProfissional_List_M;
+    FGLB_ListaFiltro                           : TList<Integer>;
 
     procedure RetorneTodosProfissionais;
     procedure Refresh_StringGrid;
@@ -45,11 +48,23 @@ uses Uteis, U_ProfissionalDetail_V;
 
 {$R *.dfm}
 
-procedure TfrmProfissionais_V.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+procedure TfrmProfissionais_V.ButtonLimparFiltroClick(Sender: TObject);
 begin
   inherited;
 
+  if Uteis.SayQuestion('Filtro', 'Deseja realmente limpar o filtro aplicado?', TMsgDlgType.mtConfirmation, mbYesNo, mrNo, 0) <> mrYes then
+    Exit;
+
+  Self.FGLB_ListaFiltro.Clear();
+
+  Self.Refresh_StringGrid();
+
+end;
+
+procedure TfrmProfissionais_V.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
   Self.FGLB_ListaProfissionais.Free();
+  Self.FGLB_ListaFiltro.Free();
 end;
 
 procedure TfrmProfissionais_V.FormCreate(Sender: TObject);
@@ -57,6 +72,7 @@ begin
   inherited;
 
   Self.FGLB_ListaProfissionais:= Nil;
+  Self.FGLB_ListaFiltro:= Nil;
 
   StringGridMain.Cells[COL_ID, 0]:= 'Código';
   StringGridMain.ColWidths[COL_ID]:= 60;
@@ -83,37 +99,51 @@ end;
 procedure TfrmProfissionais_V.Refresh_StringGrid;
 var
   C, Row                                       : integer;
+  FiltrouAlgo                                  : Boolean;
   Profissional                                 : TProfissional_M;
 
 begin
 
-  Uteis.StringGridDelete_AllRows(StringGridMain);
+  try
 
-  If Self.FGLB_ListaProfissionais.Count = 0 Then
-    Exit;
+    Uteis.StringGridDelete_AllRows(StringGridMain);
 
-  Row:= StringGridMain.FixedRows;
-  for C:= 0 to Self.FGLB_ListaProfissionais.Count - 1 do begin
-    Profissional:= TProfissional_M(Self.FGLB_ListaProfissionais[C]);
+    FiltrouAlgo:= FALSE;
 
-    If Profissional = Nil Then
-      Continue;
+    If Self.FGLB_ListaProfissionais.Count = 0 Then
+      Exit;
 
-    If NOT (Profissional is TProfissional_M) Then
-      Continue;
+    Row:= StringGridMain.FixedRows;
+    for C:= 0 to Self.FGLB_ListaProfissionais.Count - 1 do begin
+      Profissional:= TProfissional_M(Self.FGLB_ListaProfissionais[C]);
 
-    StringGridMain.Cells[COL_ID, Row]:= IntToStr(Profissional.Id);
-    StringGridMain.Cells[COL_NOME, Row]:= Profissional.Nome;
-    StringGridMain.Cells[COL_CELULAR, Row]:= Profissional.Celular;
-    StringGridMain.Cells[COL_EMAIL, Row]:= Profissional.Email;
-    StringGridMain.Cells[COL_ATIVO, Row]:= Uteis.Iff(Profissional.Ativo, 'Ativo', 'Inativo');
-    StringGridMain.Cells[COL_IDX_LISTA, Row]:= IntToStr(C);
+      if Profissional = Nil then
+        Continue;
 
-    Inc(Row);
+      if NOT (Profissional is TProfissional_M) then
+        Continue;
+
+      if ((Self.FGLB_ListaFiltro.Count > 0) AND (NOT Self.FGLB_ListaFiltro.Contains(Profissional.Id))) then begin
+        FiltrouAlgo:= TRUE;
+        Continue;
+      end;
+
+      StringGridMain.Cells[COL_ID, Row]:= IntToStr(Profissional.Id);
+      StringGridMain.Cells[COL_NOME, Row]:= Profissional.Nome;
+      StringGridMain.Cells[COL_CELULAR, Row]:= Profissional.Celular;
+      StringGridMain.Cells[COL_EMAIL, Row]:= Profissional.Email;
+      StringGridMain.Cells[COL_ATIVO, Row]:= Uteis.Iff(Profissional.Ativo, 'Ativo', 'Inativo');
+      StringGridMain.Cells[COL_IDX_LISTA, Row]:= IntToStr(C);
+
+      Inc(Row);
+    end;
+
+    If Row > StringGridMain.FixedRows Then
+      StringGridMain.RowCount:= Row;
+
+  finally
+    ButtonLimparFiltro.Visible:= FiltrouAlgo;
   end;
-
-  If Row > StringGridMain.FixedRows Then
-    StringGridMain.RowCount:= Row;
 
 end;
 
@@ -185,9 +215,40 @@ begin
 end;
 
 procedure TfrmProfissionais_V.SpeedButton_SearchClick(Sender: TObject);
+var
+  ItemLista                      : Longint;
+  Nome                           : String;
+
 begin
-  inherited;
-  Uteis.SayInfo('Em desenvolvimento');
+
+  Self.FGLB_ListaFiltro.Clear;
+
+  if Self.FGLB_ListaProfissionais.Count = 0 then
+    Exit;
+
+  Try
+    Nome:= InputBox('Filtro', 'Nome: ', '');
+
+    if Nome.Trim() = '' then
+      Exit;
+
+    Self.FGLB_ListaFiltro.Clear();
+    Self.FGLB_ListaFiltro.Free();
+
+    Self.FGLB_ListaFiltro:= Self.FGLB_ListaProfissionais.FiltraLista(Nome);
+
+    if Self.FGLB_ListaFiltro = Nil then
+      Exit;
+
+    if Self.FGLB_ListaFiltro.Count = 0 then
+      Exit;
+
+    if Self.FGLB_ListaFiltro.Count > 0 then
+      Refresh_StringGrid();
+
+  Finally
+  End;
+
 end;
 
 procedure TfrmProfissionais_V.StringGridMainDblClick(Sender: TObject);
@@ -242,6 +303,7 @@ begin
   inherited;
 
   Self.FGLB_ListaProfissionais:= TProfissional_List_M.Create();
+  Self.FGLB_ListaFiltro:= TList<Integer>.Create();
 
   Self.RetorneTodosProfissionais();
   Self.Refresh_StringGrid();
