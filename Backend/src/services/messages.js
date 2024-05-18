@@ -29,17 +29,26 @@ module.exports.messagesDefault = {
     // 2003: { error: false, message: "xxxxxx" },
     // 2004: { error: false, message: "xxxxxx" },
 
+    // PROFISSIONAL
     2501: { error: true, message: "Login ou senha do profissional não foram informados." },
     2502: { error: true, message: 'Campo "nome" do profissional é obrigatório.' },
     2503: { error: true, message: 'Campo "celular" do profissional é obrigatório.' },
     2504: { error: true, message: 'Campo "e-mail" do profissional é obrigatório.' },
     2505: { error: true, message: "Já existe um profissional cadastrado para este email." },
-    2506: { error: true, message: 'Campo "e-mail" é inválido.' },
+    2506: { error: true, message: 'Campo "e-mail" do profissional é inválido.' },
     2507: { error: true, message: "Email, Usuário ou Senha do usuário inválidos. Verifique!" },
     2508: { error: true, message: "O profissional já se encontra inativado." },
-    // 2509: { error: true, message: "xxxxxx" },
-    // 2500: { error: true, message: "xxxxxx" },
-    // 2501: { error: true, message: "xxxxxx" },
+
+    // PACIENTE
+    2509: { error: true, message: 'Campo "e-mail" do paciente é obrigatório.' },
+    2510: { error: true, message: "Já existe um paciente cadastrado para este email." },
+    2511: { error: true, message: 'Campo "nome" do paciente é obrigatório.' },
+    2512: { error: true, message: 'Campo "celular" do paciente é obrigatório.' },
+    2513: { error: true, message: 'Campo "e-mail" do paciente é obrigatório.' },
+    2514: { error: true, message: 'Campo "e-mail" do paciente é inválido.' },
+    2515: { error: true, message: "O paciente já se encontra inativado." },
+    // 2516: { error: true, message: "xxxxxx" },
+    // 2517: { error: true, message: "xxxxxx" },
 
 
     // 9999 = Reservado para "Retorno desconhecido"

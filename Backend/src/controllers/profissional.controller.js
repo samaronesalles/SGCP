@@ -41,7 +41,7 @@ module.exports = {
                 return e
             })
 
-            return res.status(200).json(mensagens.resultExternal(1001, false, profissionais))
+            return res.status(200).json(mensagens.resultExternal(200, false, profissionais))
 
         } catch (error) {
             return res.status(400).json(mensagens.resultError(error))

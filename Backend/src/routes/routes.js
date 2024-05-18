@@ -6,7 +6,8 @@ const router = express.Router()
 // Importação dos controllers...
 const profissionaisController = require(path.resolve(__dirname, '../', 'controllers', 'profissional.controller.js'))
 const profissionaisVallication = require(path.resolve(__dirname, '../', 'controllers', 'vallidations', 'profissional.vallidation.js'))
-
+const pacientesController = require(path.resolve(__dirname, '../', 'controllers', 'paciente.controller.js'))
+const pacientesVallication = require(path.resolve(__dirname, '../', 'controllers', 'vallidations', 'paciente.vallidation.js'))
 
 // Endpoints "Profissionais"...
 router.post('/profissionais', profissionaisVallication.saveCad, profissionaisVallication.cadJaExistente, profissionaisController.novo)
@@ -18,6 +19,12 @@ router.delete('/profissionais/:id/:di', profissionaisVallication.exclusaoCad, pr
 router.post('/profissionais/login', profissionaisVallication.login, profissionaisController.autenticaLogin)
 
 // Endpoints "Pacientes"...
+router.post('/pacientes', pacientesVallication.saveCad, pacientesVallication.cadJaExistente, pacientesController.novo)
+router.get('/pacientes/lista', pacientesController.lista)
+router.put('/pacientes/:id/:di', pacientesVallication.edicaoCad, pacientesVallication.saveCad, pacientesController.editar)
+router.put('/pacientes/ativar/:id/:di', pacientesVallication.edicaoCad, pacientesController.ativar)
+router.put('/pacientes/inativar/:id/:di', pacientesVallication.inativar, pacientesController.inativar)
+router.delete('/pacientes/:id/:di', pacientesVallication.exclusaoCad, pacientesController.delete)
 
 
 // Endpoints "Gerais"...
