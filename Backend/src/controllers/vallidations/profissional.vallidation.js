@@ -81,6 +81,25 @@ module.exports.exclusaoCad = async function (req, res, next) {
     next()
 }
 
+module.exports.inativar = async function (req, res, next) {
+    const { id, di } = req.params
+
+    let registro = await ProfissionalRepository.retornePeloID(id)
+
+    // Checando "di"
+    switch (await uteis.checagem_di(registro, di)) {
+        case 1: return res.status(400).json(mensagens.resultDefault(1003))
+            break;
+        case 2: return res.status(400).json(mensagens.resultDefault(2000))
+            break;
+    }
+
+    if (!registro.ativo)
+        return res.status(400).json(mensagens.resultDefault(2508))
+
+    next()
+}
+
 module.exports.login = function (req, res, next) {
 
     if (uteis.strEmpty(req.body.email))

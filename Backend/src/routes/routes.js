@@ -12,6 +12,8 @@ const profissionaisVallication = require(path.resolve(__dirname, '../', 'control
 router.post('/profissionais', profissionaisVallication.saveCad, profissionaisVallication.cadJaExistente, profissionaisController.novo)
 router.get('/profissionais/lista', profissionaisController.lista)
 router.put('/profissionais/:id/:di', profissionaisVallication.edicaoCad, profissionaisVallication.saveCad, profissionaisController.editar)
+router.put('/profissionais/ativar/:id/:di', profissionaisVallication.edicaoCad, profissionaisController.ativar)
+router.put('/profissionais/inativar/:id/:di', profissionaisVallication.inativar, profissionaisController.inativar)
 router.delete('/profissionais/:id/:di', profissionaisVallication.exclusaoCad, profissionaisController.delete)
 router.post('/profissionais/login', profissionaisVallication.login, profissionaisController.autenticaLogin)
 

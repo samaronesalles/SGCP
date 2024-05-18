@@ -36,9 +36,10 @@ module.exports.messagesDefault = {
     2505: { error: true, message: "Já existe um profissional cadastrado para este email." },
     2506: { error: true, message: 'Campo "e-mail" é inválido.' },
     2507: { error: true, message: "Email, Usuário ou Senha do usuário inválidos. Verifique!" },
-    // 2508: { error: true, message: "xxxxxx" },
+    2508: { error: true, message: "O profissional já se encontra inativado." },
     // 2509: { error: true, message: "xxxxxx" },
     // 2500: { error: true, message: "xxxxxx" },
+    // 2501: { error: true, message: "xxxxxx" },
 
 
     // 9999 = Reservado para "Retorno desconhecido"

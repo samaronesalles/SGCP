@@ -100,6 +100,52 @@ module.exports = {
         }
     },
 
+    async ativar(req, res) {
+        try {
+            const { id, di } = req.params
+
+            const profissionalEncontrado = await ProfissionalRepository.retornePeloID(id)
+
+            let dados = { ...profissionalEncontrado }
+
+            dados.ativo = true
+            dados.di = uteis.new_uuid()
+
+            await profissionalEncontrado.update(dados, {
+                returning: true,
+                plain: true
+            });
+
+            return res.status(200).json(mensagens.resultExternal(200, false, profissionalEncontrado))
+
+        } catch (error) {
+            return res.status(400).json(mensagens.resultError(error))
+        }
+    },
+
+    async inativar(req, res) {
+        try {
+            const { id, di } = req.params
+
+            const profissionalEncontrado = await ProfissionalRepository.retornePeloID(id)
+
+            let dados = { ...profissionalEncontrado }
+
+            dados.ativo = false
+            dados.di = uteis.new_uuid()
+
+            await profissionalEncontrado.update(dados, {
+                returning: true,
+                plain: true
+            });
+
+            return res.status(200).json(mensagens.resultExternal(200, false, profissionalEncontrado))
+
+        } catch (error) {
+            return res.status(400).json(mensagens.resultError(error))
+        }
+    },
+
     async autenticaLogin(req, res) {
         try {
             const { email, username, password } = req.body
@@ -123,4 +169,5 @@ module.exports = {
             return res.status(400).json(mensagens.resultDefault(2507))
         }
     }
+
 }
