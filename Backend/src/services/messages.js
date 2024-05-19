@@ -47,8 +47,13 @@ module.exports.messagesDefault = {
     2513: { error: true, message: 'Campo "e-mail" do paciente é obrigatório.' },
     2514: { error: true, message: 'Campo "e-mail" do paciente é inválido.' },
     2515: { error: true, message: "O paciente já se encontra inativado." },
-    // 2516: { error: true, message: "xxxxxx" },
+
+    // AGENDAMENTO
+    2516: { error: true, message: "Ocorreu uma falha ao salvar a nova agenda. Tente novamente e caso a falha persista, entre em contato com o suporte." },
+
     // 2517: { error: true, message: "xxxxxx" },
+    // 2518: { error: true, message: "xxxxxx" },
+    // 2519: { error: true, message: "xxxxxx" },
 
 
     // 9999 = Reservado para "Retorno desconhecido"

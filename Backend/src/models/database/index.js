@@ -7,6 +7,8 @@ const dbConfig = require(path.resolve(__dirname, '../', '../', 'config', 'mysql.
 // Importando models criados...
 const Profissional = require(path.resolve(__dirname, '../', 'profissional.model.js'))
 const Paciente = require(path.resolve(__dirname, '../', 'paciente.model.js'))
+const Agenda = require(path.resolve(__dirname, '../', 'agenda.model.js'))
+const Atendimento = require(path.resolve(__dirname, '../', 'atendimento.model.js'))
 
 
 // criando conexão com o banco de dados...
@@ -16,5 +18,10 @@ const connection = new Sequelize(dbConfig)
 // para cada model, "instanciar" chamando seu método init, passando a nossa conexão por parâmetro...
 Profissional.init(connection)
 Paciente.init(connection)
+Agenda.init(connection)
+Atendimento.init(connection)
+
+Agenda.associate(connection.models)
+Atendimento.associate(connection.models)
 
 module.exports = connection
