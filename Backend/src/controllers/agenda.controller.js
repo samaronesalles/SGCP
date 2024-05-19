@@ -35,7 +35,7 @@ module.exports = {
             const dados_atendimento = {
                 di: uteis.new_uuid(),
                 agenda_origem_id: nova_agenda.id,
-                datahora_inicio: nova_agenda.datahora_inicio
+                datahora_inicio: nova_agenda.evento_inicio
             }
 
             const novo_atendimento = await AtendimentoModel.create(dados_atendimento)
