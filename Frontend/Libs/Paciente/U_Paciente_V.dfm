@@ -1,12 +1,10 @@
-inherited frmProfissionais_V: TfrmProfissionais_V
-  Caption = 'Cadastro de profissionais'
+inherited frmPacientes_V: TfrmPacientes_V
+  Caption = 'Cadastro de pacientes'
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   TextHeight = 16
   inherited PanelButtons: TPanel
     inherited PanelLegenda: TPanel
-      Width = 184
-      ExplicitWidth = 184
       inherited Shape2: TShape
         Left = 99
         ExplicitLeft = 99
@@ -34,14 +32,5 @@ inherited frmProfissionais_V: TfrmProfissionais_V
     inherited StringGridMain: TStringGrid
       OnDblClick = StringGridMainDblClick
     end
-  end
-  inherited Panel_TopButtons: TPanel
-    inherited Panel_TopBtnsRight: TPanel
-      ExplicitLeft = 1144
-      ExplicitTop = -3
-    end
-  end
-  inherited TimerStartUp: TTimer
-    Enabled = False
   end
 end

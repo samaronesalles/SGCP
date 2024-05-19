@@ -38,6 +38,7 @@ object frmMain: TfrmMain
       object Pacientes1: TMenuItem
         Caption = '&Pacientes'
         ShortCut = 16464
+        OnClick = Pacientes1Click
       end
       object N1: TMenuItem
         Caption = '-'

@@ -33,6 +33,7 @@ type
     procedure WindowsDark1Click(Sender: TObject);
     procedure Timer_loginTimer(Sender: TObject);
     procedure erapeutas1Click(Sender: TObject);
+    procedure Pacientes1Click(Sender: TObject);
   private
     { Private declarations }
     FDefaultStyleName : String;
@@ -54,7 +55,7 @@ var
 
 implementation
 
-uses U_frmLogin, Uteis, U_Profissional_V;
+uses U_frmLogin, Uteis, U_Profissional_V, U_Paciente_V;
 
 {$R *.dfm}
 
@@ -70,6 +71,11 @@ begin
       end;
 
   Result:= False;
+end;
+
+procedure TfrmMain.Pacientes1Click(Sender: TObject);
+begin
+  ShowChild(Self, TfrmPacientes_V, frmPacientes_V);
 end;
 
 procedure TfrmMain.ShowChild(MainForm : TForm; InstanceClass: TFormClass; var Reference);

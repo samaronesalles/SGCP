@@ -27,31 +27,13 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
     TabOrder = 0
     ExplicitTop = 642
     ExplicitWidth = 1256
-    DesignSize = (
-      1262
-      70)
-    object ButtonSair: TButton
-      Left = 1154
-      Top = 21
-      Width = 85
-      Height = 30
-      Anchors = [akTop, akRight]
-      BiDiMode = bdLeftToRight
-      Caption = '&Fechar'
-      ImageIndex = 3
-      Images = ImageList_Icons
-      ParentBiDiMode = False
-      TabOrder = 0
-      OnClick = ButtonSairClick
-      ExplicitLeft = 1148
-    end
     object PanelLegenda: TPanel
       Left = 1
       Top = -3
       Width = 288
       Height = 76
       BevelOuter = bvNone
-      TabOrder = 1
+      TabOrder = 0
       object Label1: TLabel
         Left = 9
         Top = 8
@@ -102,20 +84,43 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
         Caption = 'xxxxxxxxxxxxxxx'
       end
     end
-    object ButtonLimparFiltro: TButton
-      Left = 1034
-      Top = 21
-      Width = 108
-      Height = 30
-      Anchors = [akTop, akRight]
-      BiDiMode = bdLeftToRight
-      Caption = '&Limpar filtro'
-      ImageIndex = 4
-      Images = ImageList_Icons
-      ParentBiDiMode = False
-      TabOrder = 2
-      Visible = False
-      ExplicitLeft = 1028
+    object Panel_btnsRight: TPanel
+      Left = 1031
+      Top = 1
+      Width = 230
+      Height = 68
+      Align = alRight
+      BevelOuter = bvNone
+      TabOrder = 1
+      ExplicitLeft = 1032
+      ExplicitTop = 0
+      ExplicitHeight = 70
+      object ButtonLimparFiltro: TButton
+        Left = 9
+        Top = 21
+        Width = 108
+        Height = 30
+        BiDiMode = bdLeftToRight
+        Caption = '&Limpar filtro'
+        ImageIndex = 4
+        Images = ImageList_Icons
+        ParentBiDiMode = False
+        TabOrder = 0
+        Visible = False
+      end
+      object ButtonSair: TButton
+        Left = 129
+        Top = 21
+        Width = 85
+        Height = 30
+        BiDiMode = bdLeftToRight
+        Caption = '&Fechar'
+        ImageIndex = 3
+        Images = ImageList_Icons
+        ParentBiDiMode = False
+        TabOrder = 1
+        OnClick = ButtonSairClick
+      end
     end
   end
   object Panel1: TPanel
@@ -154,7 +159,7 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
         167)
     end
   end
-  object Panel2: TPanel
+  object Panel_TopButtons: TPanel
     Left = 0
     Top = 0
     Width = 1262
@@ -162,50 +167,51 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
     Align = alTop
     TabOrder = 2
     ExplicitWidth = 1256
-    DesignSize = (
-      1262
-      41)
-    object SpeedButton_Add: TSpeedButton
-      Left = 1154
-      Top = 7
-      Width = 25
-      Height = 25
-      Hint = 'Adicionar registro'
+    object Panel_TopBtnsRight: TPanel
+      Left = 1144
+      Top = 1
+      Width = 117
+      Height = 39
+      Align = alRight
       Anchors = [akTop, akRight]
-      ImageIndex = 0
-      Images = ImageList_Icons
-      ParentShowHint = False
-      ShowHint = True
-      OnClick = SpeedButton_AddClick
-      ExplicitLeft = 1160
-    end
-    object SpeedButton_Search: TSpeedButton
-      Left = 1184
-      Top = 7
-      Width = 25
-      Height = 25
-      Hint = 'Pesquisar registro'
-      Anchors = [akTop, akRight]
-      ImageIndex = 2
-      Images = ImageList_Icons
-      ParentShowHint = False
-      ShowHint = True
-      OnClick = SpeedButton_SearchClick
-      ExplicitLeft = 1190
-    end
-    object SpeedButton_Delete: TSpeedButton
-      Left = 1214
-      Top = 7
-      Width = 25
-      Height = 25
-      Hint = 'Excluir registro selecionado'
-      Anchors = [akTop, akRight]
-      ImageIndex = 1
-      Images = ImageList_Icons
-      ParentShowHint = False
-      ShowHint = True
-      OnClick = SpeedButton_DeleteClick
-      ExplicitLeft = 1220
+      BevelOuter = bvNone
+      TabOrder = 0
+      object SpeedButton_Add: TSpeedButton
+        Left = 8
+        Top = 7
+        Width = 25
+        Height = 25
+        Hint = 'Adicionar registro'
+        ImageIndex = 0
+        Images = ImageList_Icons
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = SpeedButton_AddClick
+      end
+      object SpeedButton_Delete: TSpeedButton
+        Left = 76
+        Top = 7
+        Width = 25
+        Height = 25
+        Hint = 'Excluir registro selecionado'
+        ImageIndex = 1
+        Images = ImageList_Icons
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = SpeedButton_DeleteClick
+      end
+      object SpeedButton_Search: TSpeedButton
+        Left = 42
+        Top = 7
+        Width = 25
+        Height = 25
+        Hint = 'Pesquisar registro'
+        ImageIndex = 2
+        Images = ImageList_Icons
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = SpeedButton_SearchClick
+      end
     end
   end
   object ImageList_Icons: TImageList

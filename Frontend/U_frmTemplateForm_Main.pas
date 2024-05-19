@@ -11,7 +11,7 @@ type
     PanelButtons: TPanel;
     ButtonSair: TButton;
     Panel1: TPanel;
-    Panel2: TPanel;
+    Panel_TopButtons: TPanel;
     StringGridMain: TStringGrid;
     ImageList_Icons: TImageList;
     SpeedButton_Add: TSpeedButton;
@@ -26,6 +26,8 @@ type
     Label2: TLabel;
     Label3: TLabel;
     ButtonLimparFiltro: TButton;
+    Panel_btnsRight: TPanel;
+    Panel_TopBtnsRight: TPanel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
     procedure TimerStartUpTimer(Sender: TObject);

@@ -138,6 +138,16 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Libs\U_ExceptionTratado.pas"/>
+        <DCCReference Include="Libs\Paciente\U_Paciente_M.pas"/>
+        <DCCReference Include="Libs\Paciente\U_Paciente_C.pas"/>
+        <DCCReference Include="Libs\Paciente\U_Paciente_V.pas">
+            <Form>frmPacientes_V</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Libs\Paciente\U_PacienteDetail_V.pas">
+            <Form>frmPacienteDetail_V</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

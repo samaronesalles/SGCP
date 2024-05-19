@@ -19,7 +19,11 @@ uses
   U_Profissional_V in 'Libs\Profissional\U_Profissional_V.pas' {frmProfissionais_V},
   U_frmTemplateForm_Detail in 'U_frmTemplateForm_Detail.pas' {frmTemplateForm_Detail},
   U_ProfissionalDetail_V in 'Libs\Profissional\U_ProfissionalDetail_V.pas' {frmProfissionalDetail_V},
-  U_ExceptionTratado in 'Libs\U_ExceptionTratado.pas';
+  U_ExceptionTratado in 'Libs\U_ExceptionTratado.pas',
+  U_Paciente_M in 'Libs\Paciente\U_Paciente_M.pas',
+  U_Paciente_C in 'Libs\Paciente\U_Paciente_C.pas',
+  U_Paciente_V in 'Libs\Paciente\U_Paciente_V.pas' {frmPacientes_V},
+  U_PacienteDetail_V in 'Libs\Paciente\U_PacienteDetail_V.pas' {frmPacienteDetail_V};
 
 {$R *.res}
 
