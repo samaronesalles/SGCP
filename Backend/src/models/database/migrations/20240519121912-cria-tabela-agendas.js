@@ -55,6 +55,11 @@ module.exports = {
                 default: false,
                 type: Sequelize.BOOLEAN,
             },
+            ativo: {
+                allowNull: false,
+                default: true,
+                type: Sequelize.BOOLEAN,
+            },
             created_at: {
                 allowNull: false,
                 type: Sequelize.DATE,

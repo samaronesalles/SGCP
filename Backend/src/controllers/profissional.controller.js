@@ -148,23 +148,23 @@ module.exports = {
 
     async autenticaLogin(req, res) {
         try {
-            const { email, username, password } = req.body
+            const { username, password } = req.body
 
-            const profissional = await ProfissionalRepository.retornePeloEmail(email)
+            const profissional = await ProfissionalRepository.retorneUmOpcional({ username: username })
 
             if (!profissional)
-                return res.status(200).json(mensagens.resultDefault(2507))
+                return res.status(401).json(mensagens.resultExternal(2507, true, mensagens.translateMessage(2507)))
 
             if (!profissional.ativo)
-                return res.status(200).json(mensagens.resultDefault(2507))
+                return res.status(401).json(mensagens.resultExternal(2507, true, mensagens.translateMessage(2507)))
 
             let pass = profissional.password
             pass = await uteis.decrypt(pass)
 
             if ((profissional.username !== username) || (pass !== password))
-                return res.status(200).json(mensagens.resultDefault(2507))
+                return res.status(401).json(mensagens.resultExternal(2507, true, mensagens.translateMessage(2507)))
 
-            return res.status(200).json(mensagens.resultDefault(2001))
+            return res.status(200).json(mensagens.resultExternal(2001, false, profissional))
         } catch (error) {
             return res.status(400).json(mensagens.resultDefault(2507))
         }

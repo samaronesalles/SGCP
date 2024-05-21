@@ -6,6 +6,7 @@ module.exports.messagesDefault = {
     400: { error: true, message: "Falha." },
 
     // Faixa 1000 a 1999 = Mensagens genéricas (1000 a 1500 = coisas de sucesso  / 1501 a 2000 = coisas de falha)
+    // MENSAGENS DE SUCESSO
     1000: { error: false, message: "Nenhum registro encontrado." },
     1001: { error: false, message: "Registro salvo com sucesso." },      // "Salvar" entende-se tanto em inclusão/alteração
     1002: { error: false, message: "Registro excluído com sucesso." },
@@ -13,23 +14,25 @@ module.exports.messagesDefault = {
     // 1004: { error: false, message: "xxxxxx" },
     // 1005: { error: false, message: "xxxxxx" },
 
+
+    // MENSAGENS DE FALHA
     1501: { error: true, message: "Falha ao salvar o registro." },       // "Salvar" entende-se tanto em inclusão/alteração
     1502: { error: true, message: "Falha ao excluir o registro." },
     // 1503: { error: true, message: "xxxxxx" },
     // 1504: { error: true, message: "xxxxxx" },
     // 1505: { error: true, message: "xxxxxx" },
 
-    /* ... ir criando aqui novas mensagens genéricas de acordo com a necessidade e com o tempo... */
-
 
     // Faixa 2000 a 2999 = Mensagens específicas da regra de negócio da API em questão (2000 a 2500 = coisas de sucesso  / 2501 a 3000 = coisas de falha)
+    // MENSAGENS DE SUCESSO
     2000: { error: false, message: "Cadastro atual no banco de dados está diferente do registro solicitado." },
     2001: { error: false, message: "Login realizado com sucesso" },
     // 2002: { error: false, message: "xxxxxx" },
     // 2003: { error: false, message: "xxxxxx" },
     // 2004: { error: false, message: "xxxxxx" },
 
-    // PROFISSIONAL
+
+    // MENSAGENS DE FALHA
     2501: { error: true, message: "Login ou senha do profissional não foram informados." },
     2502: { error: true, message: 'Campo "nome" do profissional é obrigatório.' },
     2503: { error: true, message: 'Campo "celular" do profissional é obrigatório.' },
@@ -38,8 +41,6 @@ module.exports.messagesDefault = {
     2506: { error: true, message: 'Campo "e-mail" do profissional é inválido.' },
     2507: { error: true, message: "Email, Usuário ou Senha do usuário inválidos. Verifique!" },
     2508: { error: true, message: "O profissional já se encontra inativado." },
-
-    // PACIENTE
     2509: { error: true, message: 'Campo "e-mail" do paciente é obrigatório.' },
     2510: { error: true, message: "Já existe um paciente cadastrado para este email." },
     2511: { error: true, message: 'Campo "nome" do paciente é obrigatório.' },
@@ -47,13 +48,11 @@ module.exports.messagesDefault = {
     2513: { error: true, message: 'Campo "e-mail" do paciente é obrigatório.' },
     2514: { error: true, message: 'Campo "e-mail" do paciente é inválido.' },
     2515: { error: true, message: "O paciente já se encontra inativado." },
-
-    // AGENDAMENTO
     2516: { error: true, message: "Ocorreu uma falha ao salvar a nova agenda. Tente novamente e caso a falha persista, entre em contato com o suporte." },
-
-    // 2517: { error: true, message: "xxxxxx" },
+    2517: { error: true, message: 'O "username" informado já está sendo utilizado por outro profissional. Tente outro' },
     // 2518: { error: true, message: "xxxxxx" },
     // 2519: { error: true, message: "xxxxxx" },
+    // 2520: { error: true, message: "xxxxxx" },
 
 
     // 9999 = Reservado para "Retorno desconhecido"

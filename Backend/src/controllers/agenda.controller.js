@@ -22,7 +22,8 @@ module.exports = {
                 observacao: observacao,
                 evento_inicio: evento_inicio,
                 evento_fim: evento_fim,
-                evento_confirmado: evento_confirmado || false
+                evento_confirmado: evento_confirmado || false,
+                ativo: true
             }
 
             const nova_agenda = await AgendaModel.create(dados_agenda)
@@ -61,5 +62,29 @@ module.exports = {
             return res.status(400).json(mensagens.resultError(error))
         }
     },
+
+    async getAgenda(req, res) {
+        try {
+            const { id } = req.params
+
+            let Agenda = await AgendaRepository.retornePeloID(id)
+
+            return res.status(200).json(mensagens.resultExternal(200, false, Agenda))
+        } catch (error) {
+            return res.status(400).json(mensagens.resultError(error))
+        }
+    },
+
+    async lista(req, res) {
+        try {
+            const { profissional_id, paciente_id, inicio_de, inicio_ate } = req.params
+
+            let Agendas = await AgendaRepository.retorneTodas(profissional_id, paciente_id, inicio_de, inicio_ate)
+
+            return res.status(200).json(mensagens.resultExternal(200, false, Agendas))
+        } catch (error) {
+            return res.status(400).json(mensagens.resultError(error))
+        }
+    }
 
 }

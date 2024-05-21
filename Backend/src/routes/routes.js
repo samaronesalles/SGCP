@@ -10,7 +10,8 @@ const pacientesController = require(path.resolve(__dirname, '../', 'controllers'
 const pacientesValidation = require(path.resolve(__dirname, '../', 'controllers', 'validations', 'paciente.validation.js'))
 const agendasController = require(path.resolve(__dirname, '../', 'controllers', 'agenda.controller.js'))
 const agendasValidation = require(path.resolve(__dirname, '../', 'controllers', 'validations', 'agenda.validation.js'))
-
+const atendimentosController = require(path.resolve(__dirname, '../', 'controllers', 'atendimento.controller.js'))
+const atendimentosValidation = require(path.resolve(__dirname, '../', 'controllers', 'validations', 'atendimento.validation.js'))
 
 // Endpoints "Profissionais"...
 router.post('/profissionais', profissionaisValidation.saveCad, profissionaisValidation.cadJaExistente, profissionaisController.novo)
@@ -31,6 +32,12 @@ router.delete('/pacientes/:id/:di', pacientesValidation.exclusaoCad, pacientesCo
 
 // Endpoints "Agenda"...
 router.post('/agenda', agendasValidation.nova, agendasController.nova)
+router.get('/agenda/lista/:profissional_id/:paciente_id/:inicio_de/:inicio_ate', agendasController.lista)
+router.get('/agenda/:id', agendasController.getAgenda)
+
+// Endpoints "Atendimentos"...
+router.get('/atendimentos/:id', atendimentosController.getAtendimento)
+router.get('/atendimentos/lista/:status/:profissional_id/:paciente_id', atendimentosController.lista)
 
 // Endpoints "Gerais"...
 router.get('/health', function (req, res) {

@@ -21,6 +21,14 @@ module.exports.retornePeloEmail = async function (email) {
     return registro
 }
 
+module.exports.retorneUmOpcional = async function (condicao) {
+    const registro = await ProfissionalModel.findOne({
+        where: condicao,
+    })
+
+    return registro
+}
+
 module.exports.retorneTodos = async function () {
     return await ProfissionalModel.findAll()
 }

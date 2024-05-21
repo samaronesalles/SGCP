@@ -1,4 +1,5 @@
 const path = require('path')
+const { Op } = require('sequelize')
 const emailValidator = require('email-validator')
 
 const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js'))
@@ -15,6 +16,19 @@ const camposLoginValidos = function (login, senha) {
     return true
 }
 
+const loginJaUsado = async function (login, idAIgnorar) {
+    if (!login)
+        return false
+
+    const registro = await ProfissionalRepository.retorneUmOpcional({
+        username: login,
+        ativo: true,
+        id: { [Op.ne]: idAIgnorar }
+    })
+
+    return registro !== null
+}
+
 module.exports.cadJaExistente = async function (req, res, next) {
     if (uteis.strEmpty(req.body.email))
         return res.status(400).json(mensagens.resultDefault(2504))
@@ -27,7 +41,13 @@ module.exports.cadJaExistente = async function (req, res, next) {
     next()
 }
 
-module.exports.saveCad = function (req, res, next) {
+module.exports.saveCad = async function (req, res, next) {
+
+    const { id } = req.params
+
+    let x = id
+    if ((!id) || (id === 0))
+        x = 0
 
     if (uteis.strEmpty(req.body.nome))
         return res.status(400).json(mensagens.resultDefault(2502))
@@ -43,6 +63,11 @@ module.exports.saveCad = function (req, res, next) {
 
     if (!camposLoginValidos(req.body.username, req.body.password))
         return res.status(400).json(mensagens.resultDefault(2501))
+
+    if (req.body.username.length > 0) {
+        if (await loginJaUsado(req.body.username, x))
+            return res.status(400).json(mensagens.resultDefault(2517))
+    }
 
     next()
 }
@@ -101,9 +126,6 @@ module.exports.inativar = async function (req, res, next) {
 }
 
 module.exports.login = function (req, res, next) {
-
-    if (uteis.strEmpty(req.body.email))
-        return res.status(400).json(mensagens.resultDefault(2504))
 
     if (!camposLoginValidos(req.body.username, req.body.password))
         return res.status(400).json(mensagens.resultDefault(2501))

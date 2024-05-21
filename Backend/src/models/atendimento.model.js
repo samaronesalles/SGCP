@@ -15,7 +15,7 @@ class Atendimento extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.Agenda, { foreignKey: 'agenda_origem_id' })
+        this.belongsTo(models.Agenda, { foreignKey: 'agenda_origem_id', as: 'agenda' })
     };
 
 }
