@@ -3,7 +3,7 @@ object frmLogin: TfrmLogin
   Top = 0
   BorderStyle = bsNone
   Caption = 'Login'
-  ClientHeight = 257
+  ClientHeight = 215
   ClientWidth = 326
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,11 +17,11 @@ object frmLogin: TfrmLogin
   OnShow = FormShow
   DesignSize = (
     326
-    257)
+    215)
   TextHeight = 15
   object Label1: TLabel
     Left = 16
-    Top = 75
+    Top = 21
     Width = 53
     Height = 20
     Caption = 'Usu'#225'rio:'
@@ -34,7 +34,7 @@ object frmLogin: TfrmLogin
   end
   object Label2: TLabel
     Left = 16
-    Top = 135
+    Top = 81
     Width = 43
     Height = 20
     Caption = 'Senha:'
@@ -45,22 +45,9 @@ object frmLogin: TfrmLogin
     Font.Style = []
     ParentFont = False
   end
-  object Label3: TLabel
-    Left = 16
-    Top = 13
-    Width = 40
-    Height = 20
-    Caption = 'Email:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -15
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-  end
   object Button_Sair: TButton
     Left = 16
-    Top = 209
+    Top = 165
     Width = 100
     Height = 30
     Anchors = [akLeft, akBottom]
@@ -73,14 +60,14 @@ object frmLogin: TfrmLogin
     ImageIndex = 1
     Images = ImageList_Icons
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 2
     TabStop = False
     OnClick = Button_SairClick
-    ExplicitTop = 159
+    ExplicitTop = 218
   end
   object Button_Entrar: TButton
     Left = 210
-    Top = 209
+    Top = 165
     Width = 100
     Height = 30
     Anchors = [akRight, akBottom]
@@ -93,45 +80,14 @@ object frmLogin: TfrmLogin
     ImageIndex = 0
     Images = ImageList_Icons
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 3
     TabStop = False
     OnClick = Button_EntrarClick
-    ExplicitTop = 159
+    ExplicitTop = 218
   end
   object Edit_Usuario: TEdit
     Left = 16
-    Top = 101
-    Width = 294
-    Height = 28
-    Anchors = [akLeft, akTop, akRight]
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -15
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 1
-    Text = 'admin'
-  end
-  object Edit_Senha: TEdit
-    Left = 16
-    Top = 161
-    Width = 294
-    Height = 28
-    Anchors = [akLeft, akTop, akRight]
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -15
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    PasswordChar = '*'
-    TabOrder = 2
-    Text = '123'
-  end
-  object Edit1: TEdit
-    Left = 16
-    Top = 39
+    Top = 47
     Width = 294
     Height = 28
     Anchors = [akLeft, akTop, akRight]
@@ -142,15 +98,31 @@ object frmLogin: TfrmLogin
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    Text = 'samaronesalles@gmail.com'
+    Text = 'admin'
+  end
+  object Edit_Senha: TEdit
+    Left = 16
+    Top = 107
+    Width = 294
+    Height = 28
+    Anchors = [akLeft, akTop, akRight]
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    PasswordChar = '*'
+    TabOrder = 1
+    Text = '123'
   end
   object ImageList_Icons: TImageList
     ColorDepth = cd32Bit
     DrawingStyle = dsTransparent
     Height = 24
     Width = 24
-    Left = 280
-    Top = 8
+    Left = 272
+    Top = 14
     Bitmap = {
       494C010102000800040018001800FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000001800000001002000000000000024

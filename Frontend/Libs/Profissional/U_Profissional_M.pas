@@ -39,6 +39,8 @@ type
 
     function ToJSON: String;
     class function ToObject(const JSON: String): TProfissional_M;
+
+    class function autenticar(const username, password: String): TProfissional_M;
   End;
 
   TProfissional_List_M = class(TObjectList)
@@ -58,6 +60,47 @@ implementation
 uses Uteis, U_MeusTipos, U_ConexaoAPI_M, U_ConexaoAPI_V;
 
 { TProfissional_M }
+
+class function TProfissional_M.autenticar(const username, password: String): TProfissional_M;
+var
+  Requisicao                           : String;
+  RespostaAPI                          : TConexaoAPI_M;
+  Profissional                         : TProfissional_M;
+
+begin
+
+  Result:= Nil;
+
+  RespostaAPI:= Nil;
+  Profissional:= Nil;
+
+  try
+
+    Requisicao:= '{' +
+                   '"username": ' + Uteis.ConverteTextoToJson(username) + ',' +
+                   '"password": ' + Uteis.ConverteTextoToJson(password) +
+                 '}';
+
+    RespostaAPI:= frmConexaoAPI_V.Execute(taProfissional_Login, 'profissionais/login', 'POST', Requisicao, 'Fazendo login. Aguarde!');
+
+    if RespostaAPI = Nil then
+      Exit;
+
+    if RespostaAPI.StatusCode_HTTP <> 200 then
+      Exit;
+
+    Profissional:= TProfissional_M.ToObject(RespostaAPI.Data);
+    if Profissional = Nil then
+      Exit;
+
+    Result:= Profissional;
+
+  Except
+    RespostaAPI.Free();
+    Result:= Nil;
+  end;
+
+end;
 
 constructor TProfissional_M.Create;
 begin

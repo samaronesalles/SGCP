@@ -148,6 +148,12 @@
             <Form>frmPacienteDetail_V</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Libs\Atendimento\U_Atendimento_V.pas">
+            <Form>frmAtendimentos_V</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Libs\Atendimento\U_Atendimento_M.pas"/>
+        <DCCReference Include="Libs\Agenda\U_Agenda_M.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -15,6 +15,7 @@ object frmMain: TfrmMain
   Position = poScreenCenter
   WindowState = wsMaximized
   OnCreate = FormCreate
+  OnShow = FormShow
   TextHeight = 15
   object StatusBar: TStatusBar
     Left = 0
@@ -25,9 +26,19 @@ object frmMain: TfrmMain
     ExplicitTop = 547
     ExplicitWidth = 927
   end
+  object Button_Teste: TButton
+    Left = 8
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'Teste'
+    TabOrder = 1
+    Visible = False
+    OnClick = Button_TesteClick
+  end
   object MainMenu: TMainMenu
     Left = 56
-    Top = 8
+    Top = 48
     object Cadastros1: TMenuItem
       Caption = '&Cadastros'
       object erapeutas1: TMenuItem
@@ -58,6 +69,7 @@ object frmMain: TfrmMain
       object Atendimentos1: TMenuItem
         Caption = 'A&tendimentos'
         ShortCut = 16468
+        OnClick = Atendimentos1Click
       end
     end
     object Configuraes1: TMenuItem
@@ -94,6 +106,6 @@ object frmMain: TfrmMain
     Interval = 1
     OnTimer = Timer_loginTimer
     Left = 8
-    Top = 8
+    Top = 48
   end
 end

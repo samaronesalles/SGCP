@@ -2,6 +2,8 @@ inherited frmPacientes_V: TfrmPacientes_V
   Caption = 'Cadastro de pacientes'
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  ExplicitWidth = 1268
+  ExplicitHeight = 750
   TextHeight = 16
   inherited PanelButtons: TPanel
     inherited PanelLegenda: TPanel
@@ -23,6 +25,7 @@ inherited frmPacientes_V: TfrmPacientes_V
       end
     end
     inherited Panel_btnsRight: TPanel
+      Left = 1025
       inherited ButtonLimparFiltro: TButton
         OnClick = ButtonLimparFiltroClick
       end
@@ -30,7 +33,14 @@ inherited frmPacientes_V: TfrmPacientes_V
   end
   inherited Panel1: TPanel
     inherited StringGridMain: TStringGrid
+      Width = 1254
+      Height = 599
       OnDblClick = StringGridMainDblClick
+    end
+  end
+  inherited Panel_TopButtons: TPanel
+    inherited Panel_TopBtnsRight: TPanel
+      Left = 1138
     end
   end
 end

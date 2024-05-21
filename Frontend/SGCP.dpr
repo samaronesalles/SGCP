@@ -23,7 +23,10 @@ uses
   U_Paciente_M in 'Libs\Paciente\U_Paciente_M.pas',
   U_Paciente_C in 'Libs\Paciente\U_Paciente_C.pas',
   U_Paciente_V in 'Libs\Paciente\U_Paciente_V.pas' {frmPacientes_V},
-  U_PacienteDetail_V in 'Libs\Paciente\U_PacienteDetail_V.pas' {frmPacienteDetail_V};
+  U_PacienteDetail_V in 'Libs\Paciente\U_PacienteDetail_V.pas' {frmPacienteDetail_V},
+  U_Atendimento_V in 'Libs\Atendimento\U_Atendimento_V.pas' {frmAtendimentos_V},
+  U_Atendimento_M in 'Libs\Atendimento\U_Atendimento_M.pas',
+  U_Agenda_M in 'Libs\Agenda\U_Agenda_M.pas';
 
 {$R *.res}
 

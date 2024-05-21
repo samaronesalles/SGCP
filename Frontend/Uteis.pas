@@ -4,7 +4,7 @@ interface
 
 uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
      Vcl.Forms, Vcl.Controls, Vcl.Grids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
-     Vcl.Dialogs, System.JSON, Winapi.WinInet;
+     Vcl.Dialogs, System.JSON, System.DateUtils, Winapi.WinInet;
 
 function  ReturnMachineName: String;
 function  MicroDesenvolvimento: Boolean;
@@ -18,6 +18,9 @@ Procedure SayInfo(Texto: String);
 function  SayQuestion(const aCaption: String; const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons; DefButton: Integer; HelpCtx: Longint): Integer;
 
 function  Hoje: String;
+function  DateTime2Str(dataHora: TDateTime): String;
+function  DateTime2Str_UTC(dataHora: TDateTime): String;
+function  DateTimeUTC2TDatetime(dataHoraSt: String): TDateTime;
 
 function  BooleanToStr(BoolVar: Boolean): String;
 function  CharToBoolean (St: String): Boolean;
@@ -98,6 +101,25 @@ begin
 
   Hoje:= D_S + '/' + M_S + '/' + A_S;
 
+end;
+
+function DateTime2Str(dataHora: TDateTime): String;
+begin
+  Try
+    Result:= FormatDateTime('dd/mm/yyyy hh:nn:ss', dataHora);
+  Except
+    Result:= '';
+  End;
+end;
+
+function DateTime2Str_UTC(dataHora: TDateTime): String;
+begin
+  Result:= DateToISO8601(datahora);
+end;
+
+function DateTimeUTC2TDatetime(dataHoraSt: String): TDateTime;
+begin
+  Result:= ISO8601ToDate(dataHoraSt);
 end;
 
 { Exemplo: if SayQuestion( 'Please confirm', 'Do you want to format your harddisk now?', mtConfirmation, mbYesNoCancel, mrno, 0 ) = mrYes then }
@@ -551,7 +573,7 @@ end;
 
 function MicroDesenv_Temporario: Boolean;
 const
-  DiaDeValidade = '15/05/2024';
+  DiaDeValidade = '21/05/2024';
 begin
   Result:= ((MicroDesenvolvimento()) AND (Hoje() = DiaDeValidade));
 end;

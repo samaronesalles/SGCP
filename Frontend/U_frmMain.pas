@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.Themes,
-  Vcl.ExtCtrls, Vcl.WinXCalendars, System.TypInfo, Vcl.StdCtrls;
+  Vcl.ExtCtrls, Vcl.WinXCalendars, System.TypInfo, Vcl.StdCtrls, U_Profissional_M;
 
 type
   TfrmMain = class(TForm)
@@ -27,6 +27,7 @@ type
     WindowsDark1: TMenuItem;
     Timer_login: TTimer;
     Janelas1: TMenuItem;
+    Button_Teste: TButton;
     procedure Sair1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Windows1Click(Sender: TObject);
@@ -34,9 +35,14 @@ type
     procedure Timer_loginTimer(Sender: TObject);
     procedure erapeutas1Click(Sender: TObject);
     procedure Pacientes1Click(Sender: TObject);
+    procedure Atendimentos1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure Button_TesteClick(Sender: TObject);
   private
     { Private declarations }
-    FDefaultStyleName : String;
+
+    FDefaultStyleName                                   : String;
+    FProfissionalLogado                                 : TProfissional_M;
 
     procedure SetDefaultStyleName(styleNam: String);
 
@@ -48,6 +54,7 @@ type
     BufferStr                                           : String;
 
     property DefaultStyleName                           : String Read FdefaultStyleName Write SetDefaultStyleName;
+    property ProfissionalLogado                         : TProfissional_M Read FProfissionalLogado Write FProfissionalLogado;
   end;
 
 var
@@ -55,7 +62,7 @@ var
 
 implementation
 
-uses U_frmLogin, Uteis, U_Profissional_V, U_Paciente_V;
+uses U_frmLogin, Uteis, U_Profissional_V, U_Paciente_V, U_Atendimento_V;
 
 {$R *.dfm}
 
@@ -120,6 +127,23 @@ begin
   LockWindowUpdate(0);
 end;
 
+procedure TfrmMain.Atendimentos1Click(Sender: TObject);
+begin
+  ShowChild(Self, TfrmAtendimentos_V, frmAtendimentos_V);
+end;
+
+procedure TfrmMain.Button_TesteClick(Sender: TObject);
+begin
+
+  if Self.FProfissionalLogado = Nil then begin
+    SayInfo('Não está loggado!');
+    Exit;
+  end;
+
+  SayInfo(Self.FProfissionalLogado.ToJSON());
+
+end;
+
 procedure TfrmMain.erapeutas1Click(Sender: TObject);
 begin
   ShowChild(Self, TfrmProfissionais_V, frmProfissionais_V);
@@ -131,6 +155,16 @@ begin
   FDefaultStyleName:= '';
   if Assigned(TStyleManager.ActiveStyle) then
     FDefaultStyleName:= TStyleManager.ActiveStyle.Name;
+
+  Self.FProfissionalLogado:= Nil;
+
+end;
+
+procedure TfrmMain.FormShow(Sender: TObject);
+begin
+
+  if Uteis.MicroDesenv_Temporario() then
+    Button_Teste.Visible:= TRUE;
 
 end;
 

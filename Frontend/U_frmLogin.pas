@@ -15,8 +15,6 @@ type
     Edit_Senha: TEdit;
     Label2: TLabel;
     ImageList_Icons: TImageList;
-    Label3: TLabel;
-    Edit1: TEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button_SairClick(Sender: TObject);
     procedure Button_EntrarClick(Sender: TObject);
@@ -34,6 +32,8 @@ var
 
 implementation
 
+uses U_frmMain, U_Profissional_M;
+
 {$R *.dfm}
 
 procedure TfrmLogin.Button_EntrarClick(Sender: TObject);
@@ -42,18 +42,28 @@ var
 
 begin
 
-  usuarioValido:= ((Edit_Usuario.Text = 'admin') and (Edit_Senha.Text = '123'));
+  Try
+    usuarioValido:= FALSE;
 
-  if (not usuarioValido) then begin
-    ShowMessage('Usuário ou senha inválidos. Verifique!');
+    if frmMain.ProfissionalLogado <> Nil then
+      frmMain.ProfissionalLogado.Free();
 
-    Edit_Usuario.SetFocus();
-    Edit_Usuario.SelectAll();
+    frmMain.ProfissionalLogado:= TProfissional_M.autenticar(Edit_Usuario.Text, Edit_Senha.Text);
 
-    Exit;
-  end;
+    if frmMain.ProfissionalLogado <> Nil then
+      usuarioValido:= frmMain.ProfissionalLogado.Id > 0;
 
-  ModalResult:= mrOk;
+    if (NOT usuarioValido) then begin
+      Edit_Usuario.SetFocus();
+      Edit_Usuario.SelectAll();
+
+      Exit;
+    end;
+
+    ModalResult:= mrOk;
+  Except
+    frmMain.ProfissionalLogado.Free();
+  End;
 
 end;
 
