@@ -1,6 +1,8 @@
 const path = require('path')
 const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js'))
 
+const ProfissionalModel = require(path.resolve(__dirname, '../', 'profissional.model.js'))
+const PacienteModel = require(path.resolve(__dirname, '../', 'paciente.model.js'))
 const AgendasModel = require(path.resolve(__dirname, '../', 'agenda.model.js'))
 const AtendimentoModel = require(path.resolve(__dirname, '../', 'atendimento.model.js'))
 
@@ -13,7 +15,17 @@ module.exports.retornePeloID = async function (id) {
         include: [
             {
                 model: AgendasModel, as: 'agenda',
-                attributes: ['id', 'di', 'descricao', 'observacao', 'evento_inicio', 'evento_fim', 'evento_confirmado', 'ativo']
+                attributes: ['id', 'di', 'descricao', 'observacao', 'evento_inicio', 'evento_fim', 'evento_confirmado', 'ativo'],
+                include: [
+                    {
+                        model: ProfissionalModel, as: 'profissional',
+                        attributes: ['id', 'di', 'nome', 'celular', 'email', 'ativo']
+                    },
+                    {
+                        model: PacienteModel, as: 'paciente',
+                        attributes: ['id', 'di', 'nome', 'celular', 'email', 'ativo']
+                    }
+                ]
             },
         ],
         where: {
@@ -43,7 +55,17 @@ module.exports.retorneTodos = async function (profissional_id, paciente_id) {
         include: [
             {
                 model: AgendasModel, as: 'agenda',
-                attributes: ['id', 'di', 'descricao', 'observacao', 'evento_inicio', 'evento_fim', 'evento_confirmado', 'ativo']
+                attributes: ['id', 'di', 'descricao', 'observacao', 'evento_inicio', 'evento_fim', 'evento_confirmado', 'ativo'],
+                include: [
+                    {
+                        model: ProfissionalModel, as: 'profissional',
+                        attributes: ['id', 'di', 'nome', 'celular', 'email', 'ativo']
+                    },
+                    {
+                        model: PacienteModel, as: 'paciente',
+                        attributes: ['id', 'di', 'nome', 'celular', 'email', 'ativo']
+                    }
+                ]
             },
         ],
         where: condicao_where,
