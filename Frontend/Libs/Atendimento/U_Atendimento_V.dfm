@@ -1,11 +1,13 @@
 inherited frmAtendimentos_V: TfrmAtendimentos_V
   Caption = 'Atendimentos'
+  ClientHeight = 721
+  ClientWidth = 1262
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   TextHeight = 16
   inherited PanelButtons: TPanel
-    ExplicitTop = 651
-    ExplicitWidth = 1262
+    Top = 651
+    Width = 1262
     inherited PanelLegenda: TPanel
       Width = 608
       ExplicitWidth = 608
@@ -67,14 +69,22 @@ inherited frmAtendimentos_V: TfrmAtendimentos_V
     end
   end
   inherited Panel1: TPanel
-    ExplicitWidth = 1262
-    ExplicitHeight = 610
+    Width = 1262
+    Height = 610
     inherited StringGridMain: TStringGrid
+      ColCount = 6
       OnDblClick = StringGridMainDblClick
+      ColWidths = (
+        130
+        130
+        128
+        128
+        167
+        64)
     end
   end
   inherited Panel_TopButtons: TPanel
-    ExplicitWidth = 1262
+    Width = 1262
     inherited Panel_TopBtnsRight: TPanel
       inherited SpeedButton_Add: TSpeedButton
         Visible = False

@@ -304,6 +304,9 @@ begin
 
   Retorno:= Nil;
 
+  if Trim(JSON) = '' then
+    Exit;
+
   Try
     Retorno:= TProfissional_M.Create;
 

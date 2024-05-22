@@ -119,7 +119,11 @@ end;
 
 function DateTimeUTC2TDatetime(dataHoraSt: String): TDateTime;
 begin
-  Result:= ISO8601ToDate(dataHoraSt);
+  Try
+    Result:= ISO8601ToDate(dataHoraSt);
+  Except
+    Result:= 0;
+  End;
 end;
 
 { Exemplo: if SayQuestion( 'Please confirm', 'Do you want to format your harddisk now?', mtConfirmation, mbYesNoCancel, mrno, 0 ) = mrYes then }
@@ -284,6 +288,9 @@ begin
       Result:= '';
       Exit;
     End;
+
+    if St = 'null' then
+      St:= '';
 
     Result:= St;
   Except

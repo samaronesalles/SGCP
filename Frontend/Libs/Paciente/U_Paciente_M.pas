@@ -251,6 +251,9 @@ begin
 
   Retorno:= Nil;
 
+  if Trim(JSON) = '' then
+    Exit;
+
   Try
     Retorno:= TPaciente_M.Create;
 

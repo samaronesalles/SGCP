@@ -35,8 +35,8 @@ type
 
 const
    COL_ID                = 0;
-   COL_PACIENTE          = 1;
-   COL_PROFISSIONAL      = 2;
+   COL_PROFISSIONAL      = 1;
+   COL_PACIENTE          = 2;
    COL_DATA              = 3;
    COL_HORA_AGENDADA     = 4;
    COL_HORA_REALIZADA    = 5;
@@ -54,7 +54,7 @@ var
 
 implementation
 
-uses Uteis;
+uses Uteis, U_frmMain;
 
 {$R *.dfm}
 
@@ -86,24 +86,27 @@ begin
 
   // Preenchimento de títulos da lista...
   StringGridMain.Cells[COL_ID, 0]:= 'Código';
-  StringGridMain.ColWidths[COL_ID]:= 60;
-
-  StringGridMain.Cells[COL_PACIENTE, 0]:= 'Paciente';
-  StringGridMain.ColWidths[COL_PACIENTE]:= 400;
+  StringGridMain.ColWidths[COL_ID]:= 65;
 
   StringGridMain.Cells[COL_PROFISSIONAL, 0]:= 'Profissional';
-  StringGridMain.ColWidths[COL_PROFISSIONAL]:= 400;
+  StringGridMain.ColWidths[COL_PROFISSIONAL]:= 380;
+
+  StringGridMain.Cells[COL_PACIENTE, 0]:= 'Paciente';
+  StringGridMain.ColWidths[COL_PACIENTE]:= 380;
 
   StringGridMain.Cells[COL_DATA, 0]:= 'Data';
-  StringGridMain.ColWidths[COL_DATA]:= 60;
+  StringGridMain.ColWidths[COL_DATA]:= 93;
+  StringGridMain.ColAlignments[COL_DATA]:= taCenter;
 
   StringGridMain.Cells[COL_HORA_AGENDADA, 0]:= 'Hora agendada';
-  StringGridMain.ColWidths[COL_HORA_AGENDADA]:= 50;
+  StringGridMain.ColWidths[COL_HORA_AGENDADA]:= 123;
+  StringGridMain.ColAlignments[COL_HORA_AGENDADA]:= taCenter;
 
   StringGridMain.Cells[COL_HORA_REALIZADA, 0]:= 'Hora realizada';
-  StringGridMain.ColWidths[COL_HORA_REALIZADA]:= 50;
+  StringGridMain.ColWidths[COL_HORA_REALIZADA]:= 119;
+  StringGridMain.ColAlignments[COL_HORA_REALIZADA]:= taCenter;
 
-  StringGridMain.ColCount:= 5;
+  StringGridMain.ColCount:= 6;
   StringGridMain.RowCount:= 2;
 
   // Atualizando legendas...
@@ -150,8 +153,8 @@ begin
       end;
 
       StringGridMain.Cells[COL_ID, Row]:= IntToStr(Atendimento.Id);
-      StringGridMain.Cells[COL_PACIENTE, Row]:= Atendimento.Agenda.Paciente.Nome;
       StringGridMain.Cells[COL_PROFISSIONAL, Row]:= Atendimento.Agenda.Profissional.Nome;
+      StringGridMain.Cells[COL_PACIENTE, Row]:= Atendimento.Agenda.Paciente.Nome;
       StringGridMain.Cells[COL_DATA, Row]:= Copy(DateTime2Str(Atendimento.DataHoraIni), 1, 10);
       StringGridMain.Cells[COL_HORA_AGENDADA, Row]:= Copy(DateTime2Str(Atendimento.DataHoraIni), 12, 5);
       StringGridMain.Cells[COL_HORA_REALIZADA, Row]:= '';
@@ -173,7 +176,7 @@ end;
 procedure TfrmAtendimentos_V.RetorneTodosAtendimentos;
 begin
   Self.FGLB_ListaAtendimentos.Clear();
-  Self.FGLB_ListaAtendimentos.RetornoLista();
+  Self.FGLB_ListaAtendimentos.RetornoLista(0, 0, 0);
 end;
 
 procedure TfrmAtendimentos_V.SpeedButton_DeleteClick(Sender: TObject);
@@ -227,6 +230,7 @@ var
   CorFont, CorLinha              : TColor;
 
 begin
+
   inherited;
 
   CorFont:= clBlack;
