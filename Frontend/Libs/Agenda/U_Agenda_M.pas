@@ -43,7 +43,7 @@ type
 
 implementation
 
-uses Uteis, U_MeusTipos, U_ConexaoAPI_M, U_ConexaoAPI_V;
+uses Uteis, U_ConexaoAPI_M, U_ConexaoAPI_V;
 
 { TAtendimento_M }
 

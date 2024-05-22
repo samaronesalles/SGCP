@@ -51,7 +51,7 @@ type
 
 implementation
 
-uses Uteis, U_MeusTipos, U_ConexaoAPI_M, U_ConexaoAPI_V;
+uses Uteis, U_ConexaoAPI_M, U_ConexaoAPI_V;
 
 { TProfissional_M }
 
@@ -166,7 +166,7 @@ begin
 
       Requisicao:= Self.ToJSON();
 
-      RespostaAPI:= frmConexaoAPI_V.Execute(taPaciente_Save, Endpoint, Metodo, Requisicao, 'Salvando paciente. Aguarde!');
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, Requisicao, 'Salvando paciente. Aguarde!');
 
       If RespostaAPI = Nil Then
         Exit;
@@ -212,7 +212,7 @@ begin
     Try
       Endpoint:= Self.endpoint_Exclusao(Metodo);
 
-      RespostaAPI:= frmConexaoAPI_V.Execute(taPaciente_Excusao, Endpoint, Metodo, '', 'Excluindo paciente. Aguarde!');
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, '', 'Excluindo paciente. Aguarde!');
 
       If RespostaAPI = Nil Then
         Exit;
@@ -301,7 +301,7 @@ begin
     Try
       Endpoint:= Self.endpoint_lista(Metodo);
 
-      RespostaAPI:= frmConexaoAPI_V.Execute(taPaciente_Lista, Endpoint, Metodo, '', 'Retornando lista de pacientes. Aguarde!');
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, '', 'Retornando lista de pacientes. Aguarde!');
 
       If RespostaAPI = Nil Then
         Exit;

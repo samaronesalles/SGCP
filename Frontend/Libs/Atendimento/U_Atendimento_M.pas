@@ -65,7 +65,7 @@ type
 
 implementation
 
-uses Uteis, U_MeusTipos, U_ConexaoAPI_M, U_ConexaoAPI_V;
+uses Uteis, U_ConexaoAPI_M, U_ConexaoAPI_V;
 
 { TAtendimento_M }
 
@@ -230,7 +230,7 @@ begin
     Try
       Endpoint:= Self.endpoint_lista(Metodo);
 
-      RespostaAPI:= frmConexaoAPI_V.Execute(taAtendimento_Lista, Endpoint, Metodo, '', 'Retornando lista de atendimentos. Aguarde!');
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, '', 'Retornando lista de atendimentos. Aguarde!');
 
       If RespostaAPI = Nil Then
         Exit;

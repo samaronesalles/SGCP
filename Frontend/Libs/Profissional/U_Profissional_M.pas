@@ -57,7 +57,7 @@ type
 
 implementation
 
-uses Uteis, U_MeusTipos, U_ConexaoAPI_M, U_ConexaoAPI_V;
+uses Uteis, U_ConexaoAPI_M, U_ConexaoAPI_V;
 
 { TProfissional_M }
 
@@ -81,7 +81,7 @@ begin
                    '"password": ' + Uteis.ConverteTextoToJson(password) +
                  '}';
 
-    RespostaAPI:= frmConexaoAPI_V.Execute(taProfissional_Login, 'profissionais/login', 'POST', Requisicao, 'Fazendo login. Aguarde!');
+    RespostaAPI:= frmConexaoAPI_V.Execute('profissionais/login', 'POST', Requisicao, 'Fazendo login. Aguarde!');
 
     if RespostaAPI = Nil then
       Exit;
@@ -215,7 +215,7 @@ begin
 
       Requisicao:= Self.ToJSON();
 
-      RespostaAPI:= frmConexaoAPI_V.Execute(taProfissional_Save, Endpoint, Metodo, Requisicao, 'Salvando profissional. Aguarde!');
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, Requisicao, 'Salvando profissional. Aguarde!');
 
       If RespostaAPI = Nil Then
         Exit;
@@ -263,7 +263,7 @@ begin
     Try
       Endpoint:= Self.endpoint_Exclusao(Metodo);
 
-      RespostaAPI:= frmConexaoAPI_V.Execute(taProfissional_Excusao, Endpoint, Metodo, '', 'Excluindo profissional. Aguarde!');
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, '', 'Excluindo profissional. Aguarde!');
 
       If RespostaAPI = Nil Then
         Exit;
@@ -356,7 +356,7 @@ begin
     Try
       Endpoint:= Self.endpoint_lista(Metodo);
 
-      RespostaAPI:= frmConexaoAPI_V.Execute(taProfissional_Lista, Endpoint, Metodo, '', 'Retornando lista de profissionais. Aguarde!');
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, '', 'Retornando lista de profissionais. Aguarde!');
 
       If RespostaAPI = Nil Then
         Exit;

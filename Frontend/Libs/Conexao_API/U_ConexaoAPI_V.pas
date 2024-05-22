@@ -4,8 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, U_MeusTipos,
-  U_ConexaoAPI_M;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, U_ConexaoAPI_M;
 
 type
   TfrmConexaoAPI_V = class(TForm)
@@ -19,7 +18,6 @@ type
   private
     { Private declarations }
 
-    FAcao                               : TTipoAcaoAPI;
     FEndpoint                           : String;
     FMethod                             : String;
     FRequisicao                         : String;
@@ -27,12 +25,11 @@ type
   public
     { Public declarations }
 
-    property Acao                       : TTipoAcaoAPI Write FAcao;
     property Endpoint                   : String Write FEndpoint;
     property Method                     : String Write FMethod;
     property Requisicao                 : String Write FRequisicao;
 
-    function Execute(Acao: TTipoAcaoAPI; Endpoint, Method, Requisicao, Mensagem: string): TConexaoAPI_M;
+    function Execute(Endpoint, Method, Requisicao, Mensagem: string): TConexaoAPI_M;
   end;
 
 var
@@ -46,7 +43,7 @@ uses U_frmMain, Uteis, U_ExceptionTratado, U_ConexaoAPI_C;
 
 { TfrmConexaoAPI_V }
 
-function TfrmConexaoAPI_V.Execute(Acao: TTipoAcaoAPI; Endpoint, Method, Requisicao, Mensagem: string): TConexaoAPI_M;
+function TfrmConexaoAPI_V.Execute(Endpoint, Method, Requisicao, Mensagem: string): TConexaoAPI_M;
 var
   BkpBufferStr                              : String;
 
@@ -62,7 +59,6 @@ begin
       if frmConexaoAPI_V = Nil then
         frmConexaoAPI_V:= TfrmConexaoAPI_V.Create(Application);
 
-      frmConexaoAPI_V.Acao:= Acao;
       frmConexaoAPI_V.Endpoint:= Endpoint;
       frmConexaoAPI_V.Method:= Method;
       frmConexaoAPI_V.Requisicao:= Requisicao;
@@ -91,7 +87,6 @@ end;
 procedure TfrmConexaoAPI_V.FormCreate(Sender: TObject);
 begin
 
-  Self.FAcao:= taNenhuma;
   Self.FEndpoint:= '';
   Self.FMethod:= '';
   Self.FRequisicao:= '';
@@ -124,7 +119,7 @@ begin
         Exit;
       End;
 
-      ConexaoAPI_C:= TConexaoAPI_C.Create(Self.FAcao, Self.FEndpoint, Self.FMethod, Self.FRequisicao);
+      ConexaoAPI_C:= TConexaoAPI_C.Create(Self.FEndpoint, Self.FMethod, Self.FRequisicao);
 
       Retorno:= ConexaoAPI_C.processar();
       If Retorno = Nil Then

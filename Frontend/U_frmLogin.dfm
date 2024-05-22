@@ -63,7 +63,6 @@ object frmLogin: TfrmLogin
     TabOrder = 2
     TabStop = False
     OnClick = Button_SairClick
-    ExplicitTop = 218
   end
   object Button_Entrar: TButton
     Left = 210
@@ -83,7 +82,6 @@ object frmLogin: TfrmLogin
     TabOrder = 3
     TabStop = False
     OnClick = Button_EntrarClick
-    ExplicitTop = 218
   end
   object Edit_Usuario: TEdit
     Left = 16
@@ -98,7 +96,7 @@ object frmLogin: TfrmLogin
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    Text = 'admin'
+    Text = 'sama'
   end
   object Edit_Senha: TEdit
     Left = 16
@@ -114,7 +112,7 @@ object frmLogin: TfrmLogin
     ParentFont = False
     PasswordChar = '*'
     TabOrder = 1
-    Text = '123'
+    Text = '4456'
   end
   object ImageList_Icons: TImageList
     ColorDepth = cd32Bit
