@@ -5,21 +5,20 @@ const mensagens = require(path.resolve(__dirname, '../', 'services', 'messages.j
 const AtendimentoRepository = require(path.resolve(__dirname, '../', 'models', 'repositories', 'atendimento.repository.js'))
 
 const define_status_atendimento = function (atendimento) {
-    let vl_status = 0                                              // Todos
 
-    if (!atendimento?.agenda?.evento_confirmado)                             // Pendente de confirmação
-        vl_status = 1
+    if (atendimento.datahora_fim > 0)                                                  // Realizada
+        return 4
 
-    if (!atendimento?.agenda?.ativo)                                         // Canceladas
-        vl_status = 2
+    if (!atendimento?.agenda?.ativo)                                                   // Canceladas
+        return 2
 
-    if ((atendimento?.agenda?.evento_confirmado) && (!e.datahora_fim))       // Confirmada não realizada 
-        vl_status = 3
+    if ((atendimento?.agenda?.evento_confirmado) && (!atendimento.datahora_fim))       // Confirmada não realizada 
+        return 3
 
-    if (atendimento.datahora_fim > 0)                                        // Realizada
-        vl_status = 4
+    if (!atendimento?.agenda?.evento_confirmado)                                       // Pendente de confirmação
+        return 1
 
-    return vl_status
+    return 0
 }
 
 module.exports = {
