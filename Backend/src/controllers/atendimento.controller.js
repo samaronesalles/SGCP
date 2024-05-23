@@ -52,6 +52,9 @@ module.exports = {
                 return elemento.dataValues
             })
 
+            if (parseInt(status) > 0)
+                atendimentos = atendimentos.filter(e => e.status === parseInt(status))
+
             return res.status(200).json(mensagens.resultExternal(200, false, atendimentos))
         } catch (error) {
             return res.status(400).json(mensagens.resultError(error))
