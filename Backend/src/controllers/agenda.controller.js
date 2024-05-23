@@ -85,6 +85,33 @@ module.exports = {
         } catch (error) {
             return res.status(400).json(mensagens.resultError(error))
         }
+    },
+
+    async cancelamento(req, res) {
+        try {
+            const { id, di } = req.params
+
+            const Agenda = await AgendaRepository.retornePeloID(id)
+
+            const dados = {
+                di: uteis.new_uuid(),
+                ativo: false
+            }
+
+            await Agenda.update(dados, {
+                where: {
+                    id: id
+                },
+                returning: true,
+                plain: true
+            });
+
+            return res.status(200).json(mensagens.resultExternal(1001, false, Agenda))
+
+        } catch (error) {
+            return res.status(400).json(mensagens.resultError(error))
+        }
+
     }
 
 }
