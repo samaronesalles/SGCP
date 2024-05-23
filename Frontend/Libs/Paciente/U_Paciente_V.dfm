@@ -6,6 +6,8 @@ inherited frmPacientes_V: TfrmPacientes_V
   ExplicitHeight = 750
   TextHeight = 16
   inherited PanelButtons: TPanel
+    ExplicitTop = 633
+    ExplicitWidth = 1250
     inherited PanelLegenda: TPanel
       inherited Shape2: TShape
         Left = 99
@@ -26,21 +28,28 @@ inherited frmPacientes_V: TfrmPacientes_V
     end
     inherited Panel_btnsRight: TPanel
       Left = 1025
+      ExplicitLeft = 1019
       inherited ButtonLimparFiltro: TButton
         OnClick = ButtonLimparFiltroClick
       end
     end
   end
   inherited Panel1: TPanel
+    ExplicitWidth = 1250
+    ExplicitHeight = 592
     inherited StringGridMain: TStringGrid
       Width = 1254
       Height = 599
       OnDblClick = StringGridMainDblClick
+      ExplicitWidth = 1248
+      ExplicitHeight = 590
     end
   end
   inherited Panel_TopButtons: TPanel
+    ExplicitWidth = 1250
     inherited Panel_TopBtnsRight: TPanel
       Left = 1138
+      ExplicitLeft = 1132
     end
   end
 end

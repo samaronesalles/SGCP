@@ -59,6 +59,7 @@ type
     function FiltraLista(const De, Ate: TDateTime): TList<integer>;
 
     function ToJSON: String;
+    function GetStatusAtendimento(id: Longint): Longint;
 
     class function toList(const JSON: String): TAtendimento_List_M;
   end;
@@ -203,6 +204,30 @@ begin
 
   except
     raise;
+  end;
+
+end;
+
+function TAtendimento_List_M.GetStatusAtendimento(id: Longint): Longint;
+var
+  C                                                 : Integer;
+  Atendimento                                       : TAtendimento_M;
+
+begin
+
+  try
+    Result:= 0;
+
+    for Atendimento in Self do begin
+      if Atendimento.Id <> id then
+        continue;
+
+      result:= Atendimento.Status;
+      break;
+    end;
+
+  except
+    Result:= 0;
   end;
 
 end;

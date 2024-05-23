@@ -19,6 +19,8 @@ type
     FAtivo                                                                      : Boolean;
     FProfissional                                                               : TProfissional_M;
     FPaciente                                                                   : TPaciente_M;
+
+    function endpoint_cancelamento(VAR MetodoHttp: String): String;
   public
     property Id                                                                 : Longint Read FId Write FId;
     property Di                                                                 : String Read FDi Write FDi;
@@ -48,9 +50,38 @@ uses Uteis, U_ConexaoAPI_M, U_ConexaoAPI_V;
 { TAtendimento_M }
 
 function TAgenda_M.CancelarAtendamento: Boolean;
+var
+  Endpoint, Metodo                     : String;
+  RespostaAPI                          : TConexaoAPI_M;
+
 begin
-  Result:= TRUE;
-  Uteis.SayInfo('Em desenvolvimento: TAgenda_M.CancelarAtendamento()');
+
+  Result:= FALSE;
+
+  RespostaAPI:= Nil;
+
+  Try
+    Try
+      Endpoint:= Self.endpoint_cancelamento(Metodo);
+
+      if Endpoint = '' then
+        exit;
+
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, '', 'Cancelando atendimento. Aguarde!');
+
+      If RespostaAPI = Nil Then
+        Exit;
+
+      If RespostaAPI.StatusCode_HTTP <> 200 Then
+        Exit;
+
+      Result:= TRUE;
+    Except
+    End;
+  Finally
+    RespostaAPI.Free();
+  End;
+
 end;
 
 constructor TAgenda_M.Create;
@@ -73,6 +104,27 @@ begin
 
   Self.FProfissional.Free();
   Self.FPaciente.Free();
+end;
+
+function TAgenda_M.endpoint_cancelamento(var MetodoHttp: String): String;
+var
+  St                                   : String;
+
+begin
+
+  MetodoHttp:= '';
+
+  if Self.FId <= 0 then
+    Exit;
+
+  St:= 'agenda/cancelar/[id]/[di]';
+
+  Uteis.Substitua(St, '[id]', IntToStr(Self.FId));
+  Uteis.Substitua(St, '[di]', Self.Fdi);
+
+  MetodoHttp:= 'PUT';
+  Result:= St;
+
 end;
 
 function TAgenda_M.Save: Boolean;

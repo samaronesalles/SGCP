@@ -21,6 +21,7 @@ type
     procedure StringGridMainDblClick(Sender: TObject);
     procedure StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
     procedure TimerStartUpTimer(Sender: TObject);
+    procedure StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
 
@@ -181,7 +182,7 @@ end;
 
 procedure TfrmAtendimentos_V.SpeedButton_DeleteClick(Sender: TObject);
 var
-  Posicao                        : Longint;
+  Posicao, id                    : Longint;
   ItemLista, ItemEditado         : TAtendimento_M;
 
 begin
@@ -204,8 +205,16 @@ begin
   if Uteis.SayQuestion('Cancelamento', 'Deseja realmente cancelar o atencimento do paciente "' + ItemLista.Agenda.Paciente.Nome + '"?', TMsgDlgType.mtConfirmation, mbYesNo, mrNo, 0) <> mrYes then
     Exit;
 
-  if ItemLista.Agenda.CancelarAtendamento() then
+  id:= ItemLista.Id;
+
+  if NOT ItemLista.Agenda.CancelarAtendamento() then
+    SayError('Atendimento e agenda não foram cancelados. Verifique')
+  else begin
     RetorneTodosAtendimentos();
+
+    if Self.FGLB_ListaAtendimentos.GetStatusAtendimento(id) = 2 then
+      SayInfo('Atendimento e agenda cancelados com sucesso!');
+  end;
 
   Refresh_StringGrid();
 
@@ -244,6 +253,22 @@ begin
   End;
 
   Self.SetCorRowgrid(StringGridMain, CorFont, CorLinha, ACol, ARow, Rect, State);
+
+end;
+
+procedure TfrmAtendimentos_V.StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  inherited;
+
+  if Key = VK_F5 then begin
+    Key:= 0;
+
+    Self.RetorneTodosAtendimentos();
+    Self.Refresh_StringGrid();
+
+    Exit;
+  end;
 
 end;
 

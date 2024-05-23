@@ -19,6 +19,7 @@ type
     procedure StringGridMainDblClick(Sender: TObject);
     procedure StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
     procedure TimerStartUpTimer(Sender: TObject);
+    procedure StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
 
@@ -294,6 +295,22 @@ begin
 
   if AnsiUpperCase(StringGridMain.Cells[COL_ATIVO, ARow]) = 'INATIVO' then
     Self.SetCorRowgrid(StringGridMain, CorFont, CorLinha, ACol, ARow, Rect, State);
+
+end;
+
+procedure TfrmPacientes_V.StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  inherited;
+
+  if Key = VK_F5 then begin
+    Key:= 0;
+
+    Self.RetorneTodosPacientes();
+    Self.Refresh_StringGrid();
+
+    Exit;
+  end;
 
 end;
 
