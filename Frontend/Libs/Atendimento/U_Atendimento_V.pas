@@ -66,8 +66,11 @@ begin
   if Uteis.SayQuestion('Filtro', 'Deseja realmente limpar o filtro aplicado?', TMsgDlgType.mtConfirmation, mbYesNo, mrNo, 0) <> mrYes then
     Exit;
 
-  Self.FGLB_ListaFiltro.Clear();
+  Self.FGLB_ListaAtendimentos.Status:= 0;
+  Self.FGLB_ListaAtendimentos.ProfissionalID:= 0;
+  Self.FGLB_ListaAtendimentos.PacienteID:= 0;
 
+  Self.RetorneTodosAtendimentos();
   Self.Refresh_StringGrid();
 
 end;
@@ -133,7 +136,9 @@ begin
 
     Uteis.StringGridDelete_AllRows(StringGridMain);
 
-    FiltrouAlgo:= FALSE;
+    FiltrouAlgo:= ((Self.FGLB_ListaAtendimentos.Status > 0) OR
+                   (Self.FGLB_ListaAtendimentos.ProfissionalID > 0) OR
+                   (Self.FGLB_ListaAtendimentos.PacienteID > 0));
 
     If Self.FGLB_ListaAtendimentos.Count = 0 Then
       Exit;
@@ -201,6 +206,12 @@ begin
     Exit;
 
   ItemLista:= Self.FGLB_ListaAtendimentos[Posicao];
+
+  if ItemLista.Status = 2 then begin
+    SayInfo('O atendimento selecionado já está cancelado! Operação interrompida.');
+    Exit;
+  end;
+
 
   if Uteis.SayQuestion('Cancelamento', 'Deseja realmente cancelar o atendimento do paciente "' + ItemLista.Agenda.Paciente.Nome + '"?', TMsgDlgType.mtConfirmation, mbYesNo, mrNo, 0) <> mrYes then
     Exit;
