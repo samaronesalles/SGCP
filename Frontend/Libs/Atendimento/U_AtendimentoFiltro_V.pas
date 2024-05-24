@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_frmTemplateForm_Filtro, System.ImageList, Vcl.ImgList, Vcl.StdCtrls, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_MeusTipos, U_frmTemplateForm_Filtro, System.ImageList,
+  Vcl.ImgList, Vcl.StdCtrls, Vcl.ExtCtrls;
 
 type
   TfrmAtendimentoFiltro_V = class(TfrmTemplateForm_Filtro)
@@ -26,7 +27,7 @@ type
   public
     { Public declarations }
 
-    function Execute(Status, idProfissional: Longint; nomeProfissional: string): string;
+    function Execute (Status: TStatusAtendimentos; idProfissional: Longint; nomeProfissional: string): string;
   end;
 
 var
@@ -70,13 +71,19 @@ end;
 procedure TfrmAtendimentoFiltro_V.Edit_FiltroPacienteChange(Sender: TObject);
 begin
   inherited;
-  Label_idPaciente.Caption:= '0';
+
+  if Edit_FiltroPaciente.Focused then
+    Label_idPaciente.Caption:= '0';
+
 end;
 
 procedure TfrmAtendimentoFiltro_V.Edit_FiltroProfissionalChange(Sender: TObject);
 begin
   inherited;
-  Label_idProfissional.Caption:= '0';
+
+  if Edit_FiltroProfissional.Focused then
+    Label_idProfissional.Caption:= '0';
+
 end;
 
 procedure TfrmAtendimentoFiltro_V.Edit_FiltroProfissionalExit(Sender: TObject);
@@ -106,7 +113,7 @@ begin
 
 end;
 
-function TfrmAtendimentoFiltro_V.Execute(Status, idProfissional: Longint; nomeProfissional: string): string;
+function TfrmAtendimentoFiltro_V.Execute (Status: TStatusAtendimentos; idProfissional: Longint; nomeProfissional: string): string;
 var
   BkpBufferStr                              : String;
 
@@ -122,10 +129,10 @@ begin
       if frmAtendimentoFiltro_V = Nil then
         frmAtendimentoFiltro_V:= TfrmAtendimentoFiltro_V.Create(Nil);
 
-      frmAtendimentoFiltro_V.ComboBox_FiltroStatus.ItemIndex:= Status;
+      frmAtendimentoFiltro_V.ComboBox_FiltroStatus.ItemIndex:= StatusAtendimento2Int(Status);
 
-      frmAtendimentoFiltro_V.Label_idProfissional.Caption:= IntToStr(idProfissional);
       frmAtendimentoFiltro_V.Edit_FiltroProfissional.Text:= nomeProfissional;
+      frmAtendimentoFiltro_V.Label_idProfissional.Caption:= IntToStr(idProfissional);
 
       frmAtendimentoFiltro_V.Label_idPaciente.Caption:= '0';
       frmAtendimentoFiltro_V.Edit_FiltroPaciente.Text:= '';

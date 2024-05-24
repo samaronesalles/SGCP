@@ -55,7 +55,7 @@ var
 
 implementation
 
-uses Uteis, U_frmMain, U_AtendimentoFiltro_V;
+uses Uteis, U_frmMain, U_MeusTipos, U_AtendimentoFiltro_V;
 
 {$R *.dfm}
 
@@ -66,9 +66,11 @@ begin
   if Uteis.SayQuestion('Filtro', 'Deseja realmente limpar o filtro aplicado?', TMsgDlgType.mtConfirmation, mbYesNo, mrNo, 0) <> mrYes then
     Exit;
 
-  Self.FGLB_ListaAtendimentos.Status:= 0;
+  Self.FGLB_ListaAtendimentos.Status:= saTodos;
   Self.FGLB_ListaAtendimentos.ProfissionalID:= 0;
+  Self.FGLB_ListaAtendimentos.ProfissionalNome:= '';
   Self.FGLB_ListaAtendimentos.PacienteID:= 0;
+  Self.FGLB_ListaAtendimentos.PacienteNome:= '';
 
   Self.RetorneTodosAtendimentos();
   Self.Refresh_StringGrid();
@@ -136,7 +138,7 @@ begin
 
     Uteis.StringGridDelete_AllRows(StringGridMain);
 
-    FiltrouAlgo:= ((Self.FGLB_ListaAtendimentos.Status > 0) OR
+    FiltrouAlgo:= ((StatusAtendimento2Int(Self.FGLB_ListaAtendimentos.Status) > 0) OR
                    (Self.FGLB_ListaAtendimentos.ProfissionalID > 0) OR
                    (Self.FGLB_ListaAtendimentos.PacienteID > 0));
 
@@ -164,7 +166,7 @@ begin
       StringGridMain.Cells[COL_DATA, Row]:= Copy(DateTime2Str(Atendimento.DataHoraIni), 1, 10);
       StringGridMain.Cells[COL_HORA_AGENDADA, Row]:= Copy(DateTime2Str(Atendimento.DataHoraIni), 12, 5);
       StringGridMain.Cells[COL_HORA_REALIZADA, Row]:= '';
-      StringGridMain.Cells[COL_STATUS, Row]:= IntToStr(Atendimento.Status);
+      StringGridMain.Cells[COL_STATUS, Row]:= IntToStr(StatusAtendimento2Int(Atendimento.Status));
       StringGridMain.Cells[COL_IDX_LISTA, Row]:= IntToStr(C);
 
       Inc(Row);
@@ -207,7 +209,7 @@ begin
 
   ItemLista:= Self.FGLB_ListaAtendimentos[Posicao];
 
-  if ItemLista.Status = 2 then begin
+  if ItemLista.Status = saCancelado then begin
     SayInfo('O atendimento selecionado já está cancelado! Operação interrompida.');
     Exit;
   end;
@@ -223,7 +225,7 @@ begin
   else begin
     RetorneTodosAtendimentos();
 
-    if Self.FGLB_ListaAtendimentos.GetStatusAtendimento(id) = 2 then
+    if Self.FGLB_ListaAtendimentos.GetStatusAtendimento(id) = saCancelado then
       SayInfo('Atendimento e agenda cancelados com sucesso!');
   end;
 
@@ -238,9 +240,9 @@ var
 begin
   inherited;
 
-  JsonFiltro:= frmAtendimentoFiltro_V.Execute(Self.FGLB_ListaAtendimentos.Status, frmMain.ProfissionalLogado.Id, frmMain.ProfissionalLogado.Nome);
+  JsonFiltro:= frmAtendimentoFiltro_V.Execute(Self.FGLB_ListaAtendimentos.Status, Self.FGLB_ListaAtendimentos.ProfissionalID, Self.FGLB_ListaAtendimentos.ProfissionalNome);
 
-  Self.FGLB_ListaAtendimentos.Status:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'status'));
+  Self.FGLB_ListaAtendimentos.Status:= Int2StatusAtendimento(Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'status')));
   Self.FGLB_ListaAtendimentos.ProfissionalID:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'profissionalId'));
   Self.FGLB_ListaAtendimentos.ProfissionalNome:= Uteis.ReturnValor_EmJSON(JsonFiltro, 'profissionalNome');
   Self.FGLB_ListaAtendimentos.PacienteID:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'pacienteId'));
@@ -269,11 +271,11 @@ begin
   CorFont:= clBlack;
   CorLinha:= Self.GetCorCell(StringGridMain, ACol, ARow);
 
-  Case Uteis.Str2Num(StringGridMain.Cells[COL_STATUS, ARow]) Of
-    1: CorFont:= COR_PENDENTE_CONFIRMACAO;
-    2: CorFont:= COR_CANCELADOS;
-    3: CorFont:= COR_CONFIRMADA_REALIZAR;
-    4: CorFont:= COR_CONFIRMADA_REALIZADA;
+  Case Int2StatusAtendimento(Uteis.Str2Num(StringGridMain.Cells[COL_STATUS, ARow])) Of
+       saPendenteConfirmacao: CorFont:= COR_PENDENTE_CONFIRMACAO;
+                 saCancelado: CorFont:= COR_CANCELADOS;
+    saConfirmadoNaoRealizado: CorFont:= COR_CONFIRMADA_REALIZAR;
+                 saRealizado: CorFont:= COR_CONFIRMADA_REALIZADA;
   End;
 
   Uteis.SetCorRowgrid(StringGridMain, CorFont, CorLinha, ACol, ARow, Rect, State);
@@ -302,9 +304,11 @@ begin
 
   Self.FGLB_ListaAtendimentos:= TAtendimento_List_M.Create();
 
-  Self.FGLB_ListaAtendimentos.Status:= 0;            // Filtrando por todos
+  Self.FGLB_ListaAtendimentos.Status:= saTodos;
   Self.FGLB_ListaAtendimentos.ProfissionalID:= frmMain.ProfissionalLogado.Id;
-  Self.FGLB_ListaAtendimentos.PacienteID:= 0;        // Exibindo atendimentos a todos os pacientes
+  Self.FGLB_ListaAtendimentos.ProfissionalNome:= frmMain.ProfissionalLogado.Nome;
+  Self.FGLB_ListaAtendimentos.PacienteID:= 0;
+  Self.FGLB_ListaAtendimentos.PacienteNome:= '';
 
   Self.FGLB_ListaFiltro:= TList<Integer>.Create();
 

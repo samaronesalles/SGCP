@@ -4,14 +4,14 @@ interface
 
 uses
   System.Classes, System.SysUtils, System.StrUtils, System.Generics.Collections,
-  U_ObjectList, U_Profissional_M, U_Agenda_M;
+  U_ObjectList, U_MeusTipos, U_Profissional_M, U_Agenda_M;
 
 type
   TAtendimento_M = class(TObject)
   private
     FId                                                                         : Longint;
     FDi                                                                         : String;
-    FStatus                                                                     : Longint;
+    FStatus                                                                     : TStatusAtendimentos;
     FDataHoraIni                                                                : TDateTime;
     FDataHoraFim                                                                : TDateTime;
     FAnotacoes                                                                  : String;
@@ -22,7 +22,7 @@ type
   public
     property Id                                                                 : Longint Read FId Write FId;
     property Di                                                                 : String Read FDi Write FDi;
-    property Status                                                             : Longint Read FStatus Write FStatus;
+    property Status                                                             : TStatusAtendimentos Read FStatus Write FStatus;
     property Agenda                                                             : TAgenda_M Read FAgenda Write FAgenda;
     property DataHoraIni                                                        : TDateTime Read FDataHoraIni Write FDataHoraIni;
     property DataHoraFim                                                        : TDateTime Read FDataHoraFim Write FDataHoraFim;
@@ -39,11 +39,7 @@ type
 
   TAtendimento_List_M = class(TObjectList)
   private
-    FStatus                                                                     : Longint;  // 0: Todos
-                                                                                            // 1: Pendente de confirmação
-                                                                                            // 2: Canceladas
-                                                                                            // 3: Confirmada não realizada
-                                                                                            // 4: Realizada
+    FStatus                                                                     : TStatusAtendimentos;
     FProfissionalID                                                             : Longint;
     FProfissionalNome                                                           : String;
     FPacienteID                                                                 : Longint;
@@ -51,7 +47,7 @@ type
 
     function endpoint_lista(var MetodoHttp: String): String;
   public
-    property Status                                                             : Longint Read FStatus Write FStatus;
+    property Status                                                             : TStatusAtendimentos Read FStatus Write FStatus;
     property ProfissionalID                                                     : Longint Read FProfissionalID Write FProfissionalID;
     property ProfissionalNome                                                   : String Read FProfissionalNome Write FProfissionalNome;
     property PacienteID                                                         : Longint Read FPacienteID Write FPacienteID;
@@ -63,7 +59,7 @@ type
     function FiltraLista(const De, Ate: TDateTime): TList<integer>;
 
     function ToJSON: String;
-    function GetStatusAtendimento(id: Longint): Longint;
+    function GetStatusAtendimento(id: Longint): TStatusAtendimentos;
 
     class function toList(const JSON: String): TAtendimento_List_M;
   end;
@@ -78,7 +74,7 @@ constructor TAtendimento_M.Create;
 begin
   Self.FId:= 0;
   Self.FDi:= '';
-  Self.FStatus:= 1;
+  Self.FStatus:= saPendenteConfirmacao;
   Self.FDataHoraIni:= 0;
   Self.FDataHoraFim:= 0;
   Self.FAnotacoes:= '';
@@ -152,7 +148,7 @@ begin
     Retorno:= TAtendimento_M.Create;
     Retorno.Id:= Str2Num(Uteis.ReturnValor_EmJSON(JSON, 'id'));
     Retorno.Di:= Uteis.ReturnValor_EmJSON(JSON, 'di');
-    Retorno.Status:= Uteis.Str2Num(Uteis.ReturnValor_EmJSON(JSON, 'status'));
+    Retorno.Status:= Int2StatusAtendimento(Uteis.Str2Num(Uteis.ReturnValor_EmJSON(JSON, 'status')));
     Retorno.Agenda:= TAgenda_M.ToObject(Uteis.ReturnValor_EmJSON(JSON, 'agenda'));
     Retorno.DataHoraIni:= Uteis.DateTimeUTC2TDatetime(DH_ini);
     Retorno.DataHoraFim:= Uteis.DateTimeUTC2TDatetime(DH_fim);
@@ -170,7 +166,7 @@ end;
 
 constructor TAtendimento_List_M.Create;
 begin
-  Self.FStatus:= 0;
+  Self.FStatus:= saTodos;
   Self.FProfissionalID:= 0;
   Self.FProfissionalNome:= '';
   Self.FPacienteID:= 0;
@@ -186,7 +182,7 @@ begin
 
   St:= 'atendimentos/lista/[status]/[profissional_id]/[paciente_id]';
 
-  Uteis.Substitua(St, '[status]', IntToStr(Self.FStatus));
+  Uteis.Substitua(St, '[status]', IntToStr(StatusAtendimento2Int(Self.FStatus)));
   Uteis.Substitua(St, '[profissional_id]', IntToStr(Self.FProfissionalID));
   Uteis.Substitua(St, '[paciente_id]', IntToStr(Self.FPacienteID));
 
@@ -214,7 +210,7 @@ begin
 
 end;
 
-function TAtendimento_List_M.GetStatusAtendimento(id: Longint): Longint;
+function TAtendimento_List_M.GetStatusAtendimento(id: Longint): TStatusAtendimentos;
 var
   C                                                 : Integer;
   Atendimento                                       : TAtendimento_M;
@@ -222,7 +218,7 @@ var
 begin
 
   try
-    Result:= 0;
+    Result:= saTodos;
 
     for Atendimento in Self do begin
       if Atendimento.Id <> id then
@@ -233,7 +229,7 @@ begin
     end;
 
   except
-    Result:= 0;
+    Result:= saTodos;
   end;
 
 end;
