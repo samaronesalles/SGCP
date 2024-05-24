@@ -47,7 +47,7 @@ type
     FProfissionalID                                                             : Longint;
     FPacienteID                                                                 : Longint;
 
-    function endpoint_lista(status, profissionalId, pacienteId: Longint; var MetodoHttp: String): String;
+    function endpoint_lista(var MetodoHttp: String): String;
   public
     property Status                                                             : Longint Read FStatus Write FStatus;
     property ProfissionalID                                                     : Longint Read FProfissionalID Write FProfissionalID;
@@ -55,7 +55,7 @@ type
 
     constructor Create;
 
-    function RetornoLista(status, profissionalId, pacienteId: Longint): Boolean;
+    function RetornoLista: Boolean;
     function FiltraLista(const De, Ate: TDateTime): TList<integer>;
 
     function ToJSON: String;
@@ -171,7 +171,7 @@ begin
   Self.FPacienteID:= 0;
 end;
 
-function TAtendimento_List_M.endpoint_lista(status, profissionalId, pacienteId: Longint; var MetodoHttp: String): String;
+function TAtendimento_List_M.endpoint_lista(var MetodoHttp: String): String;
 var
   St                                   : String;
 
@@ -180,9 +180,9 @@ begin
 
   St:= 'atendimentos/lista/[status]/[profissional_id]/[paciente_id]';
 
-  Uteis.Substitua(St, '[status]', IntToStr(status));
-  Uteis.Substitua(St, '[profissional_id]', IntToStr(profissionalId));
-  Uteis.Substitua(St, '[paciente_id]', IntToStr(pacienteId));
+  Uteis.Substitua(St, '[status]', IntToStr(Self.FStatus));
+  Uteis.Substitua(St, '[profissional_id]', IntToStr(Self.FProfissionalID));
+  Uteis.Substitua(St, '[paciente_id]', IntToStr(Self.FPacienteID));
 
   Result:= St
 end;
@@ -232,7 +232,7 @@ begin
 
 end;
 
-function TAtendimento_List_M.RetornoLista(status, profissionalId, pacienteId: Longint): Boolean;
+function TAtendimento_List_M.RetornoLista: Boolean;
 var
   Endpoint, Metodo                     : String;
   RespostaAPI                          : TConexaoAPI_M;
@@ -253,7 +253,7 @@ begin
 
   Try
     Try
-      Endpoint:= Self.endpoint_lista(status, profissionalId, pacienteId, Metodo);
+      Endpoint:= Self.endpoint_lista(Metodo);
 
       RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, '', 'Retornando lista de atendimentos. Aguarde!');
 

@@ -80,12 +80,15 @@ end;
 
 procedure TfrmConexaoAPI_V.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  inherited;
+
   frmConexaoAPI_V:= Nil;
   Action:= caFree;
 end;
 
 procedure TfrmConexaoAPI_V.FormCreate(Sender: TObject);
 begin
+  inherited;
 
   Self.FEndpoint:= '';
   Self.FMethod:= '';

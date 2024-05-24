@@ -55,7 +55,7 @@ var
 
 implementation
 
-uses Uteis, U_frmMain;
+uses Uteis, U_frmMain, U_AtendimentoFiltro_V;
 
 {$R *.dfm}
 
@@ -177,7 +177,7 @@ end;
 procedure TfrmAtendimentos_V.RetorneTodosAtendimentos;
 begin
   Self.FGLB_ListaAtendimentos.Clear();
-  Self.FGLB_ListaAtendimentos.RetornoLista(0, 0, 0);
+  Self.FGLB_ListaAtendimentos.RetornoLista();
 end;
 
 procedure TfrmAtendimentos_V.SpeedButton_DeleteClick(Sender: TObject);
@@ -221,10 +221,21 @@ begin
 end;
 
 procedure TfrmAtendimentos_V.SpeedButton_SearchClick(Sender: TObject);
+var
+  JsonFiltro                                                 : String;
+
 begin
   inherited;
 
-  Uteis.SayInfo('Em desenvolvimento: TfrmAtendimentos_V.SpeedButton_SearchClick()');
+  JsonFiltro:= frmAtendimentoFiltro_V.Execute(Self.FGLB_ListaAtendimentos.Status);
+
+  Self.FGLB_ListaAtendimentos.Status:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'status'));
+  Self.FGLB_ListaAtendimentos.ProfissionalID:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'profissionalId'));
+  Self.FGLB_ListaAtendimentos.PacienteID:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'pacienteId'));
+
+  RetorneTodosAtendimentos();
+  Refresh_StringGrid();
+
 end;
 
 procedure TfrmAtendimentos_V.StringGridMainDblClick(Sender: TObject);
@@ -277,6 +288,11 @@ begin
   inherited;
 
   Self.FGLB_ListaAtendimentos:= TAtendimento_List_M.Create();
+
+  Self.FGLB_ListaAtendimentos.Status:= 0;            // Filtrando por todos
+  Self.FGLB_ListaAtendimentos.ProfissionalID:= frmMain.ProfissionalLogado.Id;
+  Self.FGLB_ListaAtendimentos.PacienteID:= 0;        // Exibindo atendimentos a todos os pacientes
+
   Self.FGLB_ListaFiltro:= TList<Integer>.Create();
 
   Self.RetorneTodosAtendimentos();

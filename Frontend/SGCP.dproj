@@ -122,7 +122,6 @@
         <DCCReference Include="Libs\Conexao_API\U_ConexaoAPI_M.pas"/>
         <DCCReference Include="Libs\Conexao_API\U_ConexaoAPI_C.pas"/>
         <DCCReference Include="Libs\Profissional\U_Profissional_M.pas"/>
-        <DCCReference Include="Libs\Profissional\U_Profissional_C.pas"/>
         <DCCReference Include="Libs\U_ObjectList.pas"/>
         <DCCReference Include="Libs\Profissional\U_Profissional_V.pas">
             <Form>frmProfissionais_V</Form>
@@ -138,7 +137,6 @@
         </DCCReference>
         <DCCReference Include="Libs\U_ExceptionTratado.pas"/>
         <DCCReference Include="Libs\Paciente\U_Paciente_M.pas"/>
-        <DCCReference Include="Libs\Paciente\U_Paciente_C.pas"/>
         <DCCReference Include="Libs\Paciente\U_Paciente_V.pas">
             <Form>frmPacientes_V</Form>
             <FormType>dfm</FormType>
@@ -153,6 +151,14 @@
         </DCCReference>
         <DCCReference Include="Libs\Atendimento\U_Atendimento_M.pas"/>
         <DCCReference Include="Libs\Agenda\U_Agenda_M.pas"/>
+        <DCCReference Include="U_frmTemplateForm_Filtro.pas">
+            <Form>frmTemplateForm_Filtro</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Libs\Atendimento\U_AtendimentoFiltro_V.pas">
+            <Form>frmAtendimentoFiltro_V</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

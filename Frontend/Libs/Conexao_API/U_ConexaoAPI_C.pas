@@ -21,8 +21,7 @@ type
 
 implementation
 
-uses Uteis, U_Thr_API,
-     U_Profissional_C;
+uses Uteis, U_Thr_API;
 
 { TConexaoAPI_C }
 

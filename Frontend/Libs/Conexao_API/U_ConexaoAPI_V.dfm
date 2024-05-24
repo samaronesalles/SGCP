@@ -44,6 +44,8 @@ object frmConexaoAPI_V: TfrmConexaoAPI_V
     Align = alBottom
     Style = pbstMarquee
     TabOrder = 0
+    ExplicitTop = 100
+    ExplicitWidth = 503
   end
   object TimerStartUp: TTimer
     Enabled = False
