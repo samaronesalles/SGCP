@@ -167,6 +167,7 @@
             <Form>frmProfissionalDropList_V</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Libs\U_MeusTipos.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

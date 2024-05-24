@@ -27,7 +27,8 @@ uses
   U_frmTemplateForm_Filtro in 'U_frmTemplateForm_Filtro.pas' {frmTemplateForm_Filtro},
   U_AtendimentoFiltro_V in 'Libs\Atendimento\U_AtendimentoFiltro_V.pas' {frmAtendimentoFiltro_V},
   U_frmTemplateForm_DropList in 'U_frmTemplateForm_DropList.pas' {frmTemplateForm_DropList},
-  U_ProfissionalDropList_V in 'Libs\Profissional\U_ProfissionalDropList_V.pas' {frmProfissionalDropList_V};
+  U_ProfissionalDropList_V in 'Libs\Profissional\U_ProfissionalDropList_V.pas' {frmProfissionalDropList_V},
+  U_MeusTipos in 'Libs\U_MeusTipos.pas';
 
 {$R *.res}
 
