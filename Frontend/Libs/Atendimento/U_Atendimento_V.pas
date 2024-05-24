@@ -202,7 +202,7 @@ begin
 
   ItemLista:= Self.FGLB_ListaAtendimentos[Posicao];
 
-  if Uteis.SayQuestion('Cancelamento', 'Deseja realmente cancelar o atencimento do paciente "' + ItemLista.Agenda.Paciente.Nome + '"?', TMsgDlgType.mtConfirmation, mbYesNo, mrNo, 0) <> mrYes then
+  if Uteis.SayQuestion('Cancelamento', 'Deseja realmente cancelar o atendimento do paciente "' + ItemLista.Agenda.Paciente.Nome + '"?', TMsgDlgType.mtConfirmation, mbYesNo, mrNo, 0) <> mrYes then
     Exit;
 
   id:= ItemLista.Id;
@@ -227,11 +227,13 @@ var
 begin
   inherited;
 
-  JsonFiltro:= frmAtendimentoFiltro_V.Execute(Self.FGLB_ListaAtendimentos.Status);
+  JsonFiltro:= frmAtendimentoFiltro_V.Execute(Self.FGLB_ListaAtendimentos.Status, frmMain.ProfissionalLogado.Id, frmMain.ProfissionalLogado.Nome);
 
   Self.FGLB_ListaAtendimentos.Status:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'status'));
   Self.FGLB_ListaAtendimentos.ProfissionalID:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'profissionalId'));
+  Self.FGLB_ListaAtendimentos.ProfissionalNome:= Uteis.ReturnValor_EmJSON(JsonFiltro, 'profissionalNome');
   Self.FGLB_ListaAtendimentos.PacienteID:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'pacienteId'));
+  Self.FGLB_ListaAtendimentos.PacienteNome:= Uteis.ReturnValor_EmJSON(JsonFiltro, 'pacienteNome');
 
   RetorneTodosAtendimentos();
   Refresh_StringGrid();
@@ -263,7 +265,7 @@ begin
     4: CorFont:= COR_CONFIRMADA_REALIZADA;
   End;
 
-  Self.SetCorRowgrid(StringGridMain, CorFont, CorLinha, ACol, ARow, Rect, State);
+  Uteis.SetCorRowgrid(StringGridMain, CorFont, CorLinha, ACol, ARow, Rect, State);
 
 end;
 

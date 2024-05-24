@@ -294,7 +294,7 @@ begin
   CorLinha:= Self.GetCorCell(StringGridMain, ACol, ARow);
 
   if AnsiUpperCase(StringGridMain.Cells[COL_ATIVO, ARow]) = 'INATIVO' then
-    Self.SetCorRowgrid(StringGridMain, CorFont, CorLinha, ACol, ARow, Rect, State);
+    Uteis.SetCorRowgrid(StringGridMain, CorFont, CorLinha, ACol, ARow, Rect, State);
 
 end;
 

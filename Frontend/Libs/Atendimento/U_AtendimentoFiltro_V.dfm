@@ -1,16 +1,17 @@
 inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
   ClientHeight = 218
   ClientWidth = 539
-  ExplicitLeft = 3
-  ExplicitTop = 3
   ExplicitWidth = 551
   ExplicitHeight = 256
   TextHeight = 16
   inherited Panel1: TPanel
     Top = 155
     Width = 539
+    ExplicitTop = 146
+    ExplicitWidth = 533
     inherited Panel3: TPanel
       Left = 289
+      ExplicitLeft = 283
       inherited ButtonFiltrar: TButton
         OnClick = ButtonFiltrarClick
       end
@@ -19,10 +20,8 @@ inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
   inherited Panel2: TPanel
     Width = 539
     Height = 155
-    ExplicitLeft = -1
-    ExplicitTop = -5
-    ExplicitWidth = 640
-    ExplicitHeight = 248
+    ExplicitWidth = 533
+    ExplicitHeight = 146
     object Label1: TLabel
       Left = 16
       Top = 22
@@ -44,6 +43,34 @@ inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
       Height = 16
       Caption = 'Paciente:'
     end
+    object Label_idProfissional: TLabel
+      Left = 445
+      Top = 41
+      Width = 77
+      Height = 16
+      Caption = 'idProfissional'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      Visible = False
+    end
+    object Label_idPaciente: TLabel
+      Left = 461
+      Top = 83
+      Width = 61
+      Height = 16
+      Caption = 'idPaciente'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      Visible = False
+    end
     object ComboBox_FiltroStatus: TComboBox
       Left = 120
       Top = 19
@@ -58,21 +85,22 @@ inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
         'Confirmados e n'#227'o realizados'
         'Realizados')
     end
-    object ComboBox_FiltroProfissional: TComboBox
+    object Edit_FiltroProfissional: TEdit
       Left = 120
       Top = 57
-      Width = 400
+      Width = 402
       Height = 24
-      Style = csDropDownList
       TabOrder = 1
+      OnChange = Edit_FiltroProfissionalChange
+      OnExit = Edit_FiltroProfissionalExit
     end
-    object ComboBox_FiltroPaciente: TComboBox
+    object Edit_FiltroPaciente: TEdit
       Left = 120
       Top = 99
-      Width = 400
+      Width = 402
       Height = 24
-      Style = csDropDownList
       TabOrder = 2
+      OnChange = Edit_FiltroPacienteChange
     end
   end
 end

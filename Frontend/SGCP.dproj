@@ -159,6 +159,14 @@
             <Form>frmAtendimentoFiltro_V</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="U_frmTemplateForm_DropList.pas">
+            <Form>frmTemplateForm_DropList</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Libs\Profissional\U_ProfissionalDropList_V.pas">
+            <Form>frmProfissionalDropList_V</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, System.SysUtils, System.StrUtils, System.Generics.Collections,
-  U_ObjectList, U_Agenda_M;
+  U_ObjectList, U_Profissional_M, U_Agenda_M;
 
 type
   TAtendimento_M = class(TObject)
@@ -45,13 +45,17 @@ type
                                                                                             // 3: Confirmada não realizada
                                                                                             // 4: Realizada
     FProfissionalID                                                             : Longint;
+    FProfissionalNome                                                           : String;
     FPacienteID                                                                 : Longint;
+    FPacienteNome                                                               : String;
 
     function endpoint_lista(var MetodoHttp: String): String;
   public
     property Status                                                             : Longint Read FStatus Write FStatus;
     property ProfissionalID                                                     : Longint Read FProfissionalID Write FProfissionalID;
+    property ProfissionalNome                                                   : String Read FProfissionalNome Write FProfissionalNome;
     property PacienteID                                                         : Longint Read FPacienteID Write FPacienteID;
+    property PacienteNome                                                       : String Read FPacienteNome Write FPacienteNome;
 
     constructor Create;
 
@@ -168,7 +172,9 @@ constructor TAtendimento_List_M.Create;
 begin
   Self.FStatus:= 0;
   Self.FProfissionalID:= 0;
+  Self.FProfissionalNome:= '';
   Self.FPacienteID:= 0;
+  Self.FPacienteNome:= '';
 end;
 
 function TAtendimento_List_M.endpoint_lista(var MetodoHttp: String): String;

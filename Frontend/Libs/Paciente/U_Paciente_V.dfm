@@ -1,13 +1,13 @@
 inherited frmPacientes_V: TfrmPacientes_V
   Caption = 'Cadastro de pacientes'
+  ClientHeight = 730
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
-  ExplicitWidth = 1268
-  ExplicitHeight = 750
   TextHeight = 16
   inherited PanelButtons: TPanel
-    ExplicitTop = 633
-    ExplicitWidth = 1250
+    Top = 660
+    ExplicitTop = 651
+    ExplicitWidth = 1262
     inherited PanelLegenda: TPanel
       inherited Shape2: TShape
         Left = 99
@@ -35,8 +35,9 @@ inherited frmPacientes_V: TfrmPacientes_V
     end
   end
   inherited Panel1: TPanel
-    ExplicitWidth = 1250
-    ExplicitHeight = 592
+    Height = 619
+    ExplicitWidth = 1262
+    ExplicitHeight = 610
     inherited StringGridMain: TStringGrid
       Width = 1254
       Height = 599

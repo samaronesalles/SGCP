@@ -1,88 +1,84 @@
-object frmTemplateForm_Filtro: TfrmTemplateForm_Filtro
+object frmTemplateForm_DropList: TfrmTemplateForm_DropList
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
-  Caption = 'Filtro'
-  ClientHeight = 311
-  ClientWidth = 640
+  BorderStyle = bsDialog
+  Caption = 'Droplist'
+  ClientHeight = 442
+  ClientWidth = 628
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'Arial'
   Font.Style = []
-  KeyPreview = True
   Position = poScreenCenter
-  OnClose = FormClose
-  OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   TextHeight = 16
   object Panel1: TPanel
     Left = 0
-    Top = 248
-    Width = 640
-    Height = 63
+    Top = 417
+    Width = 628
+    Height = 25
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 239
-    ExplicitWidth = 634
-    object Panel3: TPanel
-      Left = 390
-      Top = 1
-      Width = 249
-      Height = 61
-      Align = alRight
-      BevelOuter = bvNone
-      TabOrder = 0
-      ExplicitLeft = 384
-      DesignSize = (
-        249
-        61)
-      object ButtonFiltrar: TButton
-        Left = 128
-        Top = 17
-        Width = 105
-        Height = 30
-        Anchors = [akTop, akRight]
-        Caption = '&Filtrar'
-        ImageIndex = 5
-        Images = ImageList_Icons
-        TabOrder = 0
-      end
-      object ButtonSair: TButton
-        Left = 13
-        Top = 17
-        Width = 100
-        Height = 30
-        Anchors = [akTop, akRight]
-        BiDiMode = bdLeftToRight
-        Caption = '&Sair'
-        ImageIndex = 4
-        Images = ImageList_Icons
-        ParentBiDiMode = False
-        TabOrder = 1
-        OnClick = ButtonSairClick
-      end
+    ExplicitTop = 408
+    ExplicitWidth = 622
+    object Label1: TLabel
+      Left = 8
+      Top = 4
+      Width = 117
+      Height = 16
+      Caption = 'Localizar (Ctrl + F)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 640
-    Height = 248
+    Width = 628
+    Height = 417
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 634
-    ExplicitHeight = 239
+    ExplicitWidth = 622
+    ExplicitHeight = 408
+    object StringGridMain: TStringGrid
+      Left = 1
+      Top = 1
+      Width = 626
+      Height = 415
+      Align = alClient
+      BevelOuter = bvNone
+      BorderStyle = bsNone
+      ColCount = 3
+      Ctl3D = True
+      FixedColor = clGray
+      FixedCols = 0
+      RowCount = 2
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goRangeSelect, goColSizing, goRowSelect, goFixedRowDefAlign]
+      ParentCtl3D = False
+      TabOrder = 0
+      OnDrawCell = StringGridMainDrawCell
+      OnKeyDown = StringGridMainKeyDown
+      ExplicitWidth = 620
+      ExplicitHeight = 406
+      ColWidths = (
+        130
+        130
+        128)
+    end
   end
   object ImageList_Icons: TImageList
     ColorDepth = cd32Bit
     DrawingStyle = dsTransparent
     Height = 24
     Width = 24
-    Left = 24
-    Top = 267
+    Left = 8
+    Top = 379
     Bitmap = {
       494C010106000800040018001800FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000003000000001002000000000000048
@@ -684,5 +680,10 @@ object frmTemplateForm_Filtro: TfrmTemplateForm_Filtro
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000}
+  end
+  object TimerStartUp: TTimer
+    OnTimer = TimerStartUpTimer
+    Left = 8
+    Top = 344
   end
 end

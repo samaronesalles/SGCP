@@ -34,7 +34,6 @@ type
     procedure ButtonSairClick(Sender: TObject);
 
     function  GetCorCell(Grid: TStringGrid; ACol, ARow: Integer): TColor;
-    procedure SetCorRowgrid(Grid: TStringGrid; CorFont, CorLinha: TColor; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
     procedure SpeedButton_DeleteClick(Sender: TObject);
     procedure StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure SpeedButton_SearchClick(Sender: TObject);
@@ -74,47 +73,6 @@ begin
   Result:= Grid.Canvas.Pixels[R.Left + 2, R.Top + 2];
 end;
 
-procedure TfrmTemplateForm_Main.SetCorRowgrid(Grid: TStringGrid; CorFont, CorLinha: TColor; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
-var
-  yCalc                                                                 : integer;
-  Texto                                                                 : String;
-  lCanvas                                                               : TCanvas;
-
-begin
-
-  { Salva em variáveis locais por questão de clareza do código }
-  texto:= Grid.Cells[ACol, ARow];
-  lCanvas:= Grid.Canvas;
-
-  if gdFixed in State then begin
-    { Cor do fonte e de fundo para linhas e colunas fixas }
-    lCanvas.Font.Color:= clWhite;
-    lCanvas.Font.Style:= [TFontStyle.fsBold];
-
-    lCanvas.Brush.Color:= Grid.FixedColor;
-  end else begin
-    if gdSelected in State then begin
-      { Cor do fonte e de fundo para linhas e colunas selecionadas }
-      lCanvas.Font.Color:= clWhite;
-      lCanvas.Brush.Color:= clHighlight;
-    end else begin
-      { Cor do fonte e de fundo para linhas e colunas com dados }
-      lCanvas.Font.Color:= CorFont;
-      lCanvas.Brush.Color:= CorLinha;
-    end;
-  end;
-
-  { Preenche com a cor de fundo }
-  lCanvas.FillRect(Rect);
-
-  { Calcula posição para centralizar o texto na vertical }
-  yCalc:= lCanvas.TextHeight (texto);
-  yCalc:= Rect.Top + (Rect.Bottom - Rect.Top - yCalc) div 2;
-
-  lCanvas.TextRect (Rect, Rect.Left + 3, yCalc, texto);
-
-end;
-
 procedure TfrmTemplateForm_Main.SpeedButton_AddClick(Sender: TObject);
 begin
   Application.ProcessMessages();
@@ -151,7 +109,7 @@ begin
     CorLinha:= CorLinhaImpar;
   end;
 
-  SetCorRowgrid(TStringGrid(Sender), CorFont, CorLinha, ACol, ARow, Rect, State);
+  Uteis.SetCorRowgrid(TStringGrid(Sender), CorFont, CorLinha, ACol, ARow, Rect, State);
 
 end;
 

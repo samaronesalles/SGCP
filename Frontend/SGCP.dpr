@@ -25,7 +25,9 @@ uses
   U_Atendimento_M in 'Libs\Atendimento\U_Atendimento_M.pas',
   U_Agenda_M in 'Libs\Agenda\U_Agenda_M.pas',
   U_frmTemplateForm_Filtro in 'U_frmTemplateForm_Filtro.pas' {frmTemplateForm_Filtro},
-  U_AtendimentoFiltro_V in 'Libs\Atendimento\U_AtendimentoFiltro_V.pas' {frmAtendimentoFiltro_V};
+  U_AtendimentoFiltro_V in 'Libs\Atendimento\U_AtendimentoFiltro_V.pas' {frmAtendimentoFiltro_V},
+  U_frmTemplateForm_DropList in 'U_frmTemplateForm_DropList.pas' {frmTemplateForm_DropList},
+  U_ProfissionalDropList_V in 'Libs\Profissional\U_ProfissionalDropList_V.pas' {frmProfissionalDropList_V};
 
 {$R *.res}
 

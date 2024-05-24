@@ -2,12 +2,10 @@ inherited frmProfissionais_V: TfrmProfissionais_V
   Caption = 'Cadastro de profissionais'
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
-  ExplicitWidth = 1268
-  ExplicitHeight = 750
   TextHeight = 16
   inherited PanelButtons: TPanel
-    ExplicitTop = 633
-    ExplicitWidth = 1250
+    ExplicitTop = 651
+    ExplicitWidth = 1262
     inherited PanelLegenda: TPanel
       Width = 184
       ExplicitWidth = 184
@@ -37,8 +35,8 @@ inherited frmProfissionais_V: TfrmProfissionais_V
     end
   end
   inherited Panel1: TPanel
-    ExplicitWidth = 1250
-    ExplicitHeight = 592
+    ExplicitWidth = 1262
+    ExplicitHeight = 610
     inherited StringGridMain: TStringGrid
       Width = 1254
       Height = 599
