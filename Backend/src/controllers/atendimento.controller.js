@@ -70,6 +70,8 @@ module.exports = {
 
             let Atendimento = await AtendimentoRepository.retornePeloID(id)
 
+            // TODO Implementar cryptografia das anotacoes (NO FRONTEND)
+
             const dados = {
                 di: uteis.new_uuid(),
                 datahora_inicio: datahora_inicio,

@@ -36,6 +36,8 @@ module.exports.retornePeloID = async function (id) {
         ],
     })
 
+    // TODO Implementar descryptografia das anotações (NO FRONTEND)
+
     return retorno
 
 }
@@ -73,4 +75,6 @@ module.exports.retorneTodos = async function (profissional_id, paciente_id) {
             ['datahora_inicio', 'asc']
         ],
     })
+
+    // TODO Implementar descryptografia das anotações (NO FRONTEND)
 }
