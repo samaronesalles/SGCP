@@ -41,7 +41,9 @@ module.exports = {
 
     async lista(req, res) {
         try {
-            const { status, profissional_id, paciente_id } = req.params
+            const { status, profissional_id, paciente_id, inicio_de, inicio_fim } = req.params
+
+            //TODO Implementar busca por período.
 
             let atendimentos = await AtendimentoRepository.retorneTodos(profissional_id, paciente_id)
 
@@ -56,6 +58,68 @@ module.exports = {
                 atendimentos = atendimentos.filter(e => e.status === parseInt(status))
 
             return res.status(200).json(mensagens.resultExternal(200, false, atendimentos))
+        } catch (error) {
+            return res.status(400).json(mensagens.resultError(error))
+        }
+    },
+
+    async editar(req, res) {
+        try {
+            const { id, di } = req.params
+            const { datahora_inicio, datahora_fim, anotacoes } = req.body
+
+            let Atendimento = await AtendimentoRepository.retornePeloID(id)
+
+            const dados = {
+                di: uteis.new_uuid(),
+                datahora_inicio: datahora_inicio,
+                datahora_fim: datahora_fim,
+                anotacoes: anotacoes
+            }
+
+            await Atendimento.update(dados, {
+                where: {
+                    id: id
+                },
+                returning: true,
+                plain: true
+            });
+
+            const status = define_status_atendimento(Atendimento)
+
+            Atendimento.dataValues["status"] = status
+
+            return res.status(200).json(mensagens.resultExternal(1001, false, Atendimento))
+        } catch (error) {
+            return res.status(400).json(mensagens.resultError(error))
+        }
+    },
+
+    async encerrar(req, res) {
+        try {
+            const { id, di } = req.params
+            const { datahora_fim } = req.body
+
+            let Atendimento = await AtendimentoRepository.retornePeloID(id)
+
+            const dados = {
+                di: uteis.new_uuid(),
+                datahora_fim: datahora_fim
+            }
+
+            await Atendimento.update(dados, {
+                where: {
+                    id: id
+                },
+                returning: true,
+                plain: true
+            });
+
+            const status = define_status_atendimento(Atendimento)
+
+            Atendimento.dataValues["status"] = status
+
+            return res.status(200).json(mensagens.resultExternal(1001, false, Atendimento))
         } catch (error) {
             return res.status(400).json(mensagens.resultError(error))
         }

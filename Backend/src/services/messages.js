@@ -50,9 +50,10 @@ module.exports.messagesDefault = {
     2515: { error: true, message: "O paciente já se encontra inativado." },
     2516: { error: true, message: "Ocorreu uma falha ao salvar a nova agenda. Tente novamente e caso a falha persista, entre em contato com o suporte." },
     2517: { error: true, message: 'O "username" informado já está sendo utilizado por outro profissional. Tente outro' },
-    // 2518: { error: true, message: "xxxxxx" },
+    2518: { error: true, message: "A data e hora do encerramento do atendimento não foi preenchida" },
     // 2519: { error: true, message: "xxxxxx" },
     // 2520: { error: true, message: "xxxxxx" },
+    // 2521: { error: true, message: "xxxxxx" },
 
 
     // 9999 = Reservado para "Retorno desconhecido"
