@@ -53,6 +53,16 @@ procedure SetCorRowgrid(Grid: TStringGrid; CorFont, CorLinha: TColor; ACol, ARow
 procedure StringGridDeleteRow (AStringGrid: TStringGrid; ARow: integer);
 procedure StringGridDelete_AllRows (AStringGrid: TStringGrid);
 
+function  RichEdit_GetText (FilePath: String; var RichEdit: TRichEdit): String;
+procedure RichEdit_SetText(Texto: String; var RichEdit: TRichEdit);
+
+function  READ_TXTFILE_FIELD (CaracterSeparador: Char; VAR Linha: String): String;
+procedure READ_TXTFILE_FIELDS (CaracterSeparador: Char; Linha: String; VAR Fields: TStringList);
+
+function  Qde_Pos (Subst: String; Texto: String): Longint;
+function  LastPos (Substr: String; S: String): Longint;
+function  FORMATPATH (Path: String): String;
+
 implementation
 
 function temConexaoDeInternet: Boolean;
@@ -378,6 +388,11 @@ begin
 end;
 
 function ConverteTextoToJson_ByOpcoes(Texto : String; NullSeVazio : Boolean) : String;
+var
+  i                                         : Integer;
+  C                                         : Char;
+  resultStr                                 : String;
+
 begin
 
   Result:= 'null';
@@ -388,10 +403,28 @@ begin
   If (Texto = '') AND NullSeVazio Then
     Exit;
 
-  Substitua(Texto, '\', '\\');
-  Substitua(Texto, '"', '\"');
+  resultStr := '';
 
-  Result:= '"' + Texto + '"';
+  for i:= 1 to Length(Texto) do begin
+    C:= Texto[i];
+
+    case C of
+      '"': resultStr := resultStr + '\"';
+      '\': resultStr := resultStr + '\\';
+      #8: resultStr := resultStr + '\b';   // backspace
+      #9: resultStr := resultStr + '\t';   // tab
+      #10: resultStr := resultStr + '\n';  // newline
+      #12: resultStr := resultStr + '\f';  // form feed
+      #13: resultStr := resultStr + '\r';  // carriage return
+      else
+        if Ord(C) < 32 then
+          resultStr := resultStr + '\u' + IntToHex(Ord(C), 4)
+        else
+          resultStr := resultStr + C;
+    end;
+  end;
+
+  Result:= '"' + resultStr + '"';
 
 end;
 
@@ -623,9 +656,195 @@ end;
 
 function MicroDesenv_Temporario: Boolean;
 const
-  DiaDeValidade = '21/05/2024';
+  DiaDeValidade = '17/06/2024';
 begin
-  Result:= ((MicroDesenvolvimento()) AND (Hoje() = DiaDeValidade));
+  Result:= ((MicroDesenvolvimento()) AND (StrToDateDef(Hoje(), 0) <= StrToDateDef(DiaDeValidade, 0)));
 end;
+
+function RichEdit_GetText (FilePath: String; var RichEdit: TRichEdit): String;
+var
+  Stream                     : TFileStream;
+  FileText                   : TStringlist;
+
+begin
+
+  Result:= '';
+
+  Stream:= Nil;
+  FileText:= Nil;
+
+  try
+    try
+      FileText:= Tstringlist.Create();
+
+      try
+        Stream:= TFileStream.Create(FilePath, fmCreate);
+        RichEdit.Lines.SaveToStream(Stream);
+      finally
+        Stream.Free();
+      end;
+
+      FileText.LoadFromFile(FilePath);
+      Result:= FileText.Text;
+    except
+      on E: Exception do begin
+        if MicroDesenvolvimento() then
+          SayError('"RichEdit_GetText" erro: ' + E.Message);
+
+        Result:= '';
+      end;
+    end;
+  finally
+    if FileExists(FilePath) then
+      DeleteFile(FilePath);
+
+    FileText.Free();
+  end;
+
+end;
+
+procedure RichEdit_SetText(Texto: String; var RichEdit: TRichEdit);
+var
+  Stream                     : TStringStream;
+
+begin
+
+  try
+    try
+      RichEdit.Lines.Clear();
+
+      Stream:= TStringStream.Create(Texto);
+
+      RichEdit.Lines.LoadFromStream(Stream);
+    except
+      RichEdit.Lines.Clear();
+    end;
+  finally
+    Stream.Free;
+  end;
+
+end;
+
+function READ_TXTFILE_FIELD (CaracterSeparador: Char; VAR Linha: String): String;
+var
+  Leitura                   : String;
+
+begin
+
+  Result:= '';
+
+  If Pos(CaracterSeparador, Linha) = 0 Then
+    Exit;
+
+  If Pos(CaracterSeparador, Linha) = 1 Then Begin
+    Delete(Linha, 1, 1);
+    Leitura:= Copy(Linha, 1, Pos(CaracterSeparador, Linha));
+
+    Delete(Leitura, Length(Leitura), 1);
+    Leitura:= Trim(Leitura);
+
+    Delete(Linha, 1, Pos(CaracterSeparador,Linha));
+    Result:= Leitura;
+  End Else Begin
+    Delete(Linha, 1, Pos(CaracterSeparador,Linha));
+  End;
+
+end;
+
+procedure READ_TXTFILE_FIELDS (CaracterSeparador: Char; Linha: String; VAR Fields: TStringList);
+var
+  St      : String;
+begin
+
+  Fields.Clear;
+
+  REPEAT
+    St:= Read_TXTFILE_FIEld(CaracterSeparador, Linha);
+    Fields.Add(St);
+  UNTIL (Linha = '') or (Pos(CaracterSeparador, Linha) = 0);
+
+end;
+
+function Qde_Pos (Subst: String; Texto: String): Longint;
+var
+  St                         : String;
+  Posicao, Qde               : Longint;
+
+begin
+
+  Result:= 0;
+
+  if Length(Subst) = 0 then
+    Exit;
+
+  if Length(Texto) = 0 then
+    Exit;
+
+  if Length(Subst)>Length(Texto) then
+    Exit;
+
+  Posicao:= 1;
+  Qde:= 0;
+
+  St:= '';
+  REPEAT
+    St:= St + Copy(Texto, Posicao, 1);
+
+    If Pos(Subst, St) <> 0 Then
+      Inc(Qde);
+
+    If Length(St) = Length(Subst) Then
+      Delete(St, 1, 1);
+
+    Inc(Posicao);
+  UNTIL Posicao > Length(Texto);
+
+  Result:= QDE;
+
+end;
+
+function LastPos (Substr: String; S: String): Longint;
+var
+  C              : Longint;
+  ToCheck        : String;
+
+begin
+
+  Result:= 0;
+
+  if Length(S) = 0 then
+    Exit;
+
+  C:= Length(S);
+  REPEAT
+    ToCheck:= Copy(S, C, Length(S) + 1);
+
+    if Pos(Substr, ToCheck) = 1 then begin
+      Result:= C;
+      Exit;
+    end;
+
+    Dec(C);
+  UNTIL C <= 0;
+
+end;
+
+function FORMATPATH(Path: String): String;
+var
+  CH                       : String[2];
+begin
+
+  CH:= Copy(Path, Length(Path), 1);
+
+  if Ch <> '\' then
+    Path:= Path + '\';
+
+  if Path = '\' then
+    Path:= '';
+
+  FormatPath:= Path;
+
+end;
+
 
 end.

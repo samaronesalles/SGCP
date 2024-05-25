@@ -41,6 +41,9 @@ type
   private
     { Private declarations }
 
+    FMainDir                                            : String;
+    FTempDir                                            : String;
+
     FDefaultStyleName                                   : String;
     FProfissionalLogado                                 : TProfissional_M;
 
@@ -48,11 +51,15 @@ type
 
     function  IsChildFormExist(InstanceClass: TFormClass): Boolean;
     procedure ShowChild(MainForm : TForm; InstanceClass: TFormClass; var Reference);
+
+    procedure CriaDiretorios;
   public
     { Public declarations }
 
     BufferStr                                           : String;
 
+    property MainDir                                    : String Read FMainDir;
+    property TempDir                                    : String Read FTempDir;
     property DefaultStyleName                           : String Read FdefaultStyleName Write SetDefaultStyleName;
     property ProfissionalLogado                         : TProfissional_M Read FProfissionalLogado Write FProfissionalLogado;
   end;
@@ -144,6 +151,14 @@ begin
 
 end;
 
+procedure TfrmMain.CriaDiretorios;
+begin
+
+  if not DirectoryExists(Self.FTempDir) then
+    MkDir(Self.FTempDir);
+
+end;
+
 procedure TfrmMain.erapeutas1Click(Sender: TObject);
 begin
   ShowChild(Self, TfrmProfissionais_V, frmProfissionais_V);
@@ -155,6 +170,9 @@ begin
   FDefaultStyleName:= '';
   if Assigned(TStyleManager.ActiveStyle) then
     FDefaultStyleName:= TStyleManager.ActiveStyle.Name;
+
+  Self.FMainDir:= ExtractFilePath(ParamStr(0));
+  Self.FTempDir:= Self.FMainDir + 'TEMP\';
 
   Self.FProfissionalLogado:= Nil;
 
@@ -180,6 +198,8 @@ var
 begin
 
   Timer_login.Enabled:= false;
+
+  CriaDiretorios();
 
   if not Uteis.temConexaoDeInternet() then begin
     uteis.SayError('Não foi encontrado conexão com internet. Verifique');

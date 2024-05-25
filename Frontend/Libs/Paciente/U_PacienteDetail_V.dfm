@@ -4,31 +4,29 @@ inherited frmPacienteDetail_V: TfrmPacienteDetail_V
   ClientWidth = 513
   OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  ExplicitLeft = 3
-  ExplicitTop = 3
   ExplicitWidth = 525
   ExplicitHeight = 307
   TextHeight = 16
   inherited pnBotoes: TPanel
     Top = 213
     Width = 513
-    ExplicitTop = 339
-    ExplicitWidth = 667
+    ExplicitTop = 204
+    ExplicitWidth = 507
     inherited ButtonProsseguir: TButton
-      Left = 379
+      Left = 373
       OnClick = ButtonProsseguirClick
-      ExplicitLeft = 533
+      ExplicitLeft = 367
     end
     inherited ButtonCancelar: TButton
-      Left = 264
-      ExplicitLeft = 418
+      Left = 258
+      ExplicitLeft = 252
     end
   end
   inherited pnDetalhe: TPanel
     Width = 513
     Height = 213
-    ExplicitWidth = 667
-    ExplicitHeight = 339
+    ExplicitWidth = 507
+    ExplicitHeight = 204
     object Label1: TLabel
       Left = 16
       Top = 16

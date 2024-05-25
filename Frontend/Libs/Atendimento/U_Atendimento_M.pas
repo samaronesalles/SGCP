@@ -19,6 +19,8 @@ type
 
     function endpoint_Retorno_PorID(VAR MetodoHttp: String): String;
     function endpoint_Novo(VAR MetodoHttp: String): String;
+    function endpoint_Edicao(var MetodoHttp: String): String;
+    function endpoint_Encerramento(var MetodoHttp: String): String;
   public
     property Id                                                                 : Longint Read FId Write FId;
     property Di                                                                 : String Read FDi Write FDi;
@@ -32,6 +34,7 @@ type
     destructor Destroy; override;
 
     function Save: Boolean;
+    function Encerrar: Boolean;
 
     function ToJSON: String;
     class function ToObject(const JSON: String): TAtendimento_M;
@@ -113,22 +116,170 @@ begin
 
 end;
 
-function TAtendimento_M.Save: Boolean;
+function TAtendimento_M.endpoint_Edicao(var MetodoHttp: String): String;
+var
+  St                                   : String;
+
 begin
-  // Código para salvar atendimentos avulsos (Sem agenda de origem)
+
+  MetodoHttp:= '';
+
+  if Self.FId <= 0 then
+    Exit;
+
+  St:= 'atendimentos/[id]/[di]';
+
+  Uteis.Substitua(St, '[id]', IntToStr(Self.FId));
+  Uteis.Substitua(St, '[di]', Self.Fdi);
+
+  MetodoHttp:= 'PUT';
+  Result:= St;
+
+end;
+
+function TAtendimento_M.endpoint_Encerramento(var MetodoHttp: String): String;
+var
+  St                                   : String;
+
+begin
+
+  MetodoHttp:= '';
+
+  if Self.FId <= 0 then
+    Exit;
+
+  St:= 'atendimentos/encerrar/[id]/[di]';
+
+  Uteis.Substitua(St, '[id]', IntToStr(Self.FId));
+  Uteis.Substitua(St, '[di]', Self.Fdi);
+
+  MetodoHttp:= 'PUT';
+  Result:= St;
+
+end;
+
+function TAtendimento_M.Save: Boolean;
+var
+  Endpoint, Metodo, Requisicao         : String;
+  RespostaAPI                          : TConexaoAPI_M;
+  Atendimento                          : TAtendimento_M;
+
+begin
+
+  Result:= FALSE;
+
+  RespostaAPI:= Nil;
+  Atendimento:= Nil;
+
+  Try
+    Try
+      Endpoint:= Self.endpoint_Edicao(Metodo);
+
+      Requisicao:= Self.ToJSON();
+
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, Requisicao, 'Salvando atendimento. Aguarde!');
+
+      If RespostaAPI = Nil Then
+        Exit;
+
+      If RespostaAPI.StatusCode_HTTP <> 200 Then
+        Exit;
+
+      Atendimento:= TAtendimento_M.ToObject(RespostaAPI.Data);
+      If Atendimento = Nil Then
+        Exit;
+
+      Self.Id:= Atendimento.Id;
+      Self.Di:= Atendimento.Di;
+      Self.Status:= Atendimento.Status;
+      Self.DataHoraIni:= Atendimento.DataHoraIni;
+      Self.DataHoraFim:= Atendimento.DataHoraFim;
+      Self.Anotacoes:= Atendimento.Anotacoes;
+
+      Result:= TRUE;
+    Except
+      On E: Exception Do
+        Raise;
+    End;
+  Finally
+    RespostaAPI.Free();
+    Atendimento.Free();
+  End;
+
+end;
+
+function TAtendimento_M.Encerrar: Boolean;
+var
+  Novo                                 : Boolean;
+  Endpoint, Metodo, Requisicao         : String;
+  RespostaAPI                          : TConexaoAPI_M;
+  Atendimento                          : TAtendimento_M;
+
+begin
+
+  Result:= FALSE;
+
+  RespostaAPI:= Nil;
+  Atendimento:= Nil;
+
+  Try
+    Try
+      Endpoint:= Self.endpoint_Encerramento(Metodo);
+
+      Requisicao:= '{"datahora_fim": ' + Uteis.ConverteTextoToJson(Uteis.DateTime2Str_UTC(Now())) + '}';
+
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, Requisicao, 'Encerrando atendimento. Aguarde!');
+
+      If RespostaAPI = Nil Then
+        Exit;
+
+      If RespostaAPI.StatusCode_HTTP <> 200 Then
+        Exit;
+
+      Atendimento:= TAtendimento_M.ToObject(RespostaAPI.Data);
+      If Atendimento = Nil Then
+        Exit;
+
+      Self.Id:= Atendimento.Id;
+      Self.Di:= Atendimento.Di;
+      Self.Status:= Atendimento.Status;
+      Self.DataHoraIni:= Atendimento.DataHoraIni;
+      Self.DataHoraFim:= Atendimento.DataHoraFim;
+      Self.Anotacoes:= Atendimento.Anotacoes;
+
+      Result:= TRUE;
+    Except
+      On E: Exception Do
+        Raise;
+    End;
+  Finally
+    RespostaAPI.Free();
+    Atendimento.Free();
+  End;
+
 end;
 
 function TAtendimento_M.ToJSON: String;
+var
+  textoAnotacoesToJSON                               : String;
+
 begin
 
-  Result:= '{' +
-               '"id": ' + IntToStr(Self.FId) + ',' +
-               '"di": ' + Uteis.ConverteTextoToJson(Self.FDi) + ',' +
-               '"agenda": ' + Self.FAgenda.ToJSON() + ',' +
-               '"datahora_inicio"' + Uteis.ConverteTextoToJson(Uteis.DateTime2Str_UTC(Self.FDataHoraIni)) + ',' +
-               '"datahora_fim"' + Uteis.ConverteTextoToJson(Uteis.DateTime2Str_UTC(Self.FDataHoraFim)) + ',' +
-               '"anotacoes": ' + Uteis.ConverteTextoToJson(Self.FAnotacoes) +
-           '}';
+  textoAnotacoesToJSON:= Uteis.ConverteTextoToJson(Self.FAnotacoes);
+
+//  try
+    Result:= '{' +
+                 '"id": ' + IntToStr(Self.FId) + ',' +
+                 '"di": ' + Uteis.ConverteTextoToJson(Self.FDi) + ',' +
+                 '"agenda": ' + Self.FAgenda.ToJSON() + ',' +
+                 '"datahora_inicio": ' + Uteis.ConverteTextoToJson(Uteis.DateTime2Str_UTC(Self.FDataHoraIni)) + ',' +
+                 '"datahora_fim": ' + Uteis.ConverteTextoToJson(Uteis.DateTime2Str_UTC(Self.FDataHoraFim)) + ',' +
+                 '"anotacoes": ' + textoAnotacoesToJSON +
+             '}';
+//  except
+//    on E: Exception do
+//      Uteis.SayError('Atendimento_M.ToJSON: ' + #13 + E.Message);
+//  end;
 
 end;
 

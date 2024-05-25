@@ -55,7 +55,7 @@ var
 
 implementation
 
-uses Uteis, U_frmMain, U_MeusTipos, U_AtendimentoFiltro_V;
+uses Uteis, U_frmMain, U_MeusTipos, U_AtendimentoFiltro_V, U_AtendimentoDetail_V;
 
 {$R *.dfm}
 
@@ -254,10 +254,39 @@ begin
 end;
 
 procedure TfrmAtendimentos_V.StringGridMainDblClick(Sender: TObject);
-begin
-  inherited;
+var
+  Posicao, id                    : Longint;
+  ItemLista, ItemEditado         : TAtendimento_M;
 
-  Uteis.SayInfo('Em desenvolvimento: TfrmAtendimentos_V.StringGridMainDblClick()');
+begin
+
+  ItemEditado:= Nil;
+
+  Posicao:= Str2Num(StringGridMain.Cells[COL_IDX_LISTA, StringGridMain.Row]);
+
+  if Posicao < 0 then
+    Exit;
+
+  if Self.FGLB_ListaAtendimentos = Nil then
+    Exit;
+
+  if Self.FGLB_ListaAtendimentos.Count = 0 then
+    Exit;
+
+  ItemLista:= Self.FGLB_ListaAtendimentos[Posicao];
+
+  if ItemLista.Status = saCancelado then begin
+    SayInfo('O atendimento selecionado está cancelado! Operação interrompida.');
+    Exit;
+  end;
+
+  if frmAtendimentoDetail_V.Execute(ItemLista) then
+    Self.FGLB_ListaAtendimentos[Posicao]:= ItemLista
+  else
+    RetorneTodosAtendimentos();
+
+  Refresh_StringGrid();
+
 end;
 
 procedure TfrmAtendimentos_V.StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);

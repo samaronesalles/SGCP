@@ -28,7 +28,8 @@ uses
   U_AtendimentoFiltro_V in 'Libs\Atendimento\U_AtendimentoFiltro_V.pas' {frmAtendimentoFiltro_V},
   U_frmTemplateForm_DropList in 'U_frmTemplateForm_DropList.pas' {frmTemplateForm_DropList},
   U_ProfissionalDropList_V in 'Libs\Profissional\U_ProfissionalDropList_V.pas' {frmProfissionalDropList_V},
-  U_MeusTipos in 'Libs\U_MeusTipos.pas';
+  U_MeusTipos in 'Libs\U_MeusTipos.pas',
+  U_AtendimentoDetail_V in 'Libs\Atendimento\U_AtendimentoDetail_V.pas' {frmAtendimentoDetail_V};
 
 {$R *.res}
 
