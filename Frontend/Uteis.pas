@@ -19,14 +19,25 @@ Procedure SayInfo(Texto: String);
 function  SayQuestion(const aCaption: String; const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons; DefButton: Integer; HelpCtx: Longint): Integer;
 
 function  Hoje: String;
+function  CheckDate(datastr: String): Boolean;
 function  DateTime2Str(dataHora: TDateTime): String;
 function  DateTime2Str_UTC(dataHora: TDateTime): String;
 function  DateTimeUTC2TDatetime(dataHoraSt: String): TDateTime;
+procedure RetornaDiasDaSemana (DataBase: TDate; var Seg, Ter, Qua, Qui, Sex, Sab, Dom: TDate);
+procedure RetornaIntervaloDaSemana (DataBase: TDate; var Seg, Dom: TDate);
+function  RetornaDiaSemanaNaSemana (DataBase: TDate; DiaSemanaDesejado: Word): TDate;
+function  FormatDate(data: String): String;
+
+function  CheckTime(Timestr: String): Boolean;
 
 function  BooleanToStr(BoolVar: Boolean): String;
 function  CharToBoolean (St: String): Boolean;
 
-function  Str2Num(NumSt: String): Longint;
+function  Replicate (xChar: String; xQtde: Word): String;
+
+function  FillLeft (tam, Num: Longint): String;
+function  isNum (Numero: String): Boolean;
+function  Str2Num (NumSt: String): Longint;
 
 function  GetJsonValue(JSON, ValorPesquisado: WideString; VAR Resposta, Erro: WideString): Boolean;
 function  ReturnValor_EmJSON(JSON, AtributoProcurado: String): String;
@@ -115,6 +126,16 @@ begin
 
 end;
 
+function CheckDate(datastr: String): Boolean;
+begin
+  Try
+    StrToDate(datastr);
+    Result:= TRUE
+  Except
+    Result:= FALSE;
+  End;
+end;
+
 function DateTime2Str(dataHora: TDateTime): String;
 begin
   Try
@@ -136,6 +157,197 @@ begin
   Except
     Result:= 0;
   End;
+end;
+
+procedure RetornaDiasDaSemana (DataBase: TDate; var Seg, Ter, Qua, Qui, Sex, Sab, Dom: TDate);
+begin
+
+  Seg:= 0;
+  Ter:= 0;
+  Qua:= 0;
+  Qui:= 0;
+  Sex:= 0;
+  Sab:= 0;
+  Dom:= 0;
+
+  if DataBase <= 0 then
+    Exit;
+
+  case DayOfTheWeek(DataBase) of
+       DayMonday: begin
+                    Seg:= DataBase;
+                    Ter:= IncDay(DataBase, 1);
+                    Qua:= IncDay(DataBase, 2);
+                    Qui:= IncDay(DataBase, 3);
+                    Sex:= IncDay(DataBase, 4);
+                    Sab:= IncDay(DataBase, 5);
+                    Dom:= IncDay(DataBase, 6);
+                  end;
+      DayTuesday: begin
+                    Seg:= IncDay(DataBase, -1);
+                    Ter:= DataBase;
+                    Qua:= IncDay(DataBase, 1);
+                    Qui:= IncDay(DataBase, 2);
+                    Sex:= IncDay(DataBase, 3);
+                    Sab:= IncDay(DataBase, 4);
+                    Dom:= IncDay(DataBase, 5);
+                  end;
+    DayWednesday: begin
+                    Seg:= IncDay(DataBase, -2);
+                    Ter:= IncDay(DataBase, -1);
+                    Qua:= DataBase;
+                    Qui:= IncDay(DataBase, 1);
+                    Sex:= IncDay(DataBase, 2);
+                    Sab:= IncDay(DataBase, 3);
+                    Dom:= IncDay(DataBase, 4);
+                  end;
+     DayThursday: begin
+                    Seg:= IncDay(DataBase, -3);
+                    Ter:= IncDay(DataBase, -2);
+                    Qua:= IncDay(DataBase, -1);
+                    Qui:= DataBase;
+                    Sex:= IncDay(DataBase, 1);
+                    Sab:= IncDay(DataBase, 2);
+                    Dom:= IncDay(DataBase, 3);
+                  end;
+       DayFriday: begin
+                    Seg:= IncDay(DataBase, -4);
+                    Ter:= IncDay(DataBase, -3);
+                    Qua:= IncDay(DataBase, -2);
+                    Qui:= IncDay(DataBase, -1);
+                    Sex:= DataBase;
+                    Sab:= IncDay(DataBase, 1);
+                    Dom:= IncDay(DataBase, 2);
+                  end;
+     DaySaturday: begin
+                    Seg:= IncDay(DataBase, -5);
+                    Ter:= IncDay(DataBase, -4);
+                    Qua:= IncDay(DataBase, -3);
+                    Qui:= IncDay(DataBase, -2);
+                    Sex:= IncDay(DataBase, -1);
+                    Sab:= DataBase;
+                    Dom:= IncDay(DataBase, 1);
+                  end;
+       DaySunday: begin
+                    Seg:= IncDay(DataBase, -6);
+                    Ter:= IncDay(DataBase, -5);
+                    Qua:= IncDay(DataBase, -4);
+                    Qui:= IncDay(DataBase, -3);
+                    Sex:= IncDay(DataBase, -2);
+                    Sab:= IncDay(DataBase, -1);
+                    Dom:= DataBase;
+                  end;
+  end;
+
+end;
+
+procedure RetornaIntervaloDaSemana (DataBase: TDate; var Seg, Dom: TDate);
+var
+  Ter, Qua, Qui, Sex, Sab       : TDate;
+begin
+  RetornaDiasDaSemana (Date(), Seg, Ter, Qua, Qui, Sex, Sab, Dom);
+end;
+
+function RetornaDiaSemanaNaSemana (DataBase: TDate; DiaSemanaDesejado: Word): TDate;
+var
+  Seg, Ter, Qua, Qui, Sex, Sab, Dom       : TDate;
+
+begin
+
+  Result:= 0;
+
+  if DataBase <= 0 then
+    Exit;
+
+  RetornaDiasDaSemana (DataBase, Seg, Ter, Qua, Qui, Sex, Sab, Dom);
+
+  case DiaSemanaDesejado of
+       DayMonday: Result:= Seg;
+      DayTuesday: Result:= Ter;
+    DayWednesday: Result:= Qua;
+     DayThursday: Result:= Qui;
+       DayFriday: Result:= Sex;
+     DaySaturday: Result:= Sab;
+       DaySunday: Result:= Dom;
+  end;
+
+end;
+
+function FormatDate(data: String): String;
+var
+  Dia, Mes, Ano       : Word;
+  Dt                  : String;
+
+begin
+
+  Result:= '';
+
+  if Data = '' then
+    Exit;
+
+  if (Pos('/', Data) = 0) AND (Length(Data) <> 8) then
+    Exit;
+
+  if Pos('/', Data) = 0 Then Begin
+    if NOT isNum(Data) Then
+      Exit;
+
+    Insert('/', Data, 3);
+    Insert('/', Data, 6);
+  end;
+
+  Repeat
+    if Pos(' ', Data) <> 0 then
+      Delete(Data, Pos(' ', Data), 1);
+  Until Pos(' ', Data) = 0;
+
+  Dia:= Str2Num(Copy(Data, 1, Pos('/', Data) - 1));
+  Delete(Data, 1, Pos('/', Data));
+
+  Mes:= Str2Num(Copy(Data, 1, Pos('/', Data) - 1));
+  Delete(Data, 1, Pos('/', Data));
+
+  Ano:= Str2Num(Data);
+
+  if (Dia = 0) AND (Mes = 0) then
+    if Ano = 0 then begin
+      Result:= Hoje;
+      Exit;
+    end;
+
+  if (Dia = 0) OR (Dia > 31) then
+    Dia:= Str2Num(Copy(Hoje, 1, 2));
+
+  if (Mes = 0) OR (Mes > 12) then
+    Mes:= Str2Num(Copy(Hoje, 4, 2));
+
+  if (Ano = 0) then
+    Ano:= Str2Num(Copy(Hoje, 9, 2));
+
+  if Ano < 1000 then begin
+    if Ano < 60 then
+      Ano:= Ano + 2000
+    else
+      Ano:= Ano + 1900;
+  end;
+
+  Dt:= FillLeft(2, Dia) + '/' + FillLeft(2, Mes) + '/' + FillLeft(4, Ano);
+
+  If Not CheckDate(Dt) Then
+    Dt:= Hoje;
+
+  Result:= Dt;
+
+end;
+
+function CheckTime(Timestr: String): Boolean;
+begin
+  try
+    StrToTime(Timestr);
+    Result:= TRUE;
+  except
+    Result:= FALSE;
+  end;
 end;
 
 { Exemplo: if SayQuestion( 'Please confirm', 'Do you want to format your harddisk now?', mtConfirmation, mbYesNoCancel, mrno, 0 ) = mrYes then }
@@ -846,5 +1058,55 @@ begin
 
 end;
 
+function Replicate (xChar: String; xQtde: Word): String;
+Var
+  X           : Word;
+  xRet        : String;
+
+Begin
+
+  Result:= '';
+
+  if xQtde = 0 then
+    Exit;
+
+  xRet:= '';
+  For x:= 1 to xQtde Do
+    xRet:= xRet + xChar;
+
+  Result:= xRet;
+
+End;
+
+function FillLeft (tam, Num: Longint): String;
+begin
+  Result:= FormatFloat(Replicate('0', tam), Num);
+end;
+
+// Retorna True se a string for um número e falso se não. (NAO Aceita negativo)
+function isNum (Numero: String): Boolean;
+var
+  C                         : Word;
+
+begin
+
+  if Length(Numero) = 0 then begin
+    Result:= False;
+    Exit;
+  end;
+
+  Result:= True;
+  C:= 1;
+
+  Repeat
+    if Pos(Numero[C], '0123456789') = 0 then begin
+      Result:= False;
+      Exit;
+    end;
+
+    Inc(C);
+  Until C > Length(Numero);
+
+END;
 
 end.

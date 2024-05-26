@@ -1,11 +1,13 @@
 inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
-  ClientHeight = 218
+  ClientHeight = 265
   ClientWidth = 539
+  ExplicitLeft = 3
+  ExplicitTop = 3
   ExplicitWidth = 551
-  ExplicitHeight = 256
+  ExplicitHeight = 303
   TextHeight = 16
   inherited Panel1: TPanel
-    Top = 155
+    Top = 202
     Width = 539
     ExplicitTop = 146
     ExplicitWidth = 533
@@ -19,9 +21,10 @@ inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
   end
   inherited Panel2: TPanel
     Width = 539
-    Height = 155
-    ExplicitWidth = 533
-    ExplicitHeight = 146
+    Height = 202
+    ExplicitTop = -5
+    ExplicitWidth = 539
+    ExplicitHeight = 223
     object Label1: TLabel
       Left = 16
       Top = 22
@@ -31,21 +34,21 @@ inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
     end
     object Label2: TLabel
       Left = 16
-      Top = 60
+      Top = 104
       Width = 71
       Height = 16
       Caption = 'Profissional:'
     end
     object Label3: TLabel
       Left = 16
-      Top = 102
+      Top = 146
       Width = 55
       Height = 16
       Caption = 'Paciente:'
     end
     object Label_idProfissional: TLabel
       Left = 445
-      Top = 41
+      Top = 85
       Width = 77
       Height = 16
       Caption = 'idProfissional'
@@ -59,7 +62,7 @@ inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
     end
     object Label_idPaciente: TLabel
       Left = 461
-      Top = 83
+      Top = 127
       Width = 61
       Height = 16
       Caption = 'idPaciente'
@@ -71,10 +74,24 @@ inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
       ParentFont = False
       Visible = False
     end
+    object Label4: TLabel
+      Left = 16
+      Top = 64
+      Width = 102
+      Height = 16
+      Caption = 'Agendados entre:'
+    end
+    object Label5: TLabel
+      Left = 263
+      Top = 64
+      Width = 20
+      Height = 16
+      Caption = 'At'#233
+    end
     object ComboBox_FiltroStatus: TComboBox
-      Left = 120
+      Left = 134
       Top = 19
-      Width = 220
+      Width = 207
       Height = 24
       Style = csDropDownList
       TabOrder = 0
@@ -86,22 +103,66 @@ inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
         'Realizados')
     end
     object Edit_FiltroProfissional: TEdit
-      Left = 120
-      Top = 57
-      Width = 402
+      Left = 134
+      Top = 101
+      Width = 389
       Height = 24
-      TabOrder = 1
+      TabOrder = 5
       OnChange = Edit_FiltroProfissionalChange
       OnExit = Edit_FiltroProfissionalExit
     end
     object Edit_FiltroPaciente: TEdit
-      Left = 120
-      Top = 99
-      Width = 402
+      Left = 134
+      Top = 143
+      Width = 389
       Height = 24
-      TabOrder = 2
+      TabOrder = 6
       OnChange = Edit_FiltroPacienteChange
       OnExit = Edit_FiltroPacienteExit
+    end
+    object MaskEdit_Data_InicioDe: TMaskEdit
+      Left = 134
+      Top = 61
+      Width = 75
+      Height = 24
+      EditMask = '!99/99/9999;1;_'
+      MaxLength = 10
+      TabOrder = 1
+      Text = '  /  /    '
+      OnExit = MaskEdit_Data_InicioDeExit
+    end
+    object MaskEdit_Data_InicioAte: TMaskEdit
+      Left = 289
+      Top = 61
+      Width = 75
+      Height = 24
+      EditMask = '!99/99/9999;1;_'
+      MaxLength = 10
+      TabOrder = 3
+      Text = '  /  /    '
+      OnExit = MaskEdit_Data_InicioAteExit
+    end
+    object MaskEdit_Hora_InicioDe: TMaskEdit
+      Left = 215
+      Top = 61
+      Width = 42
+      Height = 24
+      EditMask = '!99:99;1;_'
+      MaxLength = 5
+      TabOrder = 2
+      Text = '  :  '
+      OnExit = MaskEdit_Hora_InicioDeExit
+    end
+    object MaskEdit_Hora_InicioAte: TMaskEdit
+      Left = 370
+      Top = 61
+      Width = 42
+      Height = 24
+      EditMask = '!99:99;1;_'
+      MaxLength = 5
+      TabOrder = 4
+      Text = '  :  '
+      OnExit = MaskEdit_Hora_InicioAteExit
     end
   end
 end

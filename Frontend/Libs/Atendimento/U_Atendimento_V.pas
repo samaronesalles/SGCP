@@ -60,13 +60,20 @@ uses Uteis, U_frmMain, U_MeusTipos, U_AtendimentoFiltro_V, U_AtendimentoDetail_V
 {$R *.dfm}
 
 procedure TfrmAtendimentos_V.ButtonLimparFiltroClick(Sender: TObject);
+var
+  Seg, Dom                             : TDate;
+
 begin
   inherited;
 
   if Uteis.SayQuestion('Filtro', 'Deseja realmente limpar o filtro aplicado?', TMsgDlgType.mtConfirmation, mbYesNo, mrNo, 0) <> mrYes then
     Exit;
 
+  Uteis.RetornaIntervaloDaSemana (Date(), Seg, Dom);
+
   Self.FGLB_ListaAtendimentos.Status:= saTodos;
+  Self.FGLB_ListaAtendimentos.InicioDe:= StrToDateTime(DateToStr(Seg) + ' 00:00');
+  Self.FGLB_ListaAtendimentos.InicioAte:= StrToDateTime(DateToStr(Dom) + ' 23:59');
   Self.FGLB_ListaAtendimentos.ProfissionalID:= 0;
   Self.FGLB_ListaAtendimentos.ProfissionalNome:= '';
   Self.FGLB_ListaAtendimentos.PacienteID:= 0;
@@ -240,9 +247,14 @@ var
 begin
   inherited;
 
-  JsonFiltro:= frmAtendimentoFiltro_V.Execute(Self.FGLB_ListaAtendimentos.Status, Self.FGLB_ListaAtendimentos.ProfissionalID, Self.FGLB_ListaAtendimentos.ProfissionalNome);
+  JsonFiltro:= frmAtendimentoFiltro_V.Execute(Self.FGLB_ListaAtendimentos);
+
+  if Trim(JsonFiltro) = '' then
+    Exit;
 
   Self.FGLB_ListaAtendimentos.Status:= Int2StatusAtendimento(Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'status')));
+  Self.FGLB_ListaAtendimentos.InicioDe:= Uteis.DateTimeUTC2TDatetime(Uteis.ReturnValor_EmJSON(JsonFiltro, 'inicioDe'));
+  Self.FGLB_ListaAtendimentos.InicioAte:= Uteis.DateTimeUTC2TDatetime(Uteis.ReturnValor_EmJSON(JsonFiltro, 'inicioAte'));
   Self.FGLB_ListaAtendimentos.ProfissionalID:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'profissionalId'));
   Self.FGLB_ListaAtendimentos.ProfissionalNome:= Uteis.ReturnValor_EmJSON(JsonFiltro, 'profissionalNome');
   Self.FGLB_ListaAtendimentos.PacienteID:= Str2Num(Uteis.ReturnValor_EmJSON(JsonFiltro, 'pacienteId'));
@@ -328,12 +340,19 @@ begin
 end;
 
 procedure TfrmAtendimentos_V.TimerStartUpTimer(Sender: TObject);
+var
+  Seg, Dom                           : TDate;
+
 begin
   inherited;
+
+  Uteis.RetornaIntervaloDaSemana (Date(), Seg, Dom);
 
   Self.FGLB_ListaAtendimentos:= TAtendimento_List_M.Create();
 
   Self.FGLB_ListaAtendimentos.Status:= saTodos;
+  Self.FGLB_ListaAtendimentos.InicioDe:= StrToDateTime(DateToStr(Seg) + ' 00:00');
+  Self.FGLB_ListaAtendimentos.InicioAte:= StrToDateTime(DateToStr(Dom) + ' 23:59');
   Self.FGLB_ListaAtendimentos.ProfissionalID:= frmMain.ProfissionalLogado.Id;
   Self.FGLB_ListaAtendimentos.ProfissionalNome:= frmMain.ProfissionalLogado.Nome;
   Self.FGLB_ListaAtendimentos.PacienteID:= 0;

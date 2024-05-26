@@ -39,6 +39,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'SGCP - Sistema Gerencial de Consultórios Psi';
   Application.CreateForm(TfrmMain, frmMain);
-  Application.CreateForm(TfrmPacienteDropList_V, frmPacienteDropList_V);
   Application.Run;
 end.

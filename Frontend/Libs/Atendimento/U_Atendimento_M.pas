@@ -43,6 +43,8 @@ type
   TAtendimento_List_M = class(TObjectList)
   private
     FStatus                                                                     : TStatusAtendimentos;
+    FInicioDe                                                                   : TDateTime;
+    FInicioAte                                                                  : TDateTime;
     FProfissionalID                                                             : Longint;
     FProfissionalNome                                                           : String;
     FPacienteID                                                                 : Longint;
@@ -51,6 +53,8 @@ type
     function endpoint_lista(var MetodoHttp: String): String;
   public
     property Status                                                             : TStatusAtendimentos Read FStatus Write FStatus;
+    property InicioDe                                                           : TDateTime Read FInicioDe Write FInicioDe;
+    property InicioAte                                                          : TDateTime Read FInicioAte Write FInicioAte;
     property ProfissionalID                                                     : Longint Read FProfissionalID Write FProfissionalID;
     property ProfissionalNome                                                   : String Read FProfissionalNome Write FProfissionalNome;
     property PacienteID                                                         : Longint Read FPacienteID Write FPacienteID;
@@ -318,6 +322,8 @@ end;
 constructor TAtendimento_List_M.Create;
 begin
   Self.FStatus:= saTodos;
+  Self.FInicioDe:= 0;
+  Self.FInicioAte:= 0;
   Self.FProfissionalID:= 0;
   Self.FProfissionalNome:= '';
   Self.FPacienteID:= 0;
@@ -331,9 +337,11 @@ var
 begin
   MetodoHttp:= 'GET';
 
-  St:= 'atendimentos/lista/[status]/[profissional_id]/[paciente_id]';
+  St:= 'atendimentos/lista/[status]/[profissional_id]/[paciente_id]/[inicio_de]/[inicio_ate]';
 
   Uteis.Substitua(St, '[status]', IntToStr(StatusAtendimento2Int(Self.FStatus)));
+  Uteis.Substitua(St, '[inicio_de]', Uteis.DateTime2Str_UTC(Self.FInicioDe));
+  Uteis.Substitua(St, '[inicio_ate]', Uteis.DateTime2Str_UTC(Self.FInicioAte));
   Uteis.Substitua(St, '[profissional_id]', IntToStr(Self.FProfissionalID));
   Uteis.Substitua(St, '[paciente_id]', IntToStr(Self.FPacienteID));
 
