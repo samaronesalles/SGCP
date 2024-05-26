@@ -43,8 +43,6 @@ module.exports = {
         try {
             const { status, profissional_id, paciente_id, inicio_de, inicio_ate } = req.params
 
-            //TODO Implementar busca por período.
-
             let atendimentos = await AtendimentoRepository.retorneTodos(profissional_id, paciente_id, inicio_de, inicio_ate)
 
             atendimentos = atendimentos.map(e => {
@@ -66,7 +64,7 @@ module.exports = {
     async editar(req, res) {
         try {
             const { id, di } = req.params
-            const { datahora_inicio, datahora_fim, anotacoes } = req.body
+            const { anotacoes } = req.body
 
             let Atendimento = await AtendimentoRepository.retornePeloID(id)
 
@@ -74,8 +72,6 @@ module.exports = {
 
             const dados = {
                 di: uteis.new_uuid(),
-                datahora_inicio: datahora_inicio,
-                datahora_fim: datahora_fim,
                 anotacoes: anotacoes
             }
 

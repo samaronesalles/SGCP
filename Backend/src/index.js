@@ -17,6 +17,8 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+//TODO Implementar autenticação por token JWT, registrar dados do profissional locado na request.
+
 app.use('/api', routes)
 app.use(middlewareErrors)
 

@@ -4,18 +4,9 @@ const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js')
 const mensagens = require(path.resolve(__dirname, '../', '../', 'services', 'messages.js'))
 const AtendimentoRepository = require(path.resolve(__dirname, '../', '../', 'models', 'repositories', 'atendimento.repository.js'))
 
-module.exports.nova = function (req, res, next) {
-
-    //TODO Validar se campos obrigatórios estáo preenchidos;
-
-    // if (uteis.strEmpty(req.body.nome))
-    //     return res.status(400).json(mensagens.resultDefault(2511))
-
-    next()
-}
-
 module.exports.editar = async function (req, res, next) {
     const { id, di } = req.params
+    const { anotacoes } = req.body
 
     let registro = await AtendimentoRepository.retornePeloID(id)
 
@@ -27,8 +18,14 @@ module.exports.editar = async function (req, res, next) {
             break;
     }
 
-    //TODO Validar se o atendimento já está encerrado, se estiver, não permitir edição.
-    //TODO Validar se o atendimento está com sua agenda cancelada, se estiver, não permitir edição.
+    if (registro?.datahora_fim > 0)
+        return res.status(400).json(mensagens.resultDefault(2519))
+
+    if (!anotacoes)
+        return res.status(400).json(mensagens.resultDefault(2520))
+
+    if (!registro?.agenda?.ativo)
+        return res.status(400).json(mensagens.resultDefault(2521))
 
     next()
 }
