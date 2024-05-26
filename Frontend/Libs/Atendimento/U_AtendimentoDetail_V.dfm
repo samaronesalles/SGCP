@@ -5,8 +5,6 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
   KeyPreview = False
   OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  ExplicitLeft = 3
-  ExplicitTop = 3
   ExplicitWidth = 809
   ExplicitHeight = 727
   TextHeight = 16
@@ -14,7 +12,7 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
     Top = 633
     Width = 797
     ExplicitTop = 624
-    ExplicitWidth = 794
+    ExplicitWidth = 791
     DesignSize = (
       797
       56)
@@ -40,7 +38,7 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = 545
+      ExplicitLeft = 542
       DesignSize = (
         248
         54)
@@ -72,18 +70,18 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
       end
     end
     inherited ButtonCancelar: TButton [2]
-      Left = -2138
+      Left = -2144
       Caption = '&Salvar'
       Visible = False
-      ExplicitLeft = -2141
+      ExplicitLeft = -2150
     end
     inherited ButtonProsseguir: TButton [3]
-      Left = -2138
+      Left = -2144
       Caption = '&Salvar'
       TabOrder = 2
       Visible = False
       OnClick = ButtonProsseguirClick
-      ExplicitLeft = -2141
+      ExplicitLeft = -2150
     end
   end
   inherited pnDetalhe: TPanel
@@ -91,7 +89,7 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
     Width = 797
     Height = 566
     ExplicitTop = 67
-    ExplicitWidth = 794
+    ExplicitWidth = 791
     ExplicitHeight = 557
     object Label1: TLabel
       Left = 8
@@ -103,21 +101,23 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
     object PanelEditor: TPanel
       Left = 8
       Top = 28
-      Width = 781
+      Width = 775
       Height = 529
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 0
+      ExplicitWidth = 769
+      ExplicitHeight = 520
       object ToolBarTextEditor: TToolBar
         Left = 1
         Top = 1
-        Width = 779
+        Width = 773
         Height = 24
         AutoSize = True
         Caption = 'ToolBarTextEditor'
         Flat = False
         Images = ImageListTollBar
         TabOrder = 0
-        ExplicitWidth = 758
+        ExplicitWidth = 767
         object ComboBox2: TComboBox
           Left = 0
           Top = 0
@@ -261,7 +261,7 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
       object RichEdit_Texto: TRichEdit
         Left = 1
         Top = 25
-        Width = 779
+        Width = 773
         Height = 503
         Align = alClient
         Font.Charset = ANSI_CHARSET
@@ -274,6 +274,8 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
         TabOrder = 1
         OnClick = RichEdit_TextoClick
         OnKeyUp = RichEdit_TextoKeyUp
+        ExplicitWidth = 767
+        ExplicitHeight = 494
       end
     end
   end
@@ -284,8 +286,7 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
     Height = 67
     Align = alTop
     TabOrder = 2
-    ExplicitTop = -6
-    ExplicitWidth = 800
+    ExplicitWidth = 791
     DesignSize = (
       797
       67)
@@ -308,7 +309,7 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
       OnClick = ButtonEncerrarAtendimentoClick
     end
     object Button3: TButton
-      Left = 684
+      Left = 678
       Top = 22
       Width = 98
       Height = 25
@@ -318,6 +319,7 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
       Images = ImageList_Icons
       TabOrder = 2
       OnClick = Button3Click
+      ExplicitLeft = 672
     end
   end
   inherited ImageList_Icons: TImageList

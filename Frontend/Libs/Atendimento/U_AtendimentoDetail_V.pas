@@ -332,6 +332,8 @@ begin
     setAtendimentoSomenteLeituraOuNao(TRUE);
   end;
 
+  RichEdit_Texto.SetFocus();
+
 end;
 
 procedure TfrmAtendimentoDetail_V.RichEdit_TextoClick(Sender: TObject);

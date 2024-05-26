@@ -170,9 +170,9 @@ begin
       StringGridMain.Cells[COL_ID, Row]:= IntToStr(Atendimento.Id);
       StringGridMain.Cells[COL_PROFISSIONAL, Row]:= Atendimento.Agenda.Profissional.Nome;
       StringGridMain.Cells[COL_PACIENTE, Row]:= Atendimento.Agenda.Paciente.Nome;
-      StringGridMain.Cells[COL_DATA, Row]:= Copy(DateTime2Str(Atendimento.DataHoraIni), 1, 10);
-      StringGridMain.Cells[COL_HORA_AGENDADA, Row]:= Copy(DateTime2Str(Atendimento.DataHoraIni), 12, 5);
-      StringGridMain.Cells[COL_HORA_REALIZADA, Row]:= '';
+      StringGridMain.Cells[COL_DATA, Row]:= formatDateTime('dd/mm/yyyy', Atendimento.DataHoraIni);
+      StringGridMain.Cells[COL_HORA_AGENDADA, Row]:= formatDateTime('hh:nn', Atendimento.DataHoraIni);
+      StringGridMain.Cells[COL_HORA_REALIZADA, Row]:= iff(Atendimento.DataHoraFim > 0, formatDateTime('hh:nn', Atendimento.DataHoraFim), '');
       StringGridMain.Cells[COL_STATUS, Row]:= IntToStr(StatusAtendimento2Int(Atendimento.Status));
       StringGridMain.Cells[COL_IDX_LISTA, Row]:= IntToStr(C);
 
