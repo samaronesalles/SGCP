@@ -22,6 +22,7 @@ type
     procedure Edit_FiltroProfissionalExit(Sender: TObject);
     procedure Edit_FiltroProfissionalChange(Sender: TObject);
     procedure Edit_FiltroPacienteChange(Sender: TObject);
+    procedure Edit_FiltroPacienteExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -35,7 +36,7 @@ var
 
 implementation
 
-uses U_frmMain, Uteis, U_ProfissionalDropList_V;
+uses U_frmMain, Uteis, U_ProfissionalDropList_V, U_PacienteDropList_V;
 
 {$R *.dfm}
 
@@ -53,8 +54,8 @@ begin
   profissionalId:= iff(Str2Num(Label_idProfissional.Caption) <= 0, 0, Str2Num(Label_idProfissional.Caption));
   profissionalNome:= Edit_FiltroProfissional.Text;
 
-  pacienteId:= 0;
-  pacienteNome:= '';
+  pacienteId:= iff(Str2Num(Label_idPaciente.Caption) <= 0, 0, Str2Num(Label_idPaciente.Caption));
+  pacienteNome:= Edit_FiltroPaciente.Text;
 
   frmMain.BufferStr:= '{' +
                           '"status": ' + IntToStr(Status) + ',' +
@@ -74,6 +75,33 @@ begin
 
   if Edit_FiltroPaciente.Focused then
     Label_idPaciente.Caption:= '0';
+
+end;
+
+procedure TfrmAtendimentoFiltro_V.Edit_FiltroPacienteExit(Sender: TObject);
+var
+  id                                        : Longint;
+  JSON_Selecionado, nome                    : String;
+
+begin
+  inherited;
+
+  if Str2Num(Label_idPaciente.Caption) > 0 then
+    Exit;
+
+  if Edit_FiltroPaciente.Text = '' then
+    Exit;
+
+  JSON_Selecionado:= frmPacienteDropList_V.Execute();
+
+  id:= Str2Num(Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'id'));
+  nome:= Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'nome');
+
+  if id <= 0 then
+    Exit;
+
+  Edit_FiltroPaciente.Text:= nome;
+  Label_idPaciente.Caption:= IntToStr(id);
 
 end;
 

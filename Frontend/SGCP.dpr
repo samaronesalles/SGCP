@@ -29,7 +29,8 @@ uses
   U_frmTemplateForm_DropList in 'U_frmTemplateForm_DropList.pas' {frmTemplateForm_DropList},
   U_ProfissionalDropList_V in 'Libs\Profissional\U_ProfissionalDropList_V.pas' {frmProfissionalDropList_V},
   U_MeusTipos in 'Libs\U_MeusTipos.pas',
-  U_AtendimentoDetail_V in 'Libs\Atendimento\U_AtendimentoDetail_V.pas' {frmAtendimentoDetail_V};
+  U_AtendimentoDetail_V in 'Libs\Atendimento\U_AtendimentoDetail_V.pas' {frmAtendimentoDetail_V},
+  U_PacienteDropList_V in 'Libs\Paciente\U_PacienteDropList_V.pas' {frmPacienteDropList_V};
 
 {$R *.res}
 
@@ -38,5 +39,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'SGCP - Sistema Gerencial de Consultórios Psi';
   Application.CreateForm(TfrmMain, frmMain);
+  Application.CreateForm(TfrmPacienteDropList_V, frmPacienteDropList_V);
   Application.Run;
 end.

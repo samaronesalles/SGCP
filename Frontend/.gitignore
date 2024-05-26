@@ -50,5 +50,6 @@
 
 # Delphi history and backups
 __history/
+__recovery/
 Win32/
 *.~*

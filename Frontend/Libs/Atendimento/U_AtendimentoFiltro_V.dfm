@@ -101,6 +101,7 @@ inherited frmAtendimentoFiltro_V: TfrmAtendimentoFiltro_V
       Height = 24
       TabOrder = 2
       OnChange = Edit_FiltroPacienteChange
+      OnExit = Edit_FiltroPacienteExit
     end
   end
 end

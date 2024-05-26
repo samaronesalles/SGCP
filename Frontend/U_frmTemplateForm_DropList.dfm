@@ -3,8 +3,8 @@ object frmTemplateForm_DropList: TfrmTemplateForm_DropList
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Droplist'
-  ClientHeight = 442
-  ClientWidth = 628
+  ClientHeight = 462
+  ClientWidth = 488
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object frmTemplateForm_DropList: TfrmTemplateForm_DropList
   TextHeight = 16
   object Panel1: TPanel
     Left = 0
-    Top = 417
-    Width = 628
+    Top = 437
+    Width = 488
     Height = 25
     Align = alBottom
     TabOrder = 0
@@ -40,8 +40,8 @@ object frmTemplateForm_DropList: TfrmTemplateForm_DropList
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 628
-    Height = 417
+    Width = 488
+    Height = 437
     Align = alClient
     TabOrder = 1
     ExplicitWidth = 622
@@ -49,12 +49,12 @@ object frmTemplateForm_DropList: TfrmTemplateForm_DropList
     object StringGridMain: TStringGrid
       Left = 1
       Top = 1
-      Width = 626
-      Height = 415
+      Width = 486
+      Height = 435
       Align = alClient
       BevelOuter = bvNone
       BorderStyle = bsNone
-      ColCount = 3
+      ColCount = 2
       Ctl3D = True
       FixedColor = clGray
       FixedCols = 0
@@ -67,9 +67,8 @@ object frmTemplateForm_DropList: TfrmTemplateForm_DropList
       ExplicitWidth = 620
       ExplicitHeight = 406
       ColWidths = (
-        130
-        130
-        128)
+        103
+        250)
     end
   end
   object ImageList_Icons: TImageList

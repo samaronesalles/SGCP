@@ -172,6 +172,10 @@
             <Form>frmAtendimentoDetail_V</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Libs\Paciente\U_PacienteDropList_V.pas">
+            <Form>frmPacienteDropList_V</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
