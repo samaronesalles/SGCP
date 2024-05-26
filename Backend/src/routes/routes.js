@@ -38,7 +38,7 @@ router.put('/agenda/cancelar/:id/:di', agendasValidation.cancelamento, agendasCo
 
 // Endpoints "Atendimentos"...
 router.get('/atendimentos/:id', atendimentosController.getAtendimento)
-router.get('/atendimentos/lista/:status/:profissional_id/:paciente_id', atendimentosController.lista)
+router.get('/atendimentos/lista/:status/:profissional_id/:paciente_id/:inicio_de/:inicio_ate', atendimentosController.lista)
 router.put('/atendimentos/:id/:di', atendimentosValidation.editar, atendimentosController.editar)
 router.put('/atendimentos/encerrar/:id/:di', atendimentosValidation.encerrar, atendimentosController.encerrar)
 

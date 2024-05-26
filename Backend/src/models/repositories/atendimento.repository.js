@@ -1,4 +1,5 @@
 const path = require('path')
+const { Op, Sequelize } = require("sequelize");
 const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js'))
 
 const ProfissionalModel = require(path.resolve(__dirname, '../', 'profissional.model.js'))
@@ -42,7 +43,7 @@ module.exports.retornePeloID = async function (id) {
 
 }
 
-module.exports.retorneTodos = async function (profissional_id, paciente_id) {
+module.exports.retorneTodos = async function (profissional_id, paciente_id, inicio_de, inicio_ate) {
 
     let condicao_where = {}
 
@@ -51,6 +52,11 @@ module.exports.retorneTodos = async function (profissional_id, paciente_id) {
 
     if (paciente_id > 0)
         condicao_where["$agenda.paciente_agendado_id$"] = paciente_id
+
+    if ((inicio_de && inicio_ate) && (Date.parse(inicio_de) > 0 && Date.parse(inicio_ate) > 0)) {
+        const data_vencimento = { [Op.between]: [inicio_de, inicio_ate] };
+        condicao_where["datahora_inicio"] = data_vencimento;
+    }
 
     return await AtendimentoModel.findAll({
         attributes: atributos_Atendimento,

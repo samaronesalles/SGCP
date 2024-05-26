@@ -41,11 +41,11 @@ module.exports = {
 
     async lista(req, res) {
         try {
-            const { status, profissional_id, paciente_id, inicio_de, inicio_fim } = req.params
+            const { status, profissional_id, paciente_id, inicio_de, inicio_ate } = req.params
 
             //TODO Implementar busca por período.
 
-            let atendimentos = await AtendimentoRepository.retorneTodos(profissional_id, paciente_id)
+            let atendimentos = await AtendimentoRepository.retorneTodos(profissional_id, paciente_id, inicio_de, inicio_ate)
 
             atendimentos = atendimentos.map(e => {
                 let elemento = { ...e }
