@@ -176,6 +176,8 @@
             <Form>frmPacienteDropList_V</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Libs\RSA_CRYPT\U_RSA.pas"/>
+        <DCCReference Include="Libs\RSA_CRYPT\MEncryptDecryptAES.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

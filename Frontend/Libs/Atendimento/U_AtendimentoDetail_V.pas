@@ -119,7 +119,7 @@ begin
       Self.FGLB_Atendimento_M.Status:= saRealizado;
       Self.Label_di.Caption:= Self.FGLB_Atendimento_M.Di;
 
-      frmMain.BufferStr:= Self.FGLB_Atendimento_M.ToJSON();
+      frmMain.BufferStr:= Self.FGLB_Atendimento_M.ToJSON(FALSE);
 
       if Self.FGLB_Atendimento_M.DataHoraFim > 0 then begin
         Uteis.SayInfo('Atendimento encerrado som sucesso.' + #13#13 +
@@ -182,7 +182,7 @@ begin
       // Self.FGLB_Atendimento_M.DataHoraFim:= xxxxx;   => Settar data hora atual, se foi encerrado.
       Self.FGLB_Atendimento_M.Anotacoes:= Uteis.RichEdit_GetText(frmMain.TempDir + FILE_ANOTACOES_RTF, RichEdit_Texto);
 
-      If Self.FJson_BkpAtendimentoEditado = Self.FGLB_Atendimento_M.ToJSON() Then
+      If Self.FJson_BkpAtendimentoEditado = Self.FGLB_Atendimento_M.ToJSON(FALSE) Then
         ModalResult:= mrCancel;
 
       if NOT Self.FGLB_Atendimento_M.Save() Then
@@ -190,7 +190,7 @@ begin
 
       Self.Label_di.Caption:= Self.FGLB_Atendimento_M.Di;
 
-      frmMain.BufferStr:= Self.FGLB_Atendimento_M.ToJSON();
+      frmMain.BufferStr:= Self.FGLB_Atendimento_M.ToJSON(FALSE);
 
       ModalResult:= mrOk;
     Except
@@ -239,7 +239,7 @@ begin
 
       Uteis.RichEdit_SetText(Atendimento.Anotacoes, frmAtendimentoDetail_V.RichEdit_Texto);
 
-      frmAtendimentoDetail_V.FJson_BkpAtendimentoEditado:= Atendimento.ToJSON();
+      frmAtendimentoDetail_V.FJson_BkpAtendimentoEditado:= Atendimento.ToJSON(FALSE);
 
       ResultadoModal:= frmAtendimentoDetail_V.ShowModal;
 

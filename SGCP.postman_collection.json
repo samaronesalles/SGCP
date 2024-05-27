@@ -1,0 +1,1573 @@
+{
+	"info": {
+		"_postman_id": "c7570766-1a5e-44c7-80aa-df92735f19ed",
+		"name": "SGCP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9354059"
+	},
+	"item": [
+		{
+			"name": "PROFISSIONAIS",
+			"item": [
+				{
+					"name": "profissionais.novo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Samarone Salles\",\r\n    \"celular\": \"(31) 92251-3632\",\r\n    \"email\": \"samaronesalles@gmail.com\",\r\n    \"ativo\": true,\r\n    \"username\": \"sama\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}profissionais",
+							"host": [
+								"{{base_url}}profissionais"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "novo",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"André Mansur\",\r\n    \"celular\": \"(31) 92251-3632\",\r\n    \"email\": \"andremansur@gmail.com\",\r\n    \"username\": \"mansur\",\r\n    \"password\": \"5566\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}profissionais",
+									"host": [
+										"{{base_url}}profissionais"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "271"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10f-3BlN1kWAa6G+zn/5uldcjNZeG3w\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 12 May 2024 01:48:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1001,\n    \"error\": false,\n    \"data\": {\n        \"id\": 7,\n        \"di\": \"29244661-b519-427d-be57-12ea4751f21f\",\n        \"nome\": \"André Mansur\",\n        \"celular\": \"31922513632\",\n        \"email\": \"andremansur@gmail.com\",\n        \"username\": \"mansur\",\n        \"password\": \"2393884a345b18393d0b509970365980:aa37733332c2088098561a98bc01a296\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "profissionais.lista",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}profissionais/lista",
+							"host": [
+								"{{base_url}}profissionais"
+							],
+							"path": [
+								"lista"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "lista",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}profissionais/lista",
+									"host": [
+										"{{base_url}}profissionais"
+									],
+									"path": [
+										"lista"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1055"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"41f-Htn3iYOi2jTmyZvFTcJv6E18vzU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 12 May 2024 01:48:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1001,\n    \"error\": false,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"di\": \"a9387649-7310-4e75-b3b6-1bfa31f35416\",\n            \"nome\": \"Samarone Salles\",\n            \"celular\": \"31985131406\",\n            \"email\": \"samaronesalles@gmail.com\",\n            \"username\": \"sama salles\",\n            \"password\": \"332255\",\n            \"createdAt\": \"2024-05-11T21:53:37.000Z\",\n            \"updatedAt\": \"2024-05-12T01:46:47.000Z\"\n        },\n        {\n            \"id\": 4,\n            \"di\": \"8fe43a72-64e8-4783-9fa4-2fa94671acad\",\n            \"nome\": \"Maria Joaquina\",\n            \"celular\": \"31985131406\",\n            \"email\": \"maria@gmail.com\",\n            \"username\": \"maria\",\n            \"password\": \"5215478\",\n            \"createdAt\": \"2024-05-11T21:55:58.000Z\",\n            \"updatedAt\": \"2024-05-11T21:55:58.000Z\"\n        },\n        {\n            \"id\": 6,\n            \"di\": \"1c72e832-a324-43d1-ba86-69f7213c0c83\",\n            \"nome\": \"Cláudia Martha\",\n            \"celular\": \"31922513632\",\n            \"email\": \"claudiamartha@gmail.com\",\n            \"username\": \"claudia\",\n            \"password\": \"12545488666\",\n            \"createdAt\": \"2024-05-12T00:27:15.000Z\",\n            \"updatedAt\": \"2024-05-12T00:27:15.000Z\"\n        },\n        {\n            \"id\": 7,\n            \"di\": \"29244661-b519-427d-be57-12ea4751f21f\",\n            \"nome\": \"André Mansur\",\n            \"celular\": \"31922513632\",\n            \"email\": \"andremansur@gmail.com\",\n            \"username\": \"mansur\",\n            \"password\": \"5566\",\n            \"createdAt\": \"2024-05-12T01:48:07.000Z\",\n            \"updatedAt\": \"2024-05-12T01:48:07.000Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "profissionais.editar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Samarone Salles\",\r\n    \"celular\": \"31985131406\",\r\n    \"email\": \"samaronesalles@gmail.com\",\r\n    \"username\": \"sama salles\",\r\n    \"password\": \"332255\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}profissionais/1/a9387649-7310-4e75-b3b6-1bfa31f35416",
+							"host": [
+								"{{base_url}}profissionais"
+							],
+							"path": [
+								"1",
+								"a9387649-7310-4e75-b3b6-1bfa31f35416"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "editar",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Samarone Salles\",\r\n    \"celular\": \"31985131406\",\r\n    \"email\": \"samaronesalles@gmail.com\",\r\n    \"username\": \"sama salles\",\r\n    \"password\": \"332255\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}profissionais/1/a9387649-7310-4e75-b3b6-1bfa31f35416",
+									"host": [
+										"{{base_url}}profissionais"
+									],
+									"path": [
+										"1",
+										"a9387649-7310-4e75-b3b6-1bfa31f35416"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "320"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"140-CICST4525SQgj8CNtCaKy0LQVw4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 12 May 2024 01:49:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1001,\n    \"error\": false,\n    \"data\": {\n        \"id\": 1,\n        \"di\": \"46b54fef-ea01-4ca2-9396-b78b627230da\",\n        \"nome\": \"Samarone Salles\",\n        \"celular\": \"31985131406\",\n        \"email\": \"samaronesalles@gmail.com\",\n        \"username\": \"sama salles\",\n        \"password\": \"5c4c72a5603beb954b4284f9892ee982:6cd7c576f9172cde34d69e99a9cad395\",\n        \"updatedAt\": \"2024-05-12T01:49:08.061Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "profissionais.ativar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}profissionais/ativar/1/9d432dee-77e5-47d1-bbcf-09ff8cafcaa7",
+							"host": [
+								"{{base_url}}profissionais"
+							],
+							"path": [
+								"ativar",
+								"1",
+								"9d432dee-77e5-47d1-bbcf-09ff8cafcaa7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}profissionais/ativar/1/9d432dee-77e5-47d1-bbcf-09ff8cafcaa7",
+									"host": [
+										"{{base_url}}profissionais"
+									],
+									"path": [
+										"ativar",
+										"1",
+										"9d432dee-77e5-47d1-bbcf-09ff8cafcaa7"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "322"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"142-/DLuCTLCXiBcK5Ov1VrqHa+7t2M\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 May 2024 15:01:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"error\": false,\n    \"data\": {\n        \"id\": 1,\n        \"di\": \"fdef90c5-7748-4c23-a695-a4408f2cfc31\",\n        \"nome\": \"André Mansur\",\n        \"celular\": \"31922513632\",\n        \"email\": \"andremansur@gmail.com\",\n        \"ativo\": true,\n        \"username\": \"mansur\",\n        \"password\": \"a1e3ca696ef7f07cc51e8c9796c592b1:a2f5d2d112b0ddbaec588049ba194441\",\n        \"updatedAt\": \"2024-05-18T15:01:15.918Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "profissionais.inativar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}profissionais/inativar/1/fdef90c5-7748-4c23-a695-a4408f2cfc31",
+							"host": [
+								"{{base_url}}profissionais"
+							],
+							"path": [
+								"inativar",
+								"1",
+								"fdef90c5-7748-4c23-a695-a4408f2cfc31"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}profissionais/inativar/1/fdef90c5-7748-4c23-a695-a4408f2cfc31",
+									"host": [
+										"{{base_url}}profissionais"
+									],
+									"path": [
+										"inativar",
+										"1",
+										"fdef90c5-7748-4c23-a695-a4408f2cfc31"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "323"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"143-r7nS+USFhND3OOXKFacLC7EkFNw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 May 2024 15:01:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"error\": false,\n    \"data\": {\n        \"id\": 1,\n        \"di\": \"6ba32593-546e-4202-acbd-553f1827c568\",\n        \"nome\": \"André Mansur\",\n        \"celular\": \"31922513632\",\n        \"email\": \"andremansur@gmail.com\",\n        \"ativo\": false,\n        \"username\": \"mansur\",\n        \"password\": \"a1e3ca696ef7f07cc51e8c9796c592b1:a2f5d2d112b0ddbaec588049ba194441\",\n        \"updatedAt\": \"2024-05-18T15:01:36.404Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "profissionais.delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}profissionais/1/46b54fef-ea01-4ca2-9396-b78b627230da",
+							"host": [
+								"{{base_url}}profissionais"
+							],
+							"path": [
+								"1",
+								"46b54fef-ea01-4ca2-9396-b78b627230da"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}profissionais/1/46b54fef-ea01-4ca2-9396-b78b627230da",
+									"host": [
+										"{{base_url}}profissionais"
+									],
+									"path": [
+										"1",
+										"46b54fef-ea01-4ca2-9396-b78b627230da"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "74"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4a-CKofDCzUKacssYGVIapaVXhRU28\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 12 May 2024 01:50:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1002,\n    \"error\": false,\n    \"data\": \"Registro excluído com sucesso.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "profissionais.autenticar Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"sama\",\r\n    \"password\": \"4456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}profissionais/login",
+							"host": [
+								"{{base_url}}profissionais"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "profissionais.autenticar Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"sama\",\r\n    \"password\": \"4456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}profissionais/login",
+									"host": [
+										"{{base_url}}profissionais"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "391"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"187-G88dPA6bHpxMpj6M+j5R6Lyoxkg\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 May 2024 10:10:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 2001,\n    \"error\": false,\n    \"data\": {\n        \"id\": 2,\n        \"di\": \"49ffe9fb-f100-49e8-8000-2484bc8e3576\",\n        \"nome\": \"Samarone Portinare Salles de Ávila Costa\",\n        \"celular\": \"31922513632\",\n        \"email\": \"samaronesalles@gmail.com\",\n        \"ativo\": true,\n        \"username\": \"sama\",\n        \"password\": \"b209bdddf6724d38619001ce55422a36:603e3ecbdfcc203cf509db224434cabb\",\n        \"createdAt\": \"2024-05-12T14:36:15.000Z\",\n        \"updatedAt\": \"2024-05-16T03:06:55.000Z\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "PACIENTES",
+			"item": [
+				{
+					"name": "pacientes.novo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Martha joaquina\",\r\n    \"celular\": \"(31) 96855-5824\",\r\n    \"email\": \"majoa@gmail.com\",\r\n    \"ativo\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}pacientes",
+							"host": [
+								"{{base_url}}pacientes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "novo",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Martha joaquina\",\r\n    \"celular\": \"(31) 96855-5824\",\r\n    \"email\": \"majoa@gmail.com\",\r\n    \"ativo\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}pacientes",
+									"host": [
+										"{{base_url}}pacientes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b5-goydNsZpe4YCYD9saVcTOhIQnGI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 May 2024 20:04:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1001,\n    \"error\": false,\n    \"data\": {\n        \"id\": 2,\n        \"di\": \"65d98057-dbe3-4275-bff2-b3091a87bfc6\",\n        \"nome\": \"Martha joaquina\",\n        \"celular\": \"31968555824\",\n        \"email\": \"majoa@gmail.com\",\n        \"ativo\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "pacientes.lista",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}pacientes/lista",
+							"host": [
+								"{{base_url}}pacientes"
+							],
+							"path": [
+								"lista"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "lista",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}pacientes/lista",
+									"host": [
+										"{{base_url}}pacientes"
+									],
+									"path": [
+										"lista"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "260"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"104-er/RMM9k8w2xVigE7Y+GUTIgxjw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 May 2024 20:04:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"error\": false,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"di\": \"65d98057-dbe3-4275-bff2-b3091a87bfc6\",\n            \"nome\": \"Martha joaquina\",\n            \"celular\": \"31968555824\",\n            \"email\": \"majoa@gmail.com\",\n            \"ativo\": true,\n            \"createdAt\": \"2024-05-18T20:04:15.000Z\",\n            \"updatedAt\": \"2024-05-18T20:04:15.000Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "pacientes.editar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Martha joaquina\",\r\n    \"celular\": \"31985131406\",\r\n    \"email\": \"majoa@gmail.com\",\r\n    \"ativo\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}pacientes/2/65d98057-dbe3-4275-bff2-b3091a87bfc6",
+							"host": [
+								"{{base_url}}pacientes"
+							],
+							"path": [
+								"2",
+								"65d98057-dbe3-4275-bff2-b3091a87bfc6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "editar",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Martha joaquina\",\r\n    \"celular\": \"31985131406\",\r\n    \"email\": \"majoa@gmail.com\",\r\n    \"ativo\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}pacientes/2/65d98057-dbe3-4275-bff2-b3091a87bfc6",
+									"host": [
+										"{{base_url}}pacientes"
+									],
+									"path": [
+										"2",
+										"65d98057-dbe3-4275-bff2-b3091a87bfc6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "220"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"dc-yC7Jkp0/AjTW4oqcFr8jrOnRbb4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 May 2024 20:11:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1001,\n    \"error\": false,\n    \"data\": {\n        \"id\": 2,\n        \"di\": \"b480557a-426f-4b4a-a292-8681db3ab050\",\n        \"nome\": \"Martha joaquina\",\n        \"celular\": \"31985131406\",\n        \"email\": \"majoa@gmail.com\",\n        \"ativo\": true,\n        \"updatedAt\": \"2024-05-18T20:11:21.822Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "pacientes.ativar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}pacientes/ativar/1/9d432dee-77e5-47d1-bbcf-09ff8cafcaa7",
+							"host": [
+								"{{base_url}}pacientes"
+							],
+							"path": [
+								"ativar",
+								"1",
+								"9d432dee-77e5-47d1-bbcf-09ff8cafcaa7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pacientes.inativar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}pacientes/inativar/1/fdef90c5-7748-4c23-a695-a4408f2cfc31",
+							"host": [
+								"{{base_url}}pacientes"
+							],
+							"path": [
+								"inativar",
+								"1",
+								"fdef90c5-7748-4c23-a695-a4408f2cfc31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pacientes.delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}pacientes/2/b480557a-426f-4b4a-a292-8681db3ab050",
+							"host": [
+								"{{base_url}}pacientes"
+							],
+							"path": [
+								"2",
+								"b480557a-426f-4b4a-a292-8681db3ab050"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}pacientes/2/b480557a-426f-4b4a-a292-8681db3ab050",
+									"host": [
+										"{{base_url}}pacientes"
+									],
+									"path": [
+										"2",
+										"b480557a-426f-4b4a-a292-8681db3ab050"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "74"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4a-CKofDCzUKacssYGVIapaVXhRU28\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 18 May 2024 20:27:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1002,\n    \"error\": false,\n    \"data\": \"Registro excluído com sucesso.\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "AGENDAS",
+			"item": [
+				{
+					"name": "agendas.nova",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profissional_id\": 1,\r\n    \"paciente_id\": 5,\r\n    \"descricao\": \"Terapia Felipe 18/05 08:30\",\r\n    \"observacao\": \"Teste de agendamento de terapia para algum paciente\",\r\n    \"evento_inicio\": \"2024-05-18T08:30Z\",\r\n    \"evento_fim\": \"2024-05-18T09:10Z\",\r\n    \"evento_confirmado\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}agenda",
+							"host": [
+								"{{base_url}}agenda"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "nova",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"profissional_id\": 1,\r\n    \"paciente_id\": 5,\r\n    \"descricao\": \"Terapia Felipe 18/05 08:30\",\r\n    \"observacao\": \"Teste de agendamento de terapia para algum paciente\",\r\n    \"evento_inicio\": \"2024-05-19T08:30Z\",\r\n    \"evento_fim\": \"2024-05-19T09:10Z\",\r\n    \"evento_confirmado\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}agenda",
+									"host": [
+										"{{base_url}}agenda"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "703"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2bf-ZB7ItlqNdmjQeFLV9TbSrzltVa8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 20 May 2024 00:23:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1001,\n    \"error\": false,\n    \"data\": {\n        \"agenda\": {\n            \"id\": 1,\n            \"profissioal_criador_id\": 1,\n            \"profissioal_agendado_id\": 1,\n            \"paciente_agendado_id\": 5,\n            \"di\": \"97a53a12-8d7d-457d-a38d-102db703b6c0\",\n            \"descricao\": \"Terapia Felipe 18/05 08:30\",\n            \"observacao\": \"Teste de agendamento de terapia para algum paciente\",\n            \"evento_inicio\": \"2024-05-19T08:30:00.000Z\",\n            \"evento_fim\": \"2024-05-19T09:10:00.000Z\",\n            \"evento_confirmado\": false,\n            \"ativo\": true,\n            \"updatedAt\": \"2024-05-20T00:23:00.519Z\",\n            \"createdAt\": \"2024-05-20T00:23:00.519Z\"\n        },\n        \"atendimento\": {\n            \"id\": 1,\n            \"di\": \"c80df810-8ed2-4e81-8512-4da64655d621\",\n            \"agenda_origem_id\": 1,\n            \"datahora_inicio\": \"2024-05-19T08:30:00.000Z\",\n            \"updatedAt\": \"2024-05-20T00:23:00.567Z\",\n            \"createdAt\": \"2024-05-20T00:23:00.567Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "agendas.getAgenda",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}agenda/1",
+							"host": [
+								"{{base_url}}agenda"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}agenda/1",
+									"host": [
+										"{{base_url}}agenda"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "638"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"27e-XjQw13irTqWeXHK32BFugcub0U4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 May 2024 01:48:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"error\": false,\n    \"data\": {\n        \"id\": 1,\n        \"di\": \"d1fe6f84-0025-4284-9453-16b007ef92be\",\n        \"descricao\": \"Terapia Felipe 18/05 08:30\",\n        \"observacao\": \"Teste de agendamento de terapia para algum paciente\",\n        \"evento_inicio\": \"2024-05-18T08:30:00.000Z\",\n        \"evento_fim\": \"2024-05-18T09:10:00.000Z\",\n        \"evento_confirmado\": false,\n        \"ativo\": true,\n        \"profissional\": {\n            \"id\": 1,\n            \"di\": \"6ba32593-546e-4202-acbd-553f1827c568\",\n            \"nome\": \"André Mansur\",\n            \"celular\": \"31922513632\",\n            \"email\": \"andremansur@gmail.com\",\n            \"ativo\": false\n        },\n        \"paciente\": {\n            \"id\": 5,\n            \"di\": \"6ba3239a-a615-4c31-bb97-1e9aa144501d\",\n            \"nome\": \"Felipe Rodrigues\",\n            \"celular\": \"31968512488\",\n            \"email\": \"felipe@gmail.com\",\n            \"ativo\": false\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "agendas.lista",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}agenda/lista/1/5/2024-05-12T00:00Z/2024-05-18T23:59Z",
+							"host": [
+								"{{base_url}}agenda"
+							],
+							"path": [
+								"lista",
+								"1",
+								"5",
+								"2024-05-12T00:00Z",
+								"2024-05-18T23:59Z"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}agenda/lista/1/5/2024-05-12T00:00Z/2024-05-18T23:59Z",
+									"host": [
+										"{{base_url}}agenda"
+									],
+									"path": [
+										"lista",
+										"1",
+										"5",
+										"2024-05-12T00:00Z",
+										"2024-05-18T23:59Z"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "640"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"280-kK+ekKXJpSc1HP4mKcNR3Kys3gU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 May 2024 02:15:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"error\": false,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"di\": \"d1fe6f84-0025-4284-9453-16b007ef92be\",\n            \"descricao\": \"Terapia Felipe 18/05 08:30\",\n            \"observacao\": \"Teste de agendamento de terapia para algum paciente\",\n            \"evento_inicio\": \"2024-05-18T08:30:00.000Z\",\n            \"evento_fim\": \"2024-05-18T09:10:00.000Z\",\n            \"evento_confirmado\": false,\n            \"ativo\": true,\n            \"profissional\": {\n                \"id\": 1,\n                \"di\": \"6ba32593-546e-4202-acbd-553f1827c568\",\n                \"nome\": \"André Mansur\",\n                \"celular\": \"31922513632\",\n                \"email\": \"andremansur@gmail.com\",\n                \"ativo\": false\n            },\n            \"paciente\": {\n                \"id\": 5,\n                \"di\": \"6ba3239a-a615-4c31-bb97-1e9aa144501d\",\n                \"nome\": \"Felipe Rodrigues\",\n                \"celular\": \"31968512488\",\n                \"email\": \"felipe@gmail.com\",\n                \"ativo\": false\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "agendas.cancelar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}agenda/cancelar/2/c58b3e91-bd9d-4838-b8a3-089df47ee71d",
+							"host": [
+								"{{base_url}}agenda"
+							],
+							"path": [
+								"cancelar",
+								"2",
+								"c58b3e91-bd9d-4838-b8a3-089df47ee71d"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}agenda/cancelar/2/c58b3e91-bd9d-4838-b8a3-089df47ee71d",
+									"host": [
+										"{{base_url}}agenda"
+									],
+									"path": [
+										"cancelar",
+										"2",
+										"c58b3e91-bd9d-4838-b8a3-089df47ee71d"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "671"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29f-Z7j7iQI9EsadQV+Q50IK0NYNzLk\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 23 May 2024 11:03:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1001,\n    \"error\": false,\n    \"data\": {\n        \"id\": 2,\n        \"di\": \"628d8535-9bca-400f-a791-03cf4905183b\",\n        \"descricao\": \"Terapia Samarone 18/05 12:00\",\n        \"observacao\": \"Samarone avisou que poderá chegar atrasado\",\n        \"evento_inicio\": \"2024-05-18T12:00:00.000Z\",\n        \"evento_fim\": \"2024-05-18T12:40:00.000Z\",\n        \"evento_confirmado\": true,\n        \"ativo\": false,\n        \"profissional\": {\n            \"id\": 4,\n            \"di\": \"0d27ecc9-0061-4194-af95-1ed2b3b6da01\",\n            \"nome\": \"Camila santos\",\n            \"celular\": \"31984557788\",\n            \"email\": \"camila@gmail.com\",\n            \"ativo\": true\n        },\n        \"paciente\": {\n            \"id\": 6,\n            \"di\": \"08633c14-5088-4584-a50f-0595004c0297\",\n            \"nome\": \"Samarone Salles\",\n            \"celular\": \"31985131406\",\n            \"email\": \"samaronesalle@gmail.com\",\n            \"ativo\": true\n        },\n        \"updatedAt\": \"2024-05-23T11:03:29.985Z\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ATENDIMENTOS",
+			"item": [
+				{
+					"name": "atendimentos.lista",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}atendimentos/lista/0/2/0/2024-05-18T08:00Z/2024-05-18T11:59Z",
+							"host": [
+								"{{base_url}}atendimentos"
+							],
+							"path": [
+								"lista",
+								"0",
+								"2",
+								"0",
+								"2024-05-18T08:00Z",
+								"2024-05-18T11:59Z"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "atendimentos.lista",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}atendimentos/lista/0/2/0/2024-05-18T08:00Z/2024-05-18T11:59Z",
+									"host": [
+										"{{base_url}}atendimentos"
+									],
+									"path": [
+										"lista",
+										"0",
+										"2",
+										"0",
+										"2024-05-18T08:00Z",
+										"2024-05-18T11:59Z"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "826"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33a-FfKBN0Yhg8xor24mD7PP8fEuuDw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 26 May 2024 14:41:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"error\": false,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"di\": \"992c673e-1ff6-44cc-b33c-840049c2660a\",\n            \"datahora_inicio\": \"2024-05-18T08:30:00.000Z\",\n            \"datahora_fim\": null,\n            \"anotacoes\": null,\n            \"agenda\": {\n                \"id\": 1,\n                \"di\": \"970fc401-2053-458f-a4f4-f1a7de79a627\",\n                \"descricao\": \"Terapia Felipe 18/05 08:30\",\n                \"observacao\": \"Teste de agendamento de terapia para algum paciente\",\n                \"evento_inicio\": \"2024-05-18T08:30:00.000Z\",\n                \"evento_fim\": \"2024-05-18T09:10:00.000Z\",\n                \"evento_confirmado\": false,\n                \"ativo\": false,\n                \"profissional\": {\n                    \"id\": 2,\n                    \"di\": \"391d4136-a1d2-40e3-821a-ea1feefa285e\",\n                    \"nome\": \"Samarone Portinare Salles de Ávila Costa\",\n                    \"celular\": \"31922513632\",\n                    \"email\": \"samaronesalles@gmail.com\",\n                    \"ativo\": true\n                },\n                \"paciente\": {\n                    \"id\": 5,\n                    \"di\": \"6ba3239a-a615-4c31-bb97-1e9aa144501d\",\n                    \"nome\": \"Felipe Rodrigues\",\n                    \"celular\": \"31968512488\",\n                    \"email\": \"felipe@gmail.com\",\n                    \"ativo\": false\n                }\n            },\n            \"status\": 2\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "atendimentos.getAtendimento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}atendimentos/2",
+							"host": [
+								"{{base_url}}atendimentos"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "atendimentos.getAtendimento",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}atendimentos/2",
+									"host": [
+										"{{base_url}}atendimentos"
+									],
+									"path": [
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27663"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"6c0f-kTmVz7tz3kOZH54ENB3WnvClT5I\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 27 May 2024 10:04:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"error\": false,\n    \"data\": {\n        \"id\": 2,\n        \"di\": \"a24757fe-95b3-4e0e-812e-8a85f3711cba\",\n        \"datahora_inicio\": \"2024-05-27T12:00:00.000Z\",\n        \"datahora_fim\": null,\n        \"anotacoes\": \"MTM2NDAsNTk2LDYwMDEsOTE5Niw4NDI1LDM2NTUsNTk2LDE2NDksMjc5Niw2OTcsODE1Niw1OTYs\\r\\nMTExNDQsNDMxMSw4NDI1LDg0MjUsODQ3MCw1OTYsMjc5NiwxMjUwOCw4NjEzLDgxNTYsMTQzODEs\\r\\nMTI1MDgsNDI4MCw2NzUwLDE2NDksOTE5NiwxMzY0MCw1OTYsODQyNSwxMjUwOCwyNzk2LDkxOTYs\\r\\nOTE5Niw4NzMxLDM5NzQsMTM2NDAsNTk2LDg0MjUsODQ3MCw1OTYsODQyNSwyNzk2LDgxNTYsMzk3\\r\\nNCw1OTYsODQyNSwxNDM4MSwxMDcyOCwxNjQ5LDYwMDEsNjk3LDQzMTEsOTE5Niw4NDcwLDE0MzEy\\r\\nLDQxMTgsNjAwMSw4MTU2LDE2NDksMzk3NCw0ODQwLDgzMTQsODMxNCwxOTIzLDc0MTAsMTM2NDAs\\r\\nNTk2LDE0MzgxLDEyNTA4LDM5NzQsMTI1MDgsNjAwMSw5MTk2LDg3MzEsMzk3NCwxNDMxMiw0ODQw\\r\\nLDU5Niw2MDAxLDQzMTEsMTExNDQsNDkwMCw2ODIyLDY4MjIsNTk2LDExNDYyLDYwMDEsNDMxMSw0\\r\\nMzExLDI3OTYsODQ3MCw1OTYsODczMSwzOTc0LDg2MTMsNDMxMSw4NDcwLDQ4NDAsODMxNCwxOTIz\\r\\nLDc0MTAsMTM2NDAsNTk2LDEzNTM4LDU5NiwxMTQ2Miw0MzExLDI3OTYsNDMxMSw2MDAxLDE2NDks\\r\\nOTE5NiwxMjUwOCw2MDAxLDE0MzEyLDkzNTIsODE1NiwxNDM4MSwxMDcyOCw0MzExLDExMTQ0LDQ5\\r\\nMDAsODQ3MCwxNDMxMiwzNjU1LDg0NzAsMTM0MzcsODQ3MCwxMzQzNyw0OTAwLDQ5MDAsNzU2Miw0\\r\\nOTAwLDM2NTUsODMxNCw1OTYsMTIyNjMsODE1Niw0MzExLDE0Mzc4LDczMTMsODE1NiwyNzk2LDEx\\r\\nMTQ0LDc1MTQsNTk2LDg2MTMsMTQzODEsMzY1NSwxNDMxMiwxOTIzLDc0MTAsNTk2LDY3NTAsMTY0\\r\\nOSw2MDAxLDExMTQ0LDU5Niw2NDA4LDE0MzgxLDU5NiwxNDM4MSw4NDI1LDM2NTUsNTk2LDg2MTMs\\r\\nMzk3NCw1OTYsODQyNSw2OTcsNzUxNCw3NTE0LDU5NiwzOTc0LDE2NDksMjc5NiwxMTQ2MiwzNjU1\\r\\nLDg0NzAsNzUxNCw3NTYyLDE0MzEyLDk4NTMsMTI1MDgsNjAwMSw0MzExLDQyODAsMTQzMTIsMTI1\\r\\nMDQsNjc1MCw2OTcsODYxMyw0MjgwLDU5NiwxNDM4MSw4NDI1LDg0NzAsNTk2LDg2MTMsMzk3NCwy\\r\\nNzk2LDEyNTA4LDI3OTYsNDMxMSw1OTYsODQyNSw2OTcsNDkwMCw4NDcwLDU5Niw2NzUwLDE2NDks\\r\\nNjAwMSwxOTIzLDc0MTAsNTk2LDgxNTYsMTQzMTIsNTg4MywxMDg2LDQzMTEsNjQwOCw4NjEzLDQz\\r\\nMTEsMTQzMTIsNjc1MCwxMjUwOCw2MDAxLDYwMDEsMTI1MDgsMTQzMTIsNjQwOCw4NjEzLDgxNTYs\\r\\nNjk3LDY0MDgsODYxMywxNjQ5LDQyODAsMTQzMTIsNDMxMSw2OTcsOTE5NiwxNDMxMiw2NDA4LDg2\\r\\nMTMsODE1NiwxNDMxMiwxMTE0NCwxMjUwOCwzOTc0LDEyNTA4LDYwMDEsNDMxMSw0MjgwLDE0MzEy\\r\\nLDgxNTYsNjc1MCw2OTcsODYxMyw0MjgwLDE0MzEyLDY0MDgsODYxMyw4MTU2LDE2NDksMTQzMTIs\\r\\nMTExNDQsMTI1MDgsMzk3NCwxMjUwOCw2MDAxLDE0MzEyLDY5Nyw4MTU2LDkxOTYsMTQzMTIsMTY0\\r\\nOSw0MjgwLDQzMTEsOTE5Niw4NDEsMTQzMTIsMTQzODEsMTI1MDgsMjc5Niw2OTcsNDMxMSwxNDM4\\r\\nMSw5MTk2LDQzMTEsOTE5Niw4NjEzLDYwMDEsODQxLDE0MzEyLDE2NDksMTExNDQsODE1Niw2NzUw\\r\\nLDgxNTYsNjk3LDE0MzgxLDgxNTYsMTQzMTIsMTIyNjMsNDMxMSwzOTc0LDgxNTYsOTE5NiwxMzQz\\r\\nNywxMzQzNywxMzQzNyw1ODgzLDU5Niw4MTU2LDg0NzAsNTk2LDY3NTAsMTY0OSw2MDAxLDE5MjMs\\r\\nNzQxMCw1ODgzLDEyNjI3LDEwNzI4LDQzMTEsNjAwMSw0MzExLDE0MzEyLDgxNTYsNjk3LDE0MzEy\\r\\nLDI3OTYsMTI1MDgsMTQzMTIsMTI1MDgsMjc5Niw0MzExLDE0MzEyLDE0Mzc4LDEwNzI4LDEyNTA4\\r\\nLDE0MzEyLDM5NzQsMTI1MDgsMTIyNjMsNDMxMSw2OTcsMTQzMTIsNjc1MCwxNjQ5LDgxNTYsMjc5\\r\\nNiwxNDMxMiw4MTU2LDkxOTYsNjk3LDQzMTEsMzk3NCw4NDI1LDg0MSwxNDMxMiwxNDM3OCwxMDcy\\r\\nOCwxMjUwOCwxNDMxMiw2OTcsNDMxMSw0MzExLDczMTMsNjk3LDE0MzEyLDE2NDksODQyNSw5MTk2\\r\\nLDQzMTEsNjAwMSwxNDMxMiw4MTU2LDkxOTYsMTQzMTIsMTY0OSwyNzk2LDExMTQ0LDE0MzEyLDE0\\r\\nMzc4LDE2NDksMjc5Niw5MTk2LDY5NywxNDMxMiw5MTk2LDEyNTA4LDE0MzEyLDEwNzI4LDE2NDks\\r\\nMTIyNjMsNDMxMSwxNDMxMiw4MTU2LDkxOTYsODQxLDE0MzEyLDY5Nyw4MTU2LDQyODAsNjc1MCwz\\r\\nOTc0LDY0MTEsMTQzMTIsODczMSw0MzExLDE0MzgxLDE2NDksODYxMyw2OTcsNDMxMSwxNDMxMiw4\\r\\nMTU2LDkxOTYsMTQzMTIsODE1Niw2OTcsMTQzMTIsNjc1MCwxNjQ5LDgxNTYsMjc5NiwxMzQzNywx\\r\\nMzQzNywxMzQzNyw1ODgzLDU5Niw2NzUwLDE2NDksNjAwMSwxOTIzLDc0MTAsMTkyMyw3NDEwLDU5\\r\\nNiw2NzUwLDE2NDksNjAwMSwxMTE0NCw1OTYsNjc1MCwxNjQ5LDYwMDEsMTkyMyw3NDEwLDU5Niw4\\r\\nNzMxLDE0MzEyLDM0NTQsMTA3MjgsMTY0OSw5MTk2LDE0MzEyLDgxNTYsNjk3LDE0MzEyLDk4NTMs\\r\\nMTI1MDgsNjAwMSw0MzExLDQyODAsMTQzMTIsMTI1MDQsNjc1MCw2OTcsODYxMyw0MjgwLDcxMyw1\\r\\nOTYsODczMSw4NDcwLDU5Niw2NzUwLDE2NDksNjAwMSwxOTIzLDc0MTAsOTg1MywxMjUwOCw2MDAx\\r\\nLDQzMTEsNDI4MCwxNDMxMiwxMjUwNCw2NzUwLDY5Nyw4NjEzLDQyODAsMTQzMTIsODE1Niw2OTcs\\r\\nMTQzMTIsNjk3LDgxNTYsNDI4MCw2NzUwLDM5NzQsNjQxMSwxNDMxMiwxMTE0NCw4NjEzLDQyODAs\\r\\nNDI4MCw2NDExLDE0MzEyLDkxOTYsNDMxMSw5NzY4LDkxOTYsMTQzMTIsMTI1MDgsODQyNSwxNDMx\\r\\nMiw5MTk2LDEwNzI4LDQzMTEsMTQzMTIsNjc1MCw2MDAxLDgxNTYsMjc5Niw5MTk2LDgxNTYsMjc5\\r\\nNiwxMTQ2MiwxNDMxMiwxNjQ5LDI3OTYsMTExNDQsMTQzMTIsOTE5Niw2NDExLDY3NTAsNDMxMSw2\\r\\nOTcsNDMxMSw5MTk2LDkxOTYsODE1NiwyNzk2LDExNDYyLDE0MzEyLDgxNTYsMjc5NiwxMTE0NCw4\\r\\nNjEzLDY5Nyw5MTk2LDYwMDEsNjQxMSwxMzQzNywxNDMxMiw5ODUzLDEyNTA4LDYwMDEsNDMxMSw0\\r\\nMjgwLDE0MzEyLDEyNTA0LDY3NTAsNjk3LDg2MTMsNDI4MCwxNDMxMiwxMDcyOCwxNjQ5LDY5Nywx\\r\\nNDMxMiw4NzMxLDQzMTEsNDMxMSwyNzk2LDE0MzEyLDkxOTYsMTA3MjgsNDMxMSwxNDMxMiw4MTU2\\r\\nLDI3OTYsMTExNDQsODYxMyw2OTcsOTE5Niw2MDAxLDY0MTEsMjYxMiw2OTcsMTQzMTIsNjk3LDkx\\r\\nOTYsMTY0OSwyNzk2LDExMTQ0LDE2NDksNjAwMSwxMTE0NCwxNDMxMiwxMTE0NCw4NjEzLDQyODAs\\r\\nNDI4MCw2NDExLDE0MzEyLDkxOTYsNDMxMSw5NzY4LDkxOTYsMTQzMTIsNDMxMSwxMjI2Myw0MzEx\\r\\nLDYwMDEsMTQzMTIsNjk3LDgxNTYsMjc5NiwxNDM4MSw0MzExLDE0MzEyLDkxOTYsMTA3MjgsNDMx\\r\\nMSwxNDMxMiwzNjU1LDY4MjIsODQ3MCw4NDcwLDY5Nyw4NDEsMTQzMTIsMTQzNzgsMTA3MjgsNDMx\\r\\nMSwyNzk2LDE0MzEyLDE2NDksMjc5NiwxNDMxMiw4NjEzLDI3OTYsNzMxMywyNzk2LDEyNTA4LDE0\\r\\nMzc4LDI3OTYsMTQzMTIsNjc1MCw2MDAxLDgxNTYsMjc5Niw5MTk2LDQzMTEsNjAwMSwxNDMxMiw5\\r\\nMTk2LDEyNTA4LDEyNTA4LDczMTMsMTQzMTIsMTY0OSwxNDMxMiwxMTQ2MiwxNjQ5LDM5NzQsMzk3\\r\\nNCw0MzExLDY0MTEsMTQzMTIsMTI1MDgsODQyNSwxNDMxMiw5MTk2LDY0MTEsNjc1MCw0MzExLDE0\\r\\nMzEyLDE2NDksMjc5NiwxMTE0NCwxNDMxMiw2OTcsMTQzODEsNjAwMSwxNjQ5LDQyODAsODczMSwz\\r\\nOTc0LDQzMTEsMTExNDQsMTQzMTIsODE1Niw5MTk2LDE0MzEyLDkxOTYsMTI1MDgsMTQzMTIsNDI4\\r\\nMCwxNjQ5LDczMTMsNDMxMSwxNDMxMiwxNjQ5LDE0MzEyLDkxOTYsNjQxMSw2NzUwLDQzMTEsMTQz\\r\\nMTIsNjk3LDY3NTAsNDMxMSwxNDM4MSw4MTU2LDQyODAsNDMxMSwyNzk2LDE0MzEyLDg3MzEsMTI1\\r\\nMDgsMTI1MDgsNzMxMywxMzQzNywxNDMxMiwxMjUwNCw5MTk2LDE0MzEyLDEwNzI4LDE2NDksNjk3\\r\\nLDE0MzEyLDY5Nyw4NjEzLDYwMDEsMTIyNjMsODE1NiwxMjI2Myw0MzExLDExMTQ0LDE0MzEyLDI3\\r\\nOTYsMTI1MDgsOTE5NiwxNDMxMiwxMjUwOCwyNzk2LDM5NzQsNjQxMSwxNDMxMiw4NDI1LDgxNTYs\\r\\nMTIyNjMsNDMxMSwxNDMxMiwxNDM4MSw0MzExLDI3OTYsOTE5Niw4NjEzLDYwMDEsODE1Niw0MzEx\\r\\nLDY5Nyw4NDEsMTQzMTIsODczMSw4NjEzLDkxOTYsMTQzMTIsMTY0OSwzOTc0LDY5NywxMjUwOCwx\\r\\nNDMxMiw5MTk2LDEwNzI4LDQzMTEsMTQzMTIsMzk3NCw0MzExLDE2NDksNjc1MCwxNDMxMiw4MTU2\\r\\nLDI3OTYsOTE5NiwxMjUwOCwxNDMxMiw0MzExLDM5NzQsNDMxMSwxNDM4MSw5MTk2LDYwMDEsMTI1\\r\\nMDgsMjc5Niw4MTU2LDE0MzgxLDE0MzEyLDkxOTYsNjQxMSw2NzUwLDQzMTEsNjk3LDQzMTEsOTE5\\r\\nNiw5MTk2LDgxNTYsMjc5NiwxMTQ2Miw4NDEsMTQzMTIsNjAwMSw0MzExLDQyODAsMTY0OSw4MTU2\\r\\nLDI3OTYsODE1NiwyNzk2LDExNDYyLDE0MzEyLDQzMTEsNjk3LDY5Nyw0MzExLDI3OTYsOTE5Niw4\\r\\nMTU2LDE2NDksMzk3NCwzOTc0LDY0MTEsMTQzMTIsODYxMywyNzk2LDE0MzgxLDEwNzI4LDE2NDks\\r\\nMjc5NiwxMTQ2Miw0MzExLDExMTQ0LDEzNDM3LDE0MzEyLDEyNTA0LDkxOTYsMTQzMTIsMTQzNzgs\\r\\nMTY0OSw2OTcsMTQzMTIsNjc1MCwxMjUwOCw2NzUwLDg2MTMsMzk3NCwxNjQ5LDYwMDEsODE1Niw2\\r\\nOTcsNDMxMSwxMTE0NCwxNDMxMiw4MTU2LDI3OTYsMTQzMTIsOTE5NiwxMDcyOCw0MzExLDE0MzEy\\r\\nLDM2NTUsMTE2NTUsNzU2Miw4NDcwLDY5NywxNDMxMiwxNDM3OCw4MTU2LDkxOTYsMTA3MjgsMTQz\\r\\nMTIsOTE5NiwxMDcyOCw0MzExLDE0MzEyLDYwMDEsNDMxMSwzOTc0LDQzMTEsMTY0OSw2OTcsNDMx\\r\\nMSwxNDMxMiwxMjUwOCw4NDI1LDE0MzEyLDk4NTMsNDMxMSw5MTk2LDYwMDEsMTY0OSw2OTcsNDMx\\r\\nMSw5MTk2LDE0MzEyLDY5NywxMDcyOCw0MzExLDQzMTEsOTE5Niw2OTcsMTQzMTIsMTQzODEsMTI1\\r\\nMDgsMjc5Niw5MTk2LDE2NDksODE1NiwyNzk2LDgxNTYsMjc5NiwxMTQ2MiwxNDMxMiw5ODUzLDEy\\r\\nNTA4LDYwMDEsNDMxMSw0MjgwLDE0MzEyLDEyNTA0LDY3NTAsNjk3LDg2MTMsNDI4MCwxNDMxMiw2\\r\\nNzUwLDE2NDksNjk3LDY5NywxNjQ5LDExNDYyLDQzMTEsNjk3LDg0MSwxNDMxMiwxNjQ5LDI3OTYs\\r\\nMTExNDQsMTQzMTIsNDI4MCwxMjUwOCw2MDAxLDQzMTEsMTQzMTIsNjAwMSw0MzExLDE0MzgxLDQz\\r\\nMTEsMjc5Niw5MTk2LDM5NzQsNjQxMSwxNDMxMiwxNDM3OCw4MTU2LDkxOTYsMTA3MjgsMTQzMTIs\\r\\nMTExNDQsNDMxMSw2OTcsNzMxMyw5MTk2LDEyNTA4LDY3NTAsMTQzMTIsNjc1MCw4NjEzLDg3MzEs\\r\\nMzk3NCw4MTU2LDY5NywxMDcyOCw4MTU2LDI3OTYsMTE0NjIsMTQzMTIsNjk3LDEyNTA4LDg0MjUs\\r\\nOTE5NiwxNDM3OCwxNjQ5LDYwMDEsNDMxMSwxNDMxMiwzOTc0LDgxNTYsNzMxMyw0MzExLDE0MzEy\\r\\nLDQxMTgsMzk3NCwxMTE0NCw4NjEzLDY5NywxNDMxMiwxMzY5MCwxNjQ5LDExNDYyLDQzMTEsNDY3\\r\\nNiwxNjQ5LDczMTMsNDMxMSw2MDAxLDE0MzEyLDgxNTYsMjc5NiwxNDM4MSwzOTc0LDg2MTMsMTEx\\r\\nNDQsODE1NiwyNzk2LDExNDYyLDE0MzEyLDEyMjYzLDQzMTEsNjAwMSw2OTcsODE1NiwxMjUwOCwy\\r\\nNzk2LDY5NywxNDMxMiwxMjUwOCw4NDI1LDE0MzEyLDk4NTMsMTI1MDgsNjAwMSw0MzExLDQyODAs\\r\\nMTQzMTIsMTI1MDQsNjc1MCw2OTcsODYxMyw0MjgwLDEzNDM3LDU5Niw2NzUwLDE2NDksNjAwMSwx\\r\\nOTIzLDc0MTAsNTk2LDY3NTAsMTY0OSw2MDAxLDE5MjMsNzQxMCw1OTYsODczMSwxNDMxMiwzNDU0\\r\\nLDEwNzI4LDQzMTEsNjAwMSw0MzExLDE0MzEyLDExMTQ0LDEyNTA4LDQzMTEsNjk3LDE0MzEyLDgx\\r\\nNTYsOTE5NiwxNDMxMiwxNDM4MSwxMjUwOCw0MjgwLDQzMTEsMTQzMTIsODQyNSw2MDAxLDEyNTA4\\r\\nLDQyODAsNzEzLDU5Niw4NzMxLDg0NzAsNTk2LDY3NTAsMTY0OSw2MDAxLDE5MjMsNzQxMCw3MzA1\\r\\nLDEyNTA4LDI3OTYsOTE5Niw2MDAxLDE2NDksNjAwMSw2NDExLDE0MzEyLDkxOTYsMTI1MDgsMTQz\\r\\nMTIsNjc1MCwxMjUwOCw2NzUwLDg2MTMsMzk3NCwxNjQ5LDYwMDEsMTQzMTIsODczMSw0MzExLDM5\\r\\nNzQsODE1Niw0MzExLDg0MjUsODQxLDE0MzEyLDk4NTMsMTI1MDgsNjAwMSw0MzExLDQyODAsMTQz\\r\\nMTIsMTI1MDQsNjc1MCw2OTcsODYxMyw0MjgwLDE0MzEyLDgxNTYsNjk3LDE0MzEyLDI3OTYsMTI1\\r\\nMDgsOTE5NiwxNDMxMiw2OTcsODE1Niw0MjgwLDY3NTAsMzk3NCw2NDExLDE0MzEyLDYwMDEsMTY0\\r\\nOSwyNzk2LDExMTQ0LDEyNTA4LDQyODAsMTQzMTIsOTE5Niw0MzExLDk3NjgsOTE5NiwxMzQzNywx\\r\\nNDMxMiwxMjUwNCw5MTk2LDE0MzEyLDEwNzI4LDE2NDksNjk3LDE0MzEyLDYwMDEsMTI1MDgsMTI1\\r\\nMDgsOTE5Niw2OTcsMTQzMTIsODE1NiwyNzk2LDE0MzEyLDE2NDksMTQzMTIsNjc1MCw4MTU2LDQz\\r\\nMTEsMTQzODEsNDMxMSwxNDMxMiwxMjUwOCw4NDI1LDE0MzEyLDE0MzgxLDM5NzQsMTY0OSw2OTcs\\r\\nNjk3LDgxNTYsMTQzODEsMTY0OSwzOTc0LDE0MzEyLDk4NTMsMTY0OSw5MTk2LDgxNTYsMjc5Niwx\\r\\nNDMxMiwzOTc0LDgxNTYsOTE5Niw0MzExLDYwMDEsMTY0OSw5MTk2LDg2MTMsNjAwMSw0MzExLDE0\\r\\nMzEyLDg0MjUsNjAwMSwxMjUwOCw0MjgwLDE0MzEyLDc1MTQsNjgyMiwxNDMxMiw2MDYzLDczMDUs\\r\\nODQxLDE0MzEyLDQyODAsMTY0OSw3MzEzLDgxNTYsMjc5NiwxMTQ2MiwxNDMxMiw4MTU2LDkxOTYs\\r\\nMTQzMTIsMTI1MDgsMTIyNjMsNDMxMSw2MDAxLDE0MzEyLDQ5MDAsODQ3MCw4NDcwLDg0NzAsMTQz\\r\\nMTIsNjQxMSw0MzExLDE2NDksNjAwMSw2OTcsMTQzMTIsMTI1MDgsMzk3NCwxMTE0NCwxMzQzNywx\\r\\nNDMxMiw5MzUyLDgxNTYsMTQzODEsMTA3MjgsMTY0OSw2MDAxLDExMTQ0LDE0MzEyLDQ2NzYsMTQz\\r\\nODEsNzMwNSwzOTc0LDgxNTYsMjc5Niw5MTk2LDEyNTA4LDE0MzgxLDczMTMsODQxLDE0MzEyLDE2\\r\\nNDksMTQzMTIsOTg1MywxNjQ5LDkxOTYsODE1NiwyNzk2LDE0MzEyLDY3NTAsNjAwMSwxMjUwOCw4\\r\\nNDI1LDQzMTEsNjk3LDY5NywxMjUwOCw2MDAxLDE0MzEyLDE2NDksOTE5NiwxNDMxMiw0NDYwLDE2\\r\\nNDksNDI4MCw2NzUwLDExMTQ0LDQzMTEsMjc5NiwxMjI3NCwzNDk3LDY0MTEsMTExNDQsMjc5Niw0\\r\\nMzExLDY0MTEsMTQzMTIsNzMwNSwxMjUwOCwzOTc0LDM5NzQsNDMxMSwxMTQ2Miw0MzExLDE0MzEy\\r\\nLDgxNTYsMjc5NiwxNDMxMiwxMTY3LDgxNTYsNjAwMSwxMTQ2Miw4MTU2LDI3OTYsODE1NiwxNjQ5\\r\\nLDg0MSwxNDMxMiwzOTc0LDEyNTA4LDEyNTA4LDczMTMsNDMxMSwxMTE0NCwxNDMxMiw4NjEzLDY3\\r\\nNTAsMTQzMTIsMTI1MDgsMjc5Niw0MzExLDE0MzEyLDEyNTA4LDg0MjUsMTQzMTIsOTE5NiwxMDcy\\r\\nOCw0MzExLDE0MzEyLDQyODAsMTI1MDgsNjAwMSw0MzExLDE0MzEyLDEyNTA4LDg3MzEsNjk3LDE0\\r\\nMzgxLDg2MTMsNjAwMSw0MzExLDE0MzEyLDk4NTMsMTY0OSw5MTk2LDgxNTYsMjc5NiwxNDMxMiwx\\r\\nNDM3OCwxMjUwOCw2MDAxLDExMTQ0LDY5Nyw4NDEsMTQzMTIsMTQzODEsMTI1MDgsMjc5Niw2OTcs\\r\\nNDMxMSwxNDM4MSw5MTk2LDQzMTEsOTE5Niw4NjEzLDYwMDEsODQxLDE0MzEyLDg0MjUsNjAwMSwx\\r\\nMjUwOCw0MjgwLDE0MzEyLDE2NDksMTQzMTIsOTg1MywxMjUwOCw2MDAxLDQzMTEsNDI4MCwxNDMx\\r\\nMiwxMjUwNCw2NzUwLDY5Nyw4NjEzLDQyODAsMTQzMTIsNjc1MCwxNjQ5LDY5Nyw2OTcsMTY0OSwx\\r\\nMTQ2Miw0MzExLDg0MSwxNDMxMiwxNjQ5LDI3OTYsMTExNDQsMTQzMTIsMTE0NjIsMTI1MDgsODE1\\r\\nNiwyNzk2LDExNDYyLDE0MzEyLDkxOTYsMTA3MjgsNjAwMSwxMjUwOCw4NjEzLDExNDYyLDEwNzI4\\r\\nLDE0MzEyLDkxOTYsMTA3MjgsNDMxMSwxNDMxMiwxNDM4MSw4MTU2LDkxOTYsNDMxMSw2OTcsMTQz\\r\\nMTIsMTI1MDgsODQyNSwxNDMxMiw5MTk2LDEwNzI4LDQzMTEsMTQzMTIsMTQzNzgsMTI1MDgsNjAw\\r\\nMSwxMTE0NCwxNDMxMiw4MTU2LDI3OTYsMTQzMTIsMTQzODEsMzk3NCwxNjQ5LDY5Nyw2OTcsODE1\\r\\nNiwxNDM4MSwxNjQ5LDM5NzQsMTQzMTIsMzk3NCw4MTU2LDkxOTYsNDMxMSw2MDAxLDE2NDksOTE5\\r\\nNiw4NjEzLDYwMDEsNDMxMSw4NDEsMTQzMTIsMTExNDQsODE1Niw2OTcsMTQzODEsMTI1MDgsMTIy\\r\\nNjMsNDMxMSw2MDAxLDQzMTEsMTExNDQsMTQzMTIsOTE5NiwxMDcyOCw0MzExLDE0MzEyLDg2MTMs\\r\\nMjc5NiwxMTE0NCwxMjUwOCw4NjEzLDg3MzEsOTE5NiwxNjQ5LDg3MzEsMzk3NCw0MzExLDE0MzEy\\r\\nLDY5NywxMjUwOCw4NjEzLDYwMDEsMTQzODEsNDMxMSwxMzQzNywxNDMxMiw5ODUzLDEyNTA4LDYw\\r\\nMDEsNDMxMSw0MjgwLDE0MzEyLDEyNTA0LDY3NTAsNjk3LDg2MTMsNDI4MCwxNDMxMiwxNDM4MSwx\\r\\nMjUwOCw0MjgwLDQzMTEsNjk3LDE0MzEyLDg0MjUsNjAwMSwxMjUwOCw0MjgwLDE0MzEyLDY5Nyw0\\r\\nMzExLDE0MzgxLDkxOTYsODE1NiwxMjUwOCwyNzk2LDY5NywxNDMxMiwzNjU1LDEzNDM3LDM2NTUs\\r\\nODQ3MCwxMzQzNyw3MTI3LDQ5MDAsMTQzMTIsMTY0OSwyNzk2LDExMTQ0LDE0MzEyLDM2NTUsMTM0\\r\\nMzcsMzY1NSw4NDcwLDEzNDM3LDcxMjcsNzEyNywxNDMxMiwxMjUwOCw4NDI1LDE0MzEyLDU4ODMs\\r\\nMTExNDQsNDMxMSwxNDMxMiwxMzY1MCw4MTU2LDI3OTYsODE1Niw4NzMxLDg2MTMsNjk3LDE0MzEy\\r\\nLDYwNjMsMTI1MDgsMjc5NiwxMjUwOCw2MDAxLDg2MTMsNDI4MCwxNDMxMiw0MzExLDkxOTYsMTQz\\r\\nMTIsNDY3NiwxNjQ5LDM5NzQsMTI1MDgsNjAwMSw4NjEzLDQyODAsNTg4MywxNDMxMiw0MjUzLDEy\\r\\nNjI3LDEwNzI4LDQzMTEsMTQzMTIsOTgyNSw5NzY4LDkxOTYsNjAwMSw0MzExLDQyODAsNDMxMSw2\\r\\nOTcsMTQzMTIsMTI1MDgsODQyNSwxNDMxMiwxMDMxOSwxMjUwOCwxMjUwOCwxMTE0NCwxNDMxMiwx\\r\\nNjQ5LDI3OTYsMTExNDQsMTQzMTIsOTgyNSwxMjI2Myw4MTU2LDM5NzQsMjY0MCwxNDMxMiw4NzMx\\r\\nLDY0MTEsMTQzMTIsNzMwNSw4MTU2LDE0MzgxLDQzMTEsNjAwMSwxMjUwOCw4NDEsMTQzMTIsMTQz\\r\\nNzgsNjAwMSw4MTU2LDkxOTYsOTE5Niw0MzExLDI3OTYsMTQzMTIsODE1NiwyNzk2LDE0MzEyLDc1\\r\\nMTQsNjgyMiwxNDMxMiw2MDYzLDczMDUsMTM0MzcsMTQzMTIsMTI2MjcsMTA3MjgsODE1Niw2OTcs\\r\\nMTQzMTIsODczMSwxMjUwOCwxMjUwOCw3MzEzLDE0MzEyLDgxNTYsNjk3LDE0MzEyLDE2NDksMTQz\\r\\nMTIsOTE5Niw2MDAxLDQzMTEsMTY0OSw5MTk2LDgxNTYsNjk3LDQzMTEsMTQzMTIsMTI1MDgsMjc5\\r\\nNiwxNDMxMiw5MTk2LDEwNzI4LDQzMTEsMTQzMTIsOTE5NiwxMDcyOCw0MzExLDEyNTA4LDYwMDEs\\r\\nNjQxMSwxNDMxMiwxMjUwOCw4NDI1LDE0MzEyLDQzMTEsOTE5NiwxMDcyOCw4MTU2LDE0MzgxLDY5\\r\\nNyw4NDEsMTQzMTIsMTIyNjMsNDMxMSw2MDAxLDY0MTEsMTQzMTIsNjc1MCwxMjUwOCw2NzUwLDg2\\r\\nMTMsMzk3NCwxNjQ5LDYwMDEsMTQzMTIsMTExNDQsODYxMyw2MDAxLDgxNTYsMjc5NiwxMTQ2Miwx\\r\\nNDMxMiw5MTk2LDEwNzI4LDQzMTEsMTQzMTIsOTM1Miw0MzExLDI3OTYsMTY0OSw4MTU2LDY5Nyw2\\r\\nOTcsMTY0OSwyNzk2LDE0MzgxLDQzMTEsMTM0MzcsMTQzMTIsMTI2MjcsMTA3MjgsNDMxMSwxNDMx\\r\\nMiw4NDI1LDgxNTYsNjAwMSw2OTcsOTE5NiwxNDMxMiwzOTc0LDgxNTYsMjc5Niw0MzExLDE0MzEy\\r\\nLDEyNTA4LDg0MjUsMTQzMTIsOTg1MywxMjUwOCw2MDAxLDQzMTEsNDI4MCwxNDMxMiwxMjUwNCw2\\r\\nNzUwLDY5Nyw4NjEzLDQyODAsODQxLDE0MzEyLDU4ODMsOTg1MywxMjUwOCw2MDAxLDQzMTEsNDI4\\r\\nMCwxNDMxMiw4MTU2LDY3NTAsNjk3LDg2MTMsNDI4MCwxNDMxMiwxMTE0NCwxMjUwOCwzOTc0LDEy\\r\\nNTA4LDYwMDEsMTQzMTIsNjk3LDgxNTYsOTE5NiwxNDMxMiwxNjQ5LDQyODAsNDMxMSw5MTk2LDEz\\r\\nNDM3LDEzNDM3LDU4ODMsODQxLDE0MzEyLDE0MzgxLDEyNTA4LDQyODAsNDMxMSw2OTcsMTQzMTIs\\r\\nODQyNSw2MDAxLDEyNTA4LDQyODAsMTQzMTIsMTY0OSwxNDMxMiwzOTc0LDgxNTYsMjc5Niw0MzEx\\r\\nLDE0MzEyLDgxNTYsMjc5NiwxNDMxMiw2OTcsNDMxMSwxNDM4MSw5MTk2LDgxNTYsMTI1MDgsMjc5\\r\\nNiwxNDMxMiwzNjU1LDEzNDM3LDM2NTUsODQ3MCwxMzQzNyw3MTI3LDQ5MDAsMTM0MzcsNTk2LDY3\\r\\nNTAsMTY0OSw2MDAxLDE5MjMsNzQxMCw1OTYsNjc1MCwxNjQ5LDYwMDEsMTkyMyw3NDEwLDEyNjI3\\r\\nLDEwNzI4LDQzMTEsMTQzMTIsNjk3LDkxOTYsMTY0OSwyNzk2LDExMTQ0LDE2NDksNjAwMSwxMTE0\\r\\nNCwxNDMxMiwxNDM4MSwxMDcyOCw4NjEzLDI3OTYsNzMxMywxNDMxMiwxMjUwOCw4NDI1LDE0MzEy\\r\\nLDk4NTMsMTI1MDgsNjAwMSw0MzExLDQyODAsMTQzMTIsMTI1MDQsNjc1MCw2OTcsODYxMyw0Mjgw\\r\\nLDE0MzEyLDg2MTMsNjk3LDQzMTEsMTExNDQsMTQzMTIsNjk3LDgxNTYsMjc5NiwxNDM4MSw0MzEx\\r\\nLDE0MzEyLDkxOTYsMTA3MjgsNDMxMSwxNDMxMiwzNjU1LDY4MjIsODQ3MCw4NDcwLDY5NywxNDMx\\r\\nMiw4MTU2LDY5NywxNDMxMiw2MDAxLDQzMTEsNjc1MCw2MDAxLDEyNTA4LDExMTQ0LDg2MTMsMTQz\\r\\nODEsNDMxMSwxMTE0NCwxNDMxMiw4NzMxLDQzMTEsMzk3NCwxMjUwOCwxNDM3OCwxNDMxMiw4NDI1\\r\\nLDEyNTA4LDYwMDEsMTQzMTIsOTE5NiwxMDcyOCwxMjUwOCw2OTcsNDMxMSwxNDMxMiw4MTU2LDI3\\r\\nOTYsOTE5Niw0MzExLDYwMDEsNDMxMSw2OTcsOTE5Niw0MzExLDExMTQ0LDEzNDM3LDE0MzEyLDM0\\r\\nOTcsNDMxMSwxNDM4MSw5MTk2LDgxNTYsMTI1MDgsMjc5Niw2OTcsMTQzMTIsMzY1NSwxMzQzNywz\\r\\nNjU1LDg0NzAsMTM0MzcsNzEyNyw0OTAwLDE0MzEyLDE2NDksMjc5NiwxMTE0NCwxNDMxMiwzNjU1\\r\\nLDEzNDM3LDM2NTUsODQ3MCwxMzQzNyw3MTI3LDcxMjcsMTQzMTIsODQyNSw2MDAxLDEyNTA4LDQy\\r\\nODAsMTQzMTIsNTg4MywxMTE0NCw0MzExLDE0MzEyLDEzNjUwLDgxNTYsMjc5Niw4MTU2LDg3MzEs\\r\\nODYxMyw2OTcsMTQzMTIsNjA2MywxMjUwOCwyNzk2LDEyNTA4LDYwMDEsODYxMyw0MjgwLDE0MzEy\\r\\nLDQzMTEsOTE5NiwxNDMxMiw0Njc2LDE2NDksMzk3NCwxMjUwOCw2MDAxLDg2MTMsNDI4MCw1ODgz\\r\\nLDE0MzEyLDg3MzEsNjQxMSwxNDMxMiw3MzA1LDgxNTYsMTQzODEsNDMxMSw2MDAxLDEyNTA4LDE0\\r\\nMzEyLDE2NDksNjAwMSw0MzExLDE0MzEyLDE2NDksMzk3NCw2OTcsMTI1MDgsMTQzMTIsNjAwMSw0\\r\\nMzExLDY3NTAsNjAwMSwxMjUwOCwxMTE0NCw4NjEzLDE0MzgxLDQzMTEsMTExNDQsMTQzMTIsODE1\\r\\nNiwyNzk2LDE0MzEyLDkxOTYsMTA3MjgsNDMxMSw4MTU2LDYwMDEsMTQzMTIsNDMxMSw5NzY4LDE2\\r\\nNDksMTQzODEsOTE5NiwxNDMxMiwxMjUwOCw2MDAxLDgxNTYsMTE0NjIsODE1NiwyNzk2LDE2NDks\\r\\nMzk3NCwxNDMxMiw4NDI1LDEyNTA4LDYwMDEsNDI4MCw4NDEsMTQzMTIsMTY0OSwxNDM4MSwxNDM4\\r\\nMSwxMjUwOCw0MjgwLDY3NTAsMTY0OSwyNzk2LDgxNTYsNDMxMSwxMTE0NCwxNDMxMiw4NzMxLDY0\\r\\nMTEsMTQzMTIsOTgyNSwyNzk2LDExNDYyLDM5NzQsODE1Niw2OTcsMTA3MjgsMTQzMTIsMTIyNjMs\\r\\nNDMxMSw2MDAxLDY5Nyw4MTU2LDEyNTA4LDI3OTYsNjk3LDE0MzEyLDg0MjUsNjAwMSwxMjUwOCw0\\r\\nMjgwLDE0MzEyLDkxOTYsMTA3MjgsNDMxMSwxNDMxMiwzNjU1LDExNjU1LDM2NTUsNzUxNCwxNDMx\\r\\nMiw5MTk2LDYwMDEsMTY0OSwyNzk2LDY5NywzOTc0LDE2NDksOTE5Niw4MTU2LDEyNTA4LDI3OTYs\\r\\nMTQzMTIsODczMSw2NDExLDE0MzEyLDQ0NjAsMTM0MzcsMTQzMTIsOTM1MiwxNjQ5LDE0MzgxLDcz\\r\\nMTMsMTA3MjgsMTY0OSw0MjgwLDEzNDM3LDU5Niw2NzUwLDE2NDksNjAwMSwxOTIzLDc0MTAsNTk2\\r\\nLDY3NTAsMTY0OSw2MDAxLDE5MjMsNzQxMCw1OTYsODczMSwxNDMxMiwzNDU0LDEwNzI4LDY0MTEs\\r\\nMTQzMTIsMTExNDQsMTI1MDgsMTQzMTIsMTQzNzgsNDMxMSwxNDMxMiw4NjEzLDY5Nyw0MzExLDE0\\r\\nMzEyLDgxNTYsOTE5Niw3MTMsNTk2LDY3NTAsMTY0OSw2MDAxLDE5MjMsNzQxMCw1OTYsODczMSw4\\r\\nNDcwLDE0MzEyLDEyNTA0LDkxOTYsMTQzMTIsODE1Niw2OTcsMTQzMTIsMTY0OSwxNDMxMiwzOTc0\\r\\nLDEyNTA4LDI3OTYsMTE0NjIsMTQzMTIsNDMxMSw2OTcsOTE5NiwxNjQ5LDg3MzEsMzk3NCw4MTU2\\r\\nLDY5NywxMDcyOCw0MzExLDExMTQ0LDE0MzEyLDg0MjUsMTY0OSwxNDM4MSw5MTk2LDE0MzEyLDkx\\r\\nOTYsMTA3MjgsMTY0OSw5MTk2LDE0MzEyLDE2NDksMTQzMTIsNjAwMSw0MzExLDE2NDksMTExNDQs\\r\\nNDMxMSw2MDAxLDE0MzEyLDE0Mzc4LDgxNTYsMzk3NCwzOTc0LDE0MzEyLDg3MzEsNDMxMSwxNDMx\\r\\nMiwxMTE0NCw4MTU2LDY5Nyw5MTk2LDYwMDEsMTY0OSwxNDM4MSw5MTk2LDQzMTEsMTExNDQsMTQz\\r\\nMTIsODczMSw2NDExLDE0MzEyLDkxOTYsMTA3MjgsNDMxMSwxNDMxMiw2MDAxLDQzMTEsMTY0OSwx\\r\\nMTE0NCwxNjQ5LDg3MzEsMzk3NCw0MzExLDE0MzEyLDE0MzgxLDEyNTA4LDI3OTYsOTE5Niw0MzEx\\r\\nLDI3OTYsOTE5NiwxNDMxMiwxMjUwOCw4NDI1LDE0MzEyLDE2NDksMTQzMTIsNjc1MCwxNjQ5LDEx\\r\\nNDYyLDQzMTEsMTQzMTIsMTQzNzgsMTA3MjgsNDMxMSwyNzk2LDE0MzEyLDM5NzQsMTI1MDgsMTI1\\r\\nMDgsNzMxMyw4MTU2LDI3OTYsMTE0NjIsMTQzMTIsMTY0OSw5MTk2LDE0MzEyLDgxNTYsOTE5Niw2\\r\\nOTcsMTQzMTIsMzk3NCwxNjQ5LDY0MTEsMTI1MDgsODYxMyw5MTk2LDEzNDM3LDE0MzEyLDEyNjI3\\r\\nLDEwNzI4LDQzMTEsMTQzMTIsNjc1MCwxMjUwOCw4MTU2LDI3OTYsOTE5NiwxNDMxMiwxMjUwOCw4\\r\\nNDI1LDE0MzEyLDg2MTMsNjk3LDgxNTYsMjc5NiwxMTQ2MiwxNDMxMiw5ODUzLDEyNTA4LDYwMDEs\\r\\nNDMxMSw0MjgwLDE0MzEyLDEyNTA0LDY3NTAsNjk3LDg2MTMsNDI4MCwxNDMxMiw4MTU2LDY5Nywx\\r\\nNDMxMiw5MTk2LDEwNzI4LDE2NDksOTE5NiwxNDMxMiw4MTU2LDkxOTYsMTQzMTIsMTA3MjgsMTY0\\r\\nOSw2OTcsMTQzMTIsMTY0OSwxNDMxMiw0MjgwLDEyNTA4LDYwMDEsNDMxMSwxMjI3NCwxMjUwOCw2\\r\\nMDAxLDEyMjc0LDM5NzQsNDMxMSw2OTcsNjk3LDE0MzEyLDI3OTYsMTI1MDgsNjAwMSw0MjgwLDE2\\r\\nNDksMzk3NCwxNDMxMiwxMTE0NCw4MTU2LDY5Nyw5MTk2LDYwMDEsODE1Niw4NzMxLDg2MTMsOTE5\\r\\nNiw4MTU2LDEyNTA4LDI3OTYsMTQzMTIsMTI1MDgsODQyNSwxNDMxMiwzOTc0LDQzMTEsOTE5Niw5\\r\\nMTk2LDQzMTEsNjAwMSw2OTcsODQxLDE0MzEyLDE2NDksNjk3LDE0MzEyLDEyNTA4LDY3NTAsNjc1\\r\\nMCwxMjUwOCw2OTcsNDMxMSwxMTE0NCwxNDMxMiw5MTk2LDEyNTA4LDE0MzEyLDg2MTMsNjk3LDgx\\r\\nNTYsMjc5NiwxMTQ2MiwxNDMxMiwyNjEyLDczMDUsMTI1MDgsMjc5Niw5MTk2LDQzMTEsMjc5Niw5\\r\\nMTk2LDE0MzEyLDEwNzI4LDQzMTEsNjAwMSw0MzExLDg0MSwxNDMxMiwxNDM4MSwxMjUwOCwyNzk2\\r\\nLDkxOTYsNDMxMSwyNzk2LDkxOTYsMTQzMTIsMTA3MjgsNDMxMSw2MDAxLDQzMTEsMjYxMiw4NDEs\\r\\nMTQzMTIsNDI4MCwxNjQ5LDczMTMsODE1NiwyNzk2LDExNDYyLDE0MzEyLDgxNTYsOTE5NiwxNDMx\\r\\nMiwzOTc0LDEyNTA4LDEyNTA4LDczMTMsMTQzMTIsMzk3NCw4MTU2LDczMTMsNDMxMSwxNDMxMiw2\\r\\nMDAxLDQzMTEsMTY0OSwxMTE0NCwxNjQ5LDg3MzEsMzk3NCw0MzExLDE0MzEyLDk4MjUsMjc5Niwx\\r\\nMTQ2MiwzOTc0LDgxNTYsNjk3LDEwNzI4LDEzNDM3LDE0MzEyLDQ2NzYsMTY0OSwyNzk2LDY0MTEs\\r\\nMTQzMTIsMTExNDQsNDMxMSw2OTcsNzMxMyw5MTk2LDEyNTA4LDY3NTAsMTQzMTIsNjc1MCw4NjEz\\r\\nLDg3MzEsMzk3NCw4MTU2LDY5NywxMDcyOCw4MTU2LDI3OTYsMTE0NjIsMTQzMTIsNjc1MCwxNjQ5\\r\\nLDE0MzgxLDczMTMsMTY0OSwxMTQ2Miw0MzExLDY5NywxNDMxMiwxNjQ5LDI3OTYsMTExNDQsMTQz\\r\\nMTIsMTQzNzgsNDMxMSw4NzMxLDE0MzEyLDY3NTAsMTY0OSwxMTQ2Miw0MzExLDE0MzEyLDQzMTEs\\r\\nMTExNDQsODE1Niw5MTk2LDEyNTA4LDYwMDEsNjk3LDE0MzEyLDI3OTYsMTI1MDgsMTQzNzgsMTQz\\r\\nMTIsODYxMyw2OTcsNDMxMSwxNDMxMiw5ODUzLDEyNTA4LDYwMDEsNDMxMSw0MjgwLDE0MzEyLDEy\\r\\nNTA0LDY3NTAsNjk3LDg2MTMsNDI4MCwxNDMxMiwxNjQ5LDY5NywxNDMxMiw5MTk2LDEwNzI4LDQz\\r\\nMTEsODE1Niw2MDAxLDE0MzEyLDExMTQ0LDQzMTEsODQyNSwxNjQ5LDg2MTMsMzk3NCw5MTk2LDE0\\r\\nMzEyLDQyODAsMTI1MDgsMTExNDQsNDMxMSwzOTc0LDE0MzEyLDkxOTYsNDMxMSw5NzY4LDkxOTYs\\r\\nODQxLDE0MzEyLDE2NDksMjc5NiwxMTE0NCwxNDMxMiwxNjQ5LDE0MzEyLDY5Nyw0MzExLDE2NDks\\r\\nNjAwMSwxNDM4MSwxMDcyOCwxNDMxMiw4NDI1LDEyNTA4LDYwMDEsMTQzMTIsMjYxMiwzOTc0LDEy\\r\\nNTA4LDYwMDEsNDMxMSw0MjgwLDE0MzEyLDgxNTYsNjc1MCw2OTcsODYxMyw0MjgwLDI2MTIsMTQz\\r\\nMTIsMTQzNzgsODE1NiwzOTc0LDM5NzQsMTQzMTIsODYxMywyNzk2LDE0MzgxLDEyNTA4LDEyMjYz\\r\\nLDQzMTEsNjAwMSwxNDMxMiw0MjgwLDE2NDksMjc5Niw2NDExLDE0MzEyLDE0Mzc4LDQzMTEsODcz\\r\\nMSwxNDMxMiw2OTcsODE1Niw5MTk2LDQzMTEsNjk3LDE0MzEyLDY5Nyw5MTk2LDgxNTYsMzk3NCwz\\r\\nOTc0LDE0MzEyLDgxNTYsMjc5NiwxNDMxMiw5MTk2LDEwNzI4LDQzMTEsODE1Niw2MDAxLDE0MzEy\\r\\nLDgxNTYsMjc5Niw4NDI1LDE2NDksMjc5NiwxNDM4MSw2NDExLDEzNDM3LDE0MzEyLDExNjcsMTY0\\r\\nOSw2MDAxLDgxNTYsMTI1MDgsODYxMyw2OTcsMTQzMTIsMTIyNjMsNDMxMSw2MDAxLDY5Nyw4MTU2\\r\\nLDEyNTA4LDI3OTYsNjk3LDE0MzEyLDEwNzI4LDE2NDksMTIyNjMsNDMxMSwxNDMxMiw0MzExLDEy\\r\\nMjYzLDEyNTA4LDM5NzQsMTIyNjMsNDMxMSwxMTE0NCwxNDMxMiwxMjUwOCwxMjI2Myw0MzExLDYw\\r\\nMDEsMTQzMTIsOTE5NiwxMDcyOCw0MzExLDE0MzEyLDY0MTEsNDMxMSwxNjQ5LDYwMDEsNjk3LDg0\\r\\nMSwxNDMxMiw2OTcsMTI1MDgsNDI4MCw0MzExLDkxOTYsODE1Niw0MjgwLDQzMTEsNjk3LDE0MzEy\\r\\nLDg3MzEsNjQxMSwxNDMxMiwxNjQ5LDE0MzgxLDE0MzgxLDgxNTYsMTExNDQsNDMxMSwyNzk2LDkx\\r\\nOTYsODQxLDE0MzEyLDY5NywxMjUwOCw0MjgwLDQzMTEsOTE5Niw4MTU2LDQyODAsNDMxMSw2OTcs\\r\\nMTQzMTIsMTI1MDgsMjc5NiwxNDMxMiw2NzUwLDg2MTMsNjAwMSw2NzUwLDEyNTA4LDY5Nyw0MzEx\\r\\nLDE0MzEyLDQyNTMsODE1NiwyNzk2LDMxMjgsNDMxMSwxNDM4MSw5MTk2LDQzMTEsMTExNDQsMTQz\\r\\nMTIsMTA3MjgsODYxMyw0MjgwLDEyNTA4LDg2MTMsNjAwMSwxNDMxMiwxNjQ5LDI3OTYsMTExNDQs\\r\\nMTQzMTIsOTE5NiwxMDcyOCw0MzExLDE0MzEyLDM5NzQsODE1Niw3MzEzLDQzMTEsMjY0MCwxMzQz\\r\\nNyw1OTYsNjc1MCwxNjQ5LDYwMDEsMTkyMyw3NDEwLDU5Niw2NzUwLDE2NDksNjAwMSwxOTIzLDc0\\r\\nMTAsNTk2LDg3MzEsMTQzMTIsMzQ1NCwxMDcyOCw0MzExLDYwMDEsNDMxMSwxNDMxMiwxNDM4MSwx\\r\\nNjQ5LDI3OTYsMTQzMTIsMTI1MDQsMTQzMTIsMTE0NjIsNDMxMSw5MTk2LDE0MzEyLDY5NywxMjUw\\r\\nOCw0MjgwLDQzMTEsNzEzLDU5Niw4NzMxLDg0NzAsNTk2LDY3NTAsMTY0OSw2MDAxLDE5MjMsNzQx\\r\\nMCwxMjYyNywxMDcyOCw0MzExLDYwMDEsNDMxMSwxNDMxMiwxNjQ5LDYwMDEsNDMxMSwxNDMxMiw0\\r\\nMjgwLDE2NDksMjc5Niw2NDExLDE0MzEyLDEyMjYzLDE2NDksNjAwMSw4MTU2LDE2NDksOTE5Niw4\\r\\nMTU2LDEyNTA4LDI3OTYsNjk3LDE0MzEyLDEyNTA4LDg0MjUsMTQzMTIsNjc1MCwxNjQ5LDY5Nyw2\\r\\nOTcsMTY0OSwxMTQ2Miw0MzExLDY5NywxNDMxMiwxMjUwOCw4NDI1LDE0MzEyLDk4NTMsMTI1MDgs\\r\\nNjAwMSw0MzExLDQyODAsMTQzMTIsMTI1MDQsNjc1MCw2OTcsODYxMyw0MjgwLDE0MzEyLDE2NDks\\r\\nMTIyNjMsMTY0OSw4MTU2LDM5NzQsMTY0OSw4NzMxLDM5NzQsNDMxMSw4NDEsMTQzMTIsODczMSw4\\r\\nNjEzLDkxOTYsMTQzMTIsOTE5NiwxMDcyOCw0MzExLDE0MzEyLDQyODAsMTY0OSwzMTI4LDEyNTA4\\r\\nLDYwMDEsODE1Niw5MTk2LDY0MTEsMTQzMTIsMTA3MjgsMTY0OSwxMjI2Myw0MzExLDE0MzEyLDY5\\r\\nNyw4NjEzLDg0MjUsODQyNSw0MzExLDYwMDEsNDMxMSwxMTE0NCwxNDMxMiwxNjQ5LDM5NzQsOTE5\\r\\nNiw0MzExLDYwMDEsMTY0OSw5MTk2LDgxNTYsMTI1MDgsMjc5NiwxNDMxMiw4MTU2LDI3OTYsMTQz\\r\\nMTIsNjk3LDEyNTA4LDQyODAsNDMxMSwxNDMxMiw4NDI1LDEyNTA4LDYwMDEsNDI4MCw4NDEsMTQz\\r\\nMTIsODczMSw2NDExLDE0MzEyLDgxNTYsMjc5NiwzMTI4LDQzMTEsMTQzODEsOTE5Niw0MzExLDEx\\r\\nMTQ0LDE0MzEyLDEwNzI4LDg2MTMsNDI4MCwxMjUwOCw4NjEzLDYwMDEsODQxLDE0MzEyLDEyNTA4\\r\\nLDYwMDEsMTQzMTIsNjAwMSwxNjQ5LDI3OTYsMTExNDQsMTI1MDgsNDI4MCw4MTU2LDY5Nyw0MzEx\\r\\nLDExMTQ0LDE0MzEyLDE0Mzc4LDEyNTA4LDYwMDEsMTExNDQsNjk3LDE0MzEyLDE0Mzc4LDEwNzI4\\r\\nLDgxNTYsMTQzODEsMTA3MjgsMTQzMTIsMTExNDQsMTI1MDgsMjc5NiwyNjEyLDkxOTYsMTQzMTIs\\r\\nMzk3NCwxMjUwOCwxMjUwOCw3MzEzLDE0MzEyLDQzMTEsMTIyNjMsNDMxMSwyNzk2LDE0MzEyLDY5\\r\\nNywzOTc0LDgxNTYsMTE0NjIsMTA3MjgsOTE5NiwzOTc0LDY0MTEsMTQzMTIsODczMSw0MzExLDM5\\r\\nNzQsODE1Niw0MzExLDEyMjYzLDE2NDksODczMSwzOTc0LDQzMTEsMTM0MzcsMTQzMTIsMTI1MDQs\\r\\nODQyNSwxNDMxMiw2NDExLDEyNTA4LDg2MTMsMTQzMTIsMTY0OSw2MDAxLDQzMTEsMTQzMTIsMTE0\\r\\nNjIsMTI1MDgsODE1NiwyNzk2LDExNDYyLDE0MzEyLDkxOTYsMTI1MDgsMTQzMTIsODYxMyw2OTcs\\r\\nNDMxMSwxNDMxMiwxNjQ5LDE0MzEyLDY3NTAsMTY0OSw2OTcsNjk3LDE2NDksMTE0NjIsNDMxMSwx\\r\\nNDMxMiwxMjUwOCw4NDI1LDE0MzEyLDk4NTMsMTI1MDgsNjAwMSw0MzExLDQyODAsMTQzMTIsMTI1\\r\\nMDQsNjc1MCw2OTcsODYxMyw0MjgwLDg0MSwxNDMxMiw2NDExLDEyNTA4LDg2MTMsMTQzMTIsMjc5\\r\\nNiw0MzExLDQzMTEsMTExNDQsMTQzMTIsOTE5NiwxMjUwOCwxNDMxMiw4NzMxLDQzMTEsMTQzMTIs\\r\\nNjk3LDg2MTMsNjAwMSw0MzExLDE0MzEyLDkxOTYsMTA3MjgsNDMxMSw2MDAxLDQzMTEsMTQzMTIs\\r\\nODE1Niw2OTcsMjc5NiwyNjEyLDkxOTYsMTQzMTIsMTY0OSwyNzk2LDY0MTEsOTE5NiwxMDcyOCw4\\r\\nMTU2LDI3OTYsMTE0NjIsMTQzMTIsNDMxMSw0MjgwLDg3MzEsMTY0OSw2MDAxLDYwMDEsMTY0OSw2\\r\\nOTcsNjk3LDgxNTYsMjc5NiwxMTQ2MiwxNDMxMiwxMDcyOCw4MTU2LDExMTQ0LDExMTQ0LDQzMTEs\\r\\nMjc5NiwxNDMxMiw4MTU2LDI3OTYsMTQzMTIsOTE5NiwxMDcyOCw0MzExLDE0MzEyLDQyODAsODE1\\r\\nNiwxMTE0NCwxMTE0NCwzOTc0LDQzMTEsMTQzMTIsMTI1MDgsODQyNSwxNDMxMiw5MTk2LDQzMTEs\\r\\nOTc2OCw5MTk2LDEzNDM3LDE0MzEyLDQxMTgsMzk3NCwzOTc0LDE0MzEyLDkxOTYsMTA3MjgsNDMx\\r\\nMSwxNDMxMiw5ODUzLDEyNTA4LDYwMDEsNDMxMSw0MjgwLDE0MzEyLDEyNTA0LDY3NTAsNjk3LDg2\\r\\nMTMsNDI4MCwxNDMxMiwxMTQ2Miw0MzExLDI3OTYsNDMxMSw2MDAxLDE2NDksOTE5NiwxMjUwOCw2\\r\\nMDAxLDY5NywxNDMxMiwxMjUwOCwyNzk2LDE0MzEyLDkxOTYsMTA3MjgsNDMxMSwxNDMxMiwxMjUw\\r\\nNCwyNzk2LDkxOTYsNDMxMSw2MDAxLDI3OTYsNDMxMSw5MTk2LDE0MzEyLDkxOTYsNDMxMSwyNzk2\\r\\nLDExMTQ0LDE0MzEyLDkxOTYsMTI1MDgsMTQzMTIsNjAwMSw0MzExLDY3NTAsNDMxMSwxNjQ5LDkx\\r\\nOTYsMTQzMTIsNjc1MCw2MDAxLDQzMTEsMTExNDQsNDMxMSw4NDI1LDgxNTYsMjc5Niw0MzExLDEx\\r\\nMTQ0LDE0MzEyLDE0MzgxLDEwNzI4LDg2MTMsMjc5Niw3MzEzLDY5NywxNDMxMiwxNjQ5LDY5Nywx\\r\\nNDMxMiwyNzk2LDQzMTEsMTQzODEsNDMxMSw2OTcsNjk3LDE2NDksNjAwMSw2NDExLDg0MSwxNDMx\\r\\nMiw0MjgwLDE2NDksNzMxMyw4MTU2LDI3OTYsMTE0NjIsMTQzMTIsOTE5NiwxMDcyOCw4MTU2LDY5\\r\\nNywxNDMxMiw5MTk2LDEwNzI4LDQzMTEsMTQzMTIsODQyNSw4MTU2LDYwMDEsNjk3LDkxOTYsMTQz\\r\\nMTIsOTE5Niw2MDAxLDg2MTMsNDMxMSwxNDMxMiwxMTQ2Miw0MzExLDI3OTYsNDMxMSw2MDAxLDE2\\r\\nNDksOTE5NiwxMjUwOCw2MDAxLDE0MzEyLDEyNTA4LDI3OTYsMTQzMTIsOTE5NiwxMDcyOCw0MzEx\\r\\nLDE0MzEyLDEyNTA0LDI3OTYsOTE5Niw0MzExLDYwMDEsMjc5Niw0MzExLDkxOTYsMTM0MzcsMTQz\\r\\nMTIsMTI1MDQsOTE5NiwxNDMxMiw4NjEzLDY5Nyw0MzExLDY5NywxNDMxMiwxNjQ5LDE0MzEyLDEx\\r\\nMTQ0LDgxNTYsMTQzODEsOTE5Niw4MTU2LDEyNTA4LDI3OTYsMTY0OSw2MDAxLDY0MTEsMTQzMTIs\\r\\nMTI1MDgsODQyNSwxNDMxMiwxMjUwOCwxMjI2Myw0MzExLDYwMDEsMTQzMTIsNDkwMCw4NDcwLDg0\\r\\nNzAsMTQzMTIsOTg1MywxNjQ5LDkxOTYsODE1NiwyNzk2LDE0MzEyLDE0Mzc4LDEyNTA4LDYwMDEs\\r\\nMTExNDQsNjk3LDg0MSwxNDMxMiwxNDM4MSwxMjUwOCw0MjgwLDg3MzEsODE1NiwyNzk2LDQzMTEs\\r\\nMTExNDQsMTQzMTIsMTQzNzgsODE1Niw5MTk2LDEwNzI4LDE0MzEyLDE2NDksMTQzMTIsMTA3Mjgs\\r\\nMTY0OSwyNzk2LDExMTQ0LDg0MjUsODYxMywzOTc0LDE0MzEyLDEyNTA4LDg0MjUsMTQzMTIsNDI4\\r\\nMCwxMjUwOCwxMTE0NCw0MzExLDM5NzQsMTQzMTIsNjk3LDQzMTEsMjc5Niw5MTk2LDQzMTEsMjc5\\r\\nNiwxNDM4MSw0MzExLDE0MzEyLDY5Nyw5MTk2LDYwMDEsODYxMywxNDM4MSw5MTk2LDg2MTMsNjAw\\r\\nMSw0MzExLDY5Nyw4NDEsMTQzMTIsOTE5NiwxMjUwOCwxNDMxMiwxMTQ2Miw0MzExLDI3OTYsNDMx\\r\\nMSw2MDAxLDE2NDksOTE5Niw0MzExLDE0MzEyLDk4NTMsMTI1MDgsNjAwMSw0MzExLDQyODAsMTQz\\r\\nMTIsMTI1MDQsNjc1MCw2OTcsODYxMyw0MjgwLDE0MzEyLDE0Mzc4LDEwNzI4LDgxNTYsMTQzODEs\\r\\nMTA3MjgsMTQzMTIsMzk3NCwxMjUwOCwxMjUwOCw3MzEzLDY5NywxNDMxMiw2MDAxLDQzMTEsMTY0\\r\\nOSw2OTcsMTI1MDgsMjc5NiwxNjQ5LDg3MzEsMzk3NCw0MzExLDEzNDM3LDE0MzEyLDEyNjI3LDEw\\r\\nNzI4LDQzMTEsMTQzMTIsMTE0NjIsNDMxMSwyNzk2LDQzMTEsNjAwMSwxNjQ5LDkxOTYsNDMxMSwx\\r\\nMTE0NCwxNDMxMiw5ODUzLDEyNTA4LDYwMDEsNDMxMSw0MjgwLDE0MzEyLDEyNTA0LDY3NTAsNjk3\\r\\nLDg2MTMsNDI4MCwxNDMxMiw4MTU2LDY5NywxNDMxMiw5MTk2LDEwNzI4LDQzMTEsNjAwMSw0MzEx\\r\\nLDg0MjUsMTI1MDgsNjAwMSw0MzExLDE0MzEyLDE2NDksMzk3NCwxNDM3OCwxNjQ5LDY0MTEsNjk3\\r\\nLDE0MzEyLDg0MjUsNjAwMSw0MzExLDQzMTEsMTQzMTIsODQyNSw2MDAxLDEyNTA4LDQyODAsMTQz\\r\\nMTIsNjAwMSw0MzExLDY3NTAsNDMxMSw5MTk2LDgxNTYsOTE5Niw4MTU2LDEyNTA4LDI3OTYsODQx\\r\\nLDE0MzEyLDgxNTYsMjc5NiwzMTI4LDQzMTEsMTQzODEsOTE5Niw0MzExLDExMTQ0LDE0MzEyLDEw\\r\\nNzI4LDg2MTMsNDI4MCwxMjUwOCw4NjEzLDYwMDEsODQxLDE0MzEyLDEyNTA4LDYwMDEsMTQzMTIs\\r\\nMjc5NiwxMjUwOCwyNzk2LDEyMjc0LDE0MzgxLDEwNzI4LDE2NDksNjAwMSwxNjQ5LDE0MzgxLDkx\\r\\nOTYsNDMxMSw2MDAxLDgxNTYsNjk3LDkxOTYsODE1NiwxNDM4MSwxNDMxMiwxNDM3OCwxMjUwOCw2\\r\\nMDAxLDExMTQ0LDY5NywxNDMxMiw0MzExLDkxOTYsMTQzODEsMTM0MzcsNTk2LDY3NTAsMTY0OSw2\\r\\nMDAxLDE5MjMsNzQxMCw4MzE0LDE5MjMsNzQxMCwwLDE5MjMsNzQxMA==\",\n        \"agenda\": {\n            \"id\": 2,\n            \"di\": \"628d8535-9bca-400f-a791-03cf4905183b\",\n            \"descricao\": \"Terapia Martha 18/05 12:00\",\n            \"observacao\": \"Martha avisou que poderá chegar atrasada\",\n            \"evento_inicio\": \"2024-05-18T12:00:00.000Z\",\n            \"evento_fim\": \"2024-05-18T12:40:00.000Z\",\n            \"evento_confirmado\": true,\n            \"ativo\": true,\n            \"profissional\": {\n                \"id\": 2,\n                \"di\": \"391d4136-a1d2-40e3-821a-ea1feefa285e\",\n                \"nome\": \"Samarone Portinare Salles de Ávila Costa\",\n                \"celular\": \"31922513632\",\n                \"email\": \"samaronesalles@gmail.com\",\n                \"ativo\": true\n            },\n            \"paciente\": {\n                \"id\": 3,\n                \"di\": \"4f4d4689-074a-4e21-99c2-f2a122a63405\",\n                \"nome\": \"Martha joaquina\",\n                \"celular\": \"31968555824\",\n                \"email\": \"majoa@gmail.com\",\n                \"ativo\": true\n            }\n        },\n        \"status\": 3\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "atendimentos.editar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 1,\r\n        \"di\": \"992c673e-1ff6-44cc-b33c-840049c2660a\",\r\n        \"datahora_inicio\": \"2024-05-18T08:30:00.000Z\",\r\n        \"datahora_fim\": null,\r\n        \"anotacoes\": null,\r\n        \"agenda\": {\r\n            \"id\": 1,\r\n            \"di\": \"970fc401-2053-458f-a4f4-f1a7de79a627\",\r\n            \"descricao\": \"Terapia Felipe 18/05 08:30\",\r\n            \"observacao\": \"Teste de agendamento de terapia para algum paciente\",\r\n            \"evento_inicio\": \"2024-05-18T08:30:00.000Z\",\r\n            \"evento_fim\": \"2024-05-18T09:10:00.000Z\",\r\n            \"evento_confirmado\": false,\r\n            \"ativo\": false,\r\n            \"profissional\": {\r\n                \"id\": 2,\r\n                \"di\": \"391d4136-a1d2-40e3-821a-ea1feefa285e\",\r\n                \"nome\": \"Samarone Portinare Salles de Ávila Costa\",\r\n                \"celular\": \"31922513632\",\r\n                \"email\": \"samaronesalles@gmail.com\",\r\n                \"ativo\": true\r\n            },\r\n            \"paciente\": {\r\n                \"id\": 5,\r\n                \"di\": \"6ba3239a-a615-4c31-bb97-1e9aa144501d\",\r\n                \"nome\": \"Felipe Rodrigues\",\r\n                \"celular\": \"31968512488\",\r\n                \"email\": \"felipe@gmail.com\",\r\n                \"ativo\": false\r\n            }\r\n        },\r\n        \"status\": 2\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}atendimentos/2/fcb73499-2e56-494c-a286-4c27d6f02270",
+							"host": [
+								"{{base_url}}atendimentos"
+							],
+							"path": [
+								"2",
+								"fcb73499-2e56-494c-a286-4c27d6f02270"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "atendimentos.editar",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"id\": 2,\"di\": \"fcb73499-2e56-494c-a286-4c27d6f02270\",\"agenda\": {\"id\": 2,\"di\": \"628d8535-9bca-400f-a791-03cf4905183b\",\"descricao\": \"Terapia Samarone 18/05 12:00\",\"observacao\": \"Samarone avisou que poderá chegar atrasado\",\"evento_inicio\": \"2024-05-18T12:00:00.000Z\",\"evento_fim\": \"2024-05-18T12:40:00.000Z\",\"evento_confirmado\": true,\"ativo\": true,\"profissional\": {\"id\": 2,\"di\": \"391d4136-a1d2-40e3-821a-ea1feefa285e\",\"nome\": \"Samarone Portinare Salles de Ávila Costa\",\"celular\": \"31922513632\",\"email\": \"samaronesalles@gmail.com\",\"ativo\": true,\"username\": \"\",\"password\": \"\"},\"paciente\": {\"id\": 6,\"di\": \"08633c14-5088-4584-a50f-0595004c0297\",\"nome\": \"Samarone Salles\",\"celular\": \"31985131406\",\"email\": \"samaronesalle@gmail.com\",\"ativo\": true}},\"datahora_inicio\": \"2024-05-18T12:00:00.000Z\",\"datahora_fim\": \"2024-05-18T12:55:00.000Z\",\"anotacoes\": \"{\\\\rtf1\\\\ansi\\\\ansicpg1252\\\\deff0\\\\nouicompat\\\\deflang1046{\\\\fonttbl{\\\\f0\\\\fnil\\\\fcharset0 Arial;}}\\r\\n{\\\\colortbl ;\\\\red255\\\\green0\\\\blue0;}\\r\\n{\\\\*\\\\generator Riched20 10.0.22621}\\\\viewkind4\\\\uc1 \\r\\n\\\\pard\\\\qc\\\\cf1\\\\ul\\\\b\\\\fs40 Lorem Ipsum\\\\cf0\\\\ulnone\\\\b0\\\\fs20\\\\par\\r\\n\\r\\n\\\\pard\\\\par\\r\\n        \\\\b Lorem Ipsum\\\\b0  is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\\\\par\\r\\n}\\r\\n\\u0000\\r\\n\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}atendimentos/2/fcb73499-2e56-494c-a286-4c27d6f02270",
+									"host": [
+										"{{base_url}}atendimentos"
+									],
+									"path": [
+										"2",
+										"fcb73499-2e56-494c-a286-4c27d6f02270"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1790"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"6fe-7tB5/cvngzcnTWAcnCmBd4OvpIc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 25 May 2024 20:21:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1001,\n    \"error\": false,\n    \"data\": {\n        \"id\": 2,\n        \"di\": \"69db3b58-dc66-47e4-9713-550c04302a51\",\n        \"datahora_inicio\": \"2024-05-18T12:00:00.000Z\",\n        \"datahora_fim\": \"2024-05-18T12:55:00.000Z\",\n        \"anotacoes\": \"{\\\\rtf1\\\\ansi\\\\ansicpg1252\\\\deff0\\\\nouicompat\\\\deflang1046{\\\\fonttbl{\\\\f0\\\\fnil\\\\fcharset0 Arial;}}\\r\\n{\\\\colortbl ;\\\\red255\\\\green0\\\\blue0;}\\r\\n{\\\\*\\\\generator Riched20 10.0.22621}\\\\viewkind4\\\\uc1 \\r\\n\\\\pard\\\\qc\\\\cf1\\\\ul\\\\b\\\\fs40 Lorem Ipsum\\\\cf0\\\\ulnone\\\\b0\\\\fs20\\\\par\\r\\n\\r\\n\\\\pard\\\\par\\r\\n        \\\\b Lorem Ipsum\\\\b0  is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\\\\par\\r\\n}\\r\\n\\u0000\\r\\n\",\n        \"agenda\": {\n            \"id\": 2,\n            \"di\": \"628d8535-9bca-400f-a791-03cf4905183b\",\n            \"descricao\": \"Terapia Samarone 18/05 12:00\",\n            \"observacao\": \"Samarone avisou que poderá chegar atrasado\",\n            \"evento_inicio\": \"2024-05-18T12:00:00.000Z\",\n            \"evento_fim\": \"2024-05-18T12:40:00.000Z\",\n            \"evento_confirmado\": true,\n            \"ativo\": true,\n            \"profissional\": {\n                \"id\": 2,\n                \"di\": \"391d4136-a1d2-40e3-821a-ea1feefa285e\",\n                \"nome\": \"Samarone Portinare Salles de Ávila Costa\",\n                \"celular\": \"31922513632\",\n                \"email\": \"samaronesalles@gmail.com\",\n                \"ativo\": true\n            },\n            \"paciente\": {\n                \"id\": 6,\n                \"di\": \"08633c14-5088-4584-a50f-0595004c0297\",\n                \"nome\": \"Samarone Salles\",\n                \"celular\": \"31985131406\",\n                \"email\": \"samaronesalle@gmail.com\",\n                \"ativo\": true\n            }\n        },\n        \"updatedAt\": \"2024-05-25T20:21:22.995Z\",\n        \"status\": 4\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}health",
+					"host": [
+						"{{base_url}}health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3325/api/",
+			"type": "string"
+		}
+	]
+}

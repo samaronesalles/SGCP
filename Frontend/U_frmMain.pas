@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.Themes,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.Themes, U_RSA,
   Vcl.ExtCtrls, Vcl.WinXCalendars, System.TypInfo, Vcl.StdCtrls, U_Profissional_M;
 
 type
@@ -37,12 +37,14 @@ type
     procedure Pacientes1Click(Sender: TObject);
     procedure Atendimentos1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure Button_TesteClick(Sender: TObject);
   private
     { Private declarations }
 
     FMainDir                                            : String;
     FTempDir                                            : String;
+
+    FRSA_PublicKey                                      : String;
+    FRSA_PrivateKey                                     : String;
 
     FDefaultStyleName                                   : String;
     FProfissionalLogado                                 : TProfissional_M;
@@ -60,6 +62,9 @@ type
 
     property MainDir                                    : String Read FMainDir;
     property TempDir                                    : String Read FTempDir;
+    property RSA_PublicKey                              : String Read FRSA_PublicKey;
+    property RSA_PrivateKey                             : String Read FRSA_PrivateKey;
+
     property DefaultStyleName                           : String Read FdefaultStyleName Write SetDefaultStyleName;
     property ProfissionalLogado                         : TProfissional_M Read FProfissionalLogado Write FProfissionalLogado;
   end;
@@ -139,18 +144,6 @@ begin
   ShowChild(Self, TfrmAtendimentos_V, frmAtendimentos_V);
 end;
 
-procedure TfrmMain.Button_TesteClick(Sender: TObject);
-begin
-
-  if Self.FProfissionalLogado = Nil then begin
-    SayInfo('Não está loggado!');
-    Exit;
-  end;
-
-  SayInfo(Self.FProfissionalLogado.ToJSON());
-
-end;
-
 procedure TfrmMain.CriaDiretorios;
 begin
 
@@ -170,6 +163,9 @@ begin
   FDefaultStyleName:= '';
   if Assigned(TStyleManager.ActiveStyle) then
     FDefaultStyleName:= TStyleManager.ActiveStyle.Name;
+
+  Self.FRSA_PublicKey:= 'MTc6MTQ2NDc=';
+  Self.FRSA_PrivateKey:= 'MTM1NTM6MTQ2NDc=';
 
   Self.FMainDir:= ExtractFilePath(ParamStr(0));
   Self.FTempDir:= Self.FMainDir + 'TEMP\';

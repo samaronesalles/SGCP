@@ -21,6 +21,7 @@ type
     function endpoint_Novo(VAR MetodoHttp: String): String;
     function endpoint_Edicao(var MetodoHttp: String): String;
     function endpoint_Encerramento(var MetodoHttp: String): String;
+
   public
     property Id                                                                 : Longint Read FId Write FId;
     property Di                                                                 : String Read FDi Write FDi;
@@ -36,8 +37,8 @@ type
     function Save: Boolean;
     function Encerrar: Boolean;
 
-    function ToJSON: String;
-    class function ToObject(const JSON: String): TAtendimento_M;
+    function ToJSON (EncodeAnotacoes: Boolean): String;
+    class function ToObject (const JSON: String): TAtendimento_M;
   End;
 
   TAtendimento_List_M = class(TObjectList)
@@ -50,7 +51,7 @@ type
     FPacienteID                                                                 : Longint;
     FPacienteNome                                                               : String;
 
-    function endpoint_lista(var MetodoHttp: String): String;
+    function endpoint_lista (var MetodoHttp: String): String;
   public
     property Status                                                             : TStatusAtendimentos Read FStatus Write FStatus;
     property InicioDe                                                           : TDateTime Read FInicioDe Write FInicioDe;
@@ -68,12 +69,12 @@ type
     function ToJSON: String;
     function GetStatusAtendimento(id: Longint): TStatusAtendimentos;
 
-    class function toList(const JSON: String): TAtendimento_List_M;
+    class function toList(const JSON: String; decifrarAnotacoes: Boolean): TAtendimento_List_M;
   end;
 
 implementation
 
-uses Uteis, U_ConexaoAPI_M, U_ConexaoAPI_V;
+uses Uteis, U_frmMain, U_RSA, U_ConexaoAPI_M, U_ConexaoAPI_V;
 
 { TAtendimento_M }
 
@@ -179,7 +180,7 @@ begin
     Try
       Endpoint:= Self.endpoint_Edicao(Metodo);
 
-      Requisicao:= Self.ToJSON();
+      Requisicao:= Self.ToJSON(TRUE);
 
       RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, Requisicao, 'Salvando atendimento. Aguarde!');
 
@@ -198,7 +199,7 @@ begin
       Self.Status:= Atendimento.Status;
       Self.DataHoraIni:= Atendimento.DataHoraIni;
       Self.DataHoraFim:= Atendimento.DataHoraFim;
-      Self.Anotacoes:= Atendimento.Anotacoes;
+      Self.Anotacoes:= DecodeRSA(Atendimento.Anotacoes, frmMain.RSA_PrivateKey);;
 
       Result:= TRUE;
     Except
@@ -263,13 +264,18 @@ begin
 
 end;
 
-function TAtendimento_M.ToJSON: String;
+function TAtendimento_M.ToJSON (EncodeAnotacoes: Boolean): String;
 var
-  textoAnotacoesToJSON                               : String;
+  textoAnotacoes, textoAnotacoesToJSON                    : String;
 
 begin
 
-  textoAnotacoesToJSON:= Uteis.ConverteTextoToJson(Self.FAnotacoes);
+  textoAnotacoes:= Self.FAnotacoes;
+
+  if EncodeAnotacoes then
+    textoAnotacoes:= EncodeRSA(textoAnotacoes, frmMain.RSA_PublicKey);
+
+  textoAnotacoesToJSON:= Uteis.ConverteTextoToJson(textoAnotacoes);
 
 //  try
     Result:= '{' +
@@ -426,7 +432,7 @@ begin
 
       JsonLista:= RespostaAPI.Data;
 
-      ListaAtendimentos:= TAtendimento_List_M.toList(JsonLista);
+      ListaAtendimentos:= TAtendimento_List_M.toList(JsonLista, TRUE);
 
       If ListaAtendimentos = Nil Then
         Raise Exception.Create('');
@@ -463,7 +469,7 @@ begin
     Item:= TAtendimento_M(Self[C]);
 
     Json:= Json +
-           Item.ToJSON();
+           Item.ToJSON(FALSE);
 
     If (C < Self.Count - 1) Then
       Json:= Json + ',';
@@ -476,7 +482,7 @@ begin
 
 end;
 
-class function TAtendimento_List_M.toList(const JSON: String): TAtendimento_List_M;
+class function TAtendimento_List_M.toList(const JSON: String; decifrarAnotacoes: Boolean): TAtendimento_List_M;
 var
   Retorno                                            : TAtendimento_List_M;
   ListaJsons                                         : TStringlist;
@@ -503,6 +509,9 @@ begin
       for C:= 0 to ListaJsons.Count - 1 do begin
         Try
           Item:= TAtendimento_M.ToObject(ListaJsons.Strings[C]);
+
+          if ((Trim(Item.Anotacoes) <> '') AND (decifrarAnotacoes)) then
+            Item.Anotacoes:= DecodeRSA(Item.Anotacoes, frmMain.RSA_PrivateKey);
 
           Retorno.Add(Item);
         Except

@@ -34,7 +34,6 @@ object frmMain: TfrmMain
     Caption = 'Teste'
     TabOrder = 1
     Visible = False
-    OnClick = Button_TesteClick
   end
   object MainMenu: TMainMenu
     Left = 56

@@ -1,7 +1,7 @@
 inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
   Caption = 'Registro de atendimento'
-  ClientHeight = 689
-  ClientWidth = 797
+  ClientHeight = 680
+  ClientWidth = 791
   KeyPreview = False
   OnCloseQuery = FormCloseQuery
   OnShow = FormShow
@@ -9,12 +9,12 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
   ExplicitHeight = 727
   TextHeight = 16
   inherited pnBotoes: TPanel
-    Top = 633
-    Width = 797
+    Top = 624
+    Width = 791
     ExplicitTop = 624
     ExplicitWidth = 791
     DesignSize = (
-      797
+      791
       56)
     object Label_di: TLabel [0]
       Left = 15
@@ -31,14 +31,13 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
       Visible = False
     end
     object PanelBotoesDir: TPanel [1]
-      Left = 548
+      Left = 542
       Top = 1
       Width = 248
       Height = 54
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = 542
       DesignSize = (
         248
         54)
@@ -70,13 +69,13 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
       end
     end
     inherited ButtonCancelar: TButton [2]
-      Left = -2144
+      Left = -2156
       Caption = '&Salvar'
       Visible = False
       ExplicitLeft = -2150
     end
     inherited ButtonProsseguir: TButton [3]
-      Left = -2144
+      Left = -2156
       Caption = '&Salvar'
       TabOrder = 2
       Visible = False
@@ -86,8 +85,8 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
   end
   inherited pnDetalhe: TPanel
     Top = 67
-    Width = 797
-    Height = 566
+    Width = 791
+    Height = 557
     ExplicitTop = 67
     ExplicitWidth = 791
     ExplicitHeight = 557
@@ -101,23 +100,22 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
     object PanelEditor: TPanel
       Left = 8
       Top = 28
-      Width = 775
+      Width = 769
       Height = 529
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 0
-      ExplicitWidth = 769
       ExplicitHeight = 520
       object ToolBarTextEditor: TToolBar
         Left = 1
         Top = 1
-        Width = 773
+        Width = 767
         Height = 24
         AutoSize = True
         Caption = 'ToolBarTextEditor'
         Flat = False
         Images = ImageListTollBar
         TabOrder = 0
-        ExplicitWidth = 767
+        ExplicitWidth = 773
         object ComboBox2: TComboBox
           Left = 0
           Top = 0
@@ -261,8 +259,8 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
       object RichEdit_Texto: TRichEdit
         Left = 1
         Top = 25
-        Width = 773
-        Height = 503
+        Width = 761
+        Height = 494
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -274,21 +272,18 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
         TabOrder = 1
         OnClick = RichEdit_TextoClick
         OnKeyUp = RichEdit_TextoKeyUp
-        ExplicitWidth = 767
-        ExplicitHeight = 494
       end
     end
   end
   object PanelBotoesTop: TPanel [2]
     Left = 0
     Top = 0
-    Width = 797
+    Width = 791
     Height = 67
     Align = alTop
     TabOrder = 2
-    ExplicitWidth = 791
     DesignSize = (
-      797
+      791
       67)
     object ButtonAplicarTestePHQ: TButton
       Left = 16
@@ -309,7 +304,7 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
       OnClick = ButtonEncerrarAtendimentoClick
     end
     object Button3: TButton
-      Left = 678
+      Left = 666
       Top = 22
       Width = 98
       Height = 25
