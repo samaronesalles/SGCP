@@ -32,7 +32,8 @@ uses
   U_AtendimentoDetail_V in 'Libs\Atendimento\U_AtendimentoDetail_V.pas' {frmAtendimentoDetail_V},
   U_PacienteDropList_V in 'Libs\Paciente\U_PacienteDropList_V.pas' {frmPacienteDropList_V},
   U_RSA in 'Libs\RSA_CRYPT\U_RSA.pas',
-  MEncryptDecryptAES in 'Libs\RSA_CRYPT\MEncryptDecryptAES.pas';
+  MEncryptDecryptAES in 'Libs\RSA_CRYPT\MEncryptDecryptAES.pas',
+  U_Agenda_V in 'Libs\Agenda\U_Agenda_V.pas' {frmAgenda_V};
 
 {$R *.res}
 

@@ -64,6 +64,7 @@ object frmMain: TfrmMain
       object Agendamentos1: TMenuItem
         Caption = '&Agendamentos'
         ShortCut = 16449
+        OnClick = Agendamentos1Click
       end
       object Atendimentos1: TMenuItem
         Caption = 'A&tendimentos'
@@ -73,6 +74,7 @@ object frmMain: TfrmMain
     end
     object Configuraes1: TMenuItem
       Caption = 'Configura'#231#245'es'
+      Visible = False
       object emas1: TMenuItem
         Caption = 'Temas'
         Hint = 'PROBLEMAS.. NAO USAR'
@@ -93,6 +95,7 @@ object frmMain: TfrmMain
     end
     object Janelas1: TMenuItem
       Caption = 'Janelas'
+      Visible = False
     end
     object Sobre1: TMenuItem
       Caption = '&Sobre'

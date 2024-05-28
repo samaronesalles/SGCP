@@ -50,8 +50,9 @@ object frmTemplateForm_Main: TfrmTemplateForm_Main
       object Bevel1: TBevel
         Left = 9
         Top = 27
-        Width = 69
-        Height = 1
+        Width = 75
+        Height = 2
+        Shape = bsTopLine
       end
       object Shape1: TShape
         Left = 9

@@ -245,7 +245,7 @@ procedure RetornaIntervaloDaSemana (DataBase: TDate; var Seg, Dom: TDate);
 var
   Ter, Qua, Qui, Sex, Sab       : TDate;
 begin
-  RetornaDiasDaSemana (Date(), Seg, Ter, Qua, Qui, Sex, Sab, Dom);
+  RetornaDiasDaSemana (DataBase, Seg, Ter, Qua, Qui, Sex, Sab, Dom);
 end;
 
 function RetornaDiaSemanaNaSemana (DataBase: TDate; DiaSemanaDesejado: Word): TDate;

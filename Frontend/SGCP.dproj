@@ -178,6 +178,10 @@
         </DCCReference>
         <DCCReference Include="Libs\RSA_CRYPT\U_RSA.pas"/>
         <DCCReference Include="Libs\RSA_CRYPT\MEncryptDecryptAES.pas"/>
+        <DCCReference Include="Libs\Agenda\U_Agenda_V.pas">
+            <Form>frmAgenda_V</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

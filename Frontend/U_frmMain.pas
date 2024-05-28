@@ -37,6 +37,7 @@ type
     procedure Pacientes1Click(Sender: TObject);
     procedure Atendimentos1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure Agendamentos1Click(Sender: TObject);
   private
     { Private declarations }
 
@@ -74,7 +75,7 @@ var
 
 implementation
 
-uses U_frmLogin, Uteis, U_Profissional_V, U_Paciente_V, U_Atendimento_V;
+uses U_frmLogin, Uteis, U_Agenda_V, U_Profissional_V, U_Paciente_V, U_Atendimento_V;
 
 {$R *.dfm}
 
@@ -139,6 +140,11 @@ begin
   LockWindowUpdate(0);
 end;
 
+procedure TfrmMain.Agendamentos1Click(Sender: TObject);
+begin
+  ShowChild(Self, TfrmAgenda_V, frmAgenda_V);
+end;
+
 procedure TfrmMain.Atendimentos1Click(Sender: TObject);
 begin
   ShowChild(Self, TfrmAtendimentos_V, frmAtendimentos_V);
@@ -177,8 +183,8 @@ end;
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
 
-  if Uteis.MicroDesenv_Temporario() then
-    Button_Teste.Visible:= TRUE;
+//  if Uteis.MicroDesenv_Temporario() then
+//    Button_Teste.Visible:= TRUE;
 
 end;
 
