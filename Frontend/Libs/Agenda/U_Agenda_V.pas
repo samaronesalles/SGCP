@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.ImageList, Vcl.ImgList, Vcl.WinXCalendars, Vcl.Buttons;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.ImageList, Vcl.ImgList, Vcl.WinXCalendars, Vcl.Buttons, Vcl.Grids;
 
 type
   TfrmAgenda_V = class(TForm)
@@ -44,6 +44,29 @@ type
     Label_idProfissional: TLabel;
     Label_idPaciente: TLabel;
     Splitter: TSplitter;
+    ScrollBoxMain: TScrollBox;
+    PanelIntervaloHoras: TPanel;
+    DrawGridEventos: TDrawGrid;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
+    Label24: TLabel;
+    Label25: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonSairClick(Sender: TObject);
     procedure TimerStartUpTimer(Sender: TObject);
@@ -56,6 +79,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure EditFiltroProfissionalKeyPress(Sender: TObject; var Key: Char);
     procedure EditFiltroPacienteKeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -173,6 +197,11 @@ end;
 procedure TfrmAgenda_V.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action:= caFree;
+end;
+
+procedure TfrmAgenda_V.FormCreate(Sender: TObject);
+begin
+  CalendarView.Date:= Date();
 end;
 
 procedure TfrmAgenda_V.FormShow(Sender: TObject);

@@ -4,8 +4,8 @@ object frmAgenda_V: TfrmAgenda_V
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'Agenda'
-  ClientHeight = 759
-  ClientWidth = 1254
+  ClientHeight = 712
+  ClientWidth = 1256
   Color = clBtnFace
   Constraints.MinWidth = 300
   Font.Charset = DEFAULT_CHARSET
@@ -17,29 +17,33 @@ object frmAgenda_V: TfrmAgenda_V
   Visible = True
   WindowState = wsMaximized
   OnClose = FormClose
+  OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 16
   object Splitter: TSplitter
-    Left = 300
+    Left = 350
     Top = 0
     Width = 2
-    Height = 759
+    Height = 712
+    ExplicitLeft = 300
+    ExplicitHeight = 759
   end
   object PanelLateralEsquerdo: TPanel
     Left = 0
     Top = 0
-    Width = 300
-    Height = 759
+    Width = 350
+    Height = 712
     Align = alLeft
     Color = clWhite
     Constraints.MinWidth = 300
     ParentBackground = False
     TabOrder = 0
+    ExplicitHeight = 0
     object LabelHoraAtual: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 346
-      Width = 292
+      Width = 342
       Height = 21
       Margins.Top = 8
       Margins.Bottom = 8
@@ -52,14 +56,12 @@ object frmAgenda_V: TfrmAgenda_V
       Font.Name = 'Arial'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = 2
-      ExplicitTop = 394
-      ExplicitWidth = 289
+      ExplicitWidth = 163
     end
     object CalendarView: TCalendarView
       Left = 1
       Top = 1
-      Width = 298
+      Width = 348
       Align = alTop
       Date = 45439.000000000000000000
       Font.Charset = DEFAULT_CHARSET
@@ -80,39 +82,36 @@ object frmAgenda_V: TfrmAgenda_V
       OnClick = CalendarViewClick
       ParentFont = False
       TabOrder = 1
-      ExplicitWidth = 289
     end
     object PanelFiltroAgenda: TPanel
       Left = 1
       Top = 375
-      Width = 298
-      Height = 383
+      Width = 348
+      Height = 336
       Align = alClient
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 0
       TabStop = True
-      ExplicitWidth = 289
+      ExplicitHeight = 383
       object LabelTituloFiltro: TLabel
         AlignWithMargins = True
         Left = 8
         Top = 24
-        Width = 282
+        Width = 332
         Height = 16
         Margins.Left = 8
         Margins.Top = 24
         Margins.Right = 8
         Align = alTop
         Caption = 'Exibindo agenda de:'
-        ExplicitLeft = 3
-        ExplicitTop = 40
         ExplicitWidth = 118
       end
       object BevelTituloFiltroAgenda: TBevel
         AlignWithMargins = True
         Left = 8
         Top = 44
-        Width = 282
+        Width = 332
         Height = 2
         Margins.Left = 8
         Margins.Top = 1
@@ -157,7 +156,7 @@ object frmAgenda_V: TfrmAgenda_V
         AlignWithMargins = True
         Left = 8
         Top = 73
-        Width = 282
+        Width = 332
         Height = 32
         Margins.Left = 8
         Margins.Top = 24
@@ -167,10 +166,8 @@ object frmAgenda_V: TfrmAgenda_V
         ParentColor = True
         TabOrder = 0
         TabStop = True
-        ExplicitTop = 72
-        ExplicitWidth = 273
         DesignSize = (
-          282
+          332
           32)
         object Label4: TLabel
           AlignWithMargins = True
@@ -181,28 +178,25 @@ object frmAgenda_V: TfrmAgenda_V
           Align = alLeft
           Caption = 'Profissional:'
           Layout = tlCenter
-          ExplicitLeft = 24
-          ExplicitTop = 16
           ExplicitHeight = 16
         end
         object EditFiltroProfissional: TEdit
           Left = 78
           Top = 4
-          Width = 203
+          Width = 253
           Height = 24
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 0
           OnChange = EditFiltroProfissionalChange
           OnExit = EditFiltroProfissionalExit
           OnKeyPress = EditFiltroProfissionalKeyPress
-          ExplicitWidth = 194
         end
       end
       object PanelFiltroPaciente: TPanel
         AlignWithMargins = True
         Left = 8
         Top = 108
-        Width = 282
+        Width = 332
         Height = 32
         Margins.Left = 8
         Margins.Top = 0
@@ -212,10 +206,8 @@ object frmAgenda_V: TfrmAgenda_V
         ParentColor = True
         TabOrder = 1
         TabStop = True
-        ExplicitTop = 131
-        ExplicitWidth = 273
         DesignSize = (
-          282
+          332
           32)
         object Label5: TLabel
           AlignWithMargins = True
@@ -226,47 +218,45 @@ object frmAgenda_V: TfrmAgenda_V
           Align = alLeft
           Caption = 'Paciente:'
           Layout = tlCenter
-          ExplicitLeft = 1
-          ExplicitTop = 1
           ExplicitHeight = 16
         end
         object EditFiltroPaciente: TEdit
           Left = 78
           Top = 5
-          Width = 203
+          Width = 253
           Height = 24
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 0
           OnChange = EditFiltroPacienteChange
           OnExit = EditFiltroPacienteExit
           OnKeyPress = EditFiltroPacienteKeyPress
-          ExplicitWidth = 194
         end
       end
     end
   end
   object PanelMain: TPanel
-    Left = 302
+    Left = 352
     Top = 0
-    Width = 952
-    Height = 759
+    Width = 904
+    Height = 712
     Align = alClient
     Color = clWhite
     Constraints.MinWidth = 750
     ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 512
-    ExplicitWidth = 750
+    ExplicitWidth = 902
+    ExplicitHeight = 0
     object PanelButtons: TPanel
       Left = 1
-      Top = 688
-      Width = 950
+      Top = 641
+      Width = 902
       Height = 70
       Align = alBottom
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 961
+      ExplicitTop = -71
+      ExplicitWidth = 900
       object PanelLegenda: TPanel
         Left = 1
         Top = -3
@@ -337,16 +327,14 @@ object frmAgenda_V: TfrmAgenda_V
         end
       end
       object Panel_btnsRight: TPanel
-        Left = 720
+        Left = 672
         Top = 0
         Width = 230
         Height = 70
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitLeft = 730
-        ExplicitTop = 1
-        ExplicitHeight = 68
+        ExplicitLeft = 670
         object ButtonSair: TButton
           Left = 129
           Top = 21
@@ -365,13 +353,13 @@ object frmAgenda_V: TfrmAgenda_V
     object PanelTop: TPanel
       Left = 1
       Top = 1
-      Width = 950
+      Width = 902
       Height = 88
       Align = alTop
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 1
-      ExplicitWidth = 961
+      ExplicitWidth = 900
       object Bevel2: TBevel
         AlignWithMargins = True
         Left = 16
@@ -397,7 +385,7 @@ object frmAgenda_V: TfrmAgenda_V
         ParentFont = False
       end
       object Panel_TopBtnsRight: TPanel
-        Left = 830
+        Left = 782
         Top = 0
         Width = 120
         Height = 88
@@ -405,9 +393,7 @@ object frmAgenda_V: TfrmAgenda_V
         Anchors = [akTop, akRight]
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 841
-        ExplicitTop = 1
-        ExplicitHeight = 102
+        ExplicitLeft = 780
         DesignSize = (
           120
           88)
@@ -436,6 +422,192 @@ object frmAgenda_V: TfrmAgenda_V
           ParentShowHint = False
           ShowHint = True
           ExplicitTop = 52
+        end
+      end
+    end
+    object ScrollBoxMain: TScrollBox
+      Left = 1
+      Top = 89
+      Width = 902
+      Height = 552
+      Align = alClient
+      BorderStyle = bsNone
+      Color = clWhite
+      ParentColor = False
+      TabOrder = 2
+      ExplicitLeft = 71
+      ExplicitWidth = 832
+      ExplicitHeight = 1260
+      object DrawGridEventos: TDrawGrid
+        Left = 71
+        Top = 0
+        Width = 1060
+        Height = 1250
+        Cursor = crHandPoint
+        BevelOuter = bvNone
+        BorderStyle = bsNone
+        ColCount = 7
+        Ctl3D = False
+        DefaultColWidth = 150
+        DefaultRowHeight = 60
+        FixedCols = 0
+        RowCount = 20
+        FixedRows = 0
+        Options = [goVertLine, goHorzLine, goFixedRowDefAlign]
+        ParentCtl3D = False
+        ScrollBars = ssNone
+        TabOrder = 0
+      end
+      object PanelIntervaloHoras: TPanel
+        Left = 0
+        Top = 0
+        Width = 70
+        Height = 1250
+        Align = alLeft
+        BevelOuter = bvNone
+        ParentBackground = False
+        TabOrder = 1
+        ExplicitTop = -715
+        ExplicitHeight = 1246
+        object Label6: TLabel
+          Left = 26
+          Top = 50
+          Width = 40
+          Height = 16
+          Caption = '05:00 -'
+        end
+        object Label7: TLabel
+          Left = 26
+          Top = 112
+          Width = 40
+          Height = 16
+          Caption = '06:00 -'
+        end
+        object Label8: TLabel
+          Left = 26
+          Top = 234
+          Width = 40
+          Height = 16
+          Caption = '08:00 -'
+        end
+        object Label9: TLabel
+          Left = 26
+          Top = 173
+          Width = 40
+          Height = 16
+          Caption = '07:00 -'
+        end
+        object Label10: TLabel
+          Left = 26
+          Top = 478
+          Width = 40
+          Height = 16
+          Caption = '12:00 -'
+        end
+        object Label11: TLabel
+          Left = 26
+          Top = 417
+          Width = 39
+          Height = 16
+          Caption = '11:00 -'
+        end
+        object Label12: TLabel
+          Left = 26
+          Top = 356
+          Width = 40
+          Height = 16
+          Caption = '10:00 -'
+        end
+        object Label13: TLabel
+          Left = 26
+          Top = 295
+          Width = 40
+          Height = 16
+          Caption = '09:00 -'
+        end
+        object Label14: TLabel
+          Left = 26
+          Top = 722
+          Width = 40
+          Height = 16
+          Caption = '16:00 -'
+        end
+        object Label15: TLabel
+          Left = 26
+          Top = 661
+          Width = 40
+          Height = 16
+          Caption = '15:00 -'
+        end
+        object Label16: TLabel
+          Left = 26
+          Top = 600
+          Width = 40
+          Height = 16
+          Caption = '14:00 -'
+        end
+        object Label17: TLabel
+          Left = 26
+          Top = 539
+          Width = 40
+          Height = 16
+          Caption = '13:00 -'
+        end
+        object Label18: TLabel
+          Left = 26
+          Top = 1027
+          Width = 40
+          Height = 16
+          Caption = '21:00 -'
+        end
+        object Label19: TLabel
+          Left = 26
+          Top = 966
+          Width = 40
+          Height = 16
+          Caption = '20:00 -'
+        end
+        object Label20: TLabel
+          Left = 26
+          Top = 905
+          Width = 40
+          Height = 16
+          Caption = '19:00 -'
+        end
+        object Label21: TLabel
+          Left = 26
+          Top = 844
+          Width = 40
+          Height = 16
+          Caption = '18:00 -'
+        end
+        object Label22: TLabel
+          Left = 26
+          Top = 783
+          Width = 40
+          Height = 16
+          Caption = '17:00 -'
+        end
+        object Label23: TLabel
+          Left = 26
+          Top = 1210
+          Width = 40
+          Height = 16
+          Caption = '00:00 -'
+        end
+        object Label24: TLabel
+          Left = 26
+          Top = 1149
+          Width = 40
+          Height = 16
+          Caption = '23:00 -'
+        end
+        object Label25: TLabel
+          Left = 26
+          Top = 1088
+          Width = 40
+          Height = 16
+          Caption = '22:00 -'
         end
       end
     end
