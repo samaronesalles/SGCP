@@ -38,7 +38,6 @@ object frmAgenda_V: TfrmAgenda_V
     Constraints.MinWidth = 300
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 0
     object LabelHoraAtual: TLabel
       AlignWithMargins = True
       Left = 4
@@ -93,7 +92,6 @@ object frmAgenda_V: TfrmAgenda_V
       ParentColor = True
       TabOrder = 0
       TabStop = True
-      ExplicitHeight = 383
       object LabelTituloFiltro: TLabel
         AlignWithMargins = True
         Left = 8
@@ -244,8 +242,6 @@ object frmAgenda_V: TfrmAgenda_V
     Constraints.MinWidth = 750
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 902
-    ExplicitHeight = 0
     object PanelButtons: TPanel
       Left = 1
       Top = 641
@@ -255,18 +251,25 @@ object frmAgenda_V: TfrmAgenda_V
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 0
-      ExplicitTop = -71
-      ExplicitWidth = 900
       object PanelLegenda: TPanel
-        Left = 1
-        Top = -3
+        AlignWithMargins = True
+        Left = 60
+        Top = 0
         Width = 288
-        Height = 76
+        Height = 70
+        Margins.Left = 60
+        Margins.Top = 0
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Align = alLeft
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitLeft = 1
+        ExplicitTop = -3
+        ExplicitHeight = 76
         object Label1: TLabel
-          Left = 9
-          Top = 8
+          Left = 11
+          Top = 3
           Width = 53
           Height = 16
           Caption = 'Legenda:'
@@ -278,30 +281,30 @@ object frmAgenda_V: TfrmAgenda_V
           ParentFont = False
         end
         object Bevel1: TBevel
-          Left = 9
-          Top = 27
+          Left = 11
+          Top = 22
           Width = 60
           Height = 1
         end
         object Shape1: TShape
-          Left = 9
-          Top = 36
+          Left = 11
+          Top = 31
           Width = 12
           Height = 12
           Brush.Color = clBlack
           Shape = stCircle
         end
         object Shape2: TShape
-          Left = 9
-          Top = 54
+          Left = 11
+          Top = 49
           Width = 12
           Height = 12
           Brush.Color = clRed
           Shape = stCircle
         end
         object Label2: TLabel
-          Left = 27
-          Top = 34
+          Left = 29
+          Top = 29
           Width = 95
           Height = 15
           Caption = 'N'#227'o confirmados'
@@ -313,8 +316,8 @@ object frmAgenda_V: TfrmAgenda_V
           ParentFont = False
         end
         object Label3: TLabel
-          Left = 27
-          Top = 52
+          Left = 29
+          Top = 47
           Width = 72
           Height = 15
           Caption = 'Confirmados'
@@ -334,7 +337,6 @@ object frmAgenda_V: TfrmAgenda_V
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitLeft = 670
         object ButtonSair: TButton
           Left = 129
           Top = 21
@@ -359,7 +361,6 @@ object frmAgenda_V: TfrmAgenda_V
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 1
-      ExplicitWidth = 900
       object Bevel2: TBevel
         AlignWithMargins = True
         Left = 16
@@ -393,7 +394,6 @@ object frmAgenda_V: TfrmAgenda_V
         Anchors = [akTop, akRight]
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 780
         DesignSize = (
           120
           88)
@@ -435,9 +435,6 @@ object frmAgenda_V: TfrmAgenda_V
       Color = clWhite
       ParentColor = False
       TabOrder = 2
-      ExplicitLeft = 71
-      ExplicitWidth = 832
-      ExplicitHeight = 1260
       object DrawGridEventos: TDrawGrid
         Left = 71
         Top = 0
@@ -446,6 +443,7 @@ object frmAgenda_V: TfrmAgenda_V
         Cursor = crHandPoint
         BevelOuter = bvNone
         BorderStyle = bsNone
+        Color = clWhite
         ColCount = 7
         Ctl3D = False
         DefaultColWidth = 150
@@ -453,10 +451,12 @@ object frmAgenda_V: TfrmAgenda_V
         FixedCols = 0
         RowCount = 20
         FixedRows = 0
-        Options = [goVertLine, goHorzLine, goFixedRowDefAlign]
+        Options = [goVertLine, goHorzLine]
         ParentCtl3D = False
         ScrollBars = ssNone
         TabOrder = 0
+        OnDrawCell = DrawGridEventosDrawCell
+        OnSelectCell = DrawGridEventosSelectCell
       end
       object PanelIntervaloHoras: TPanel
         Left = 0
@@ -467,147 +467,460 @@ object frmAgenda_V: TfrmAgenda_V
         BevelOuter = bvNone
         ParentBackground = False
         TabOrder = 1
-        ExplicitTop = -715
-        ExplicitHeight = 1246
-        object Label6: TLabel
+        object Label_0500: TLabel
           Left = 26
           Top = 50
           Width = 40
           Height = 16
           Caption = '05:00 -'
         end
-        object Label7: TLabel
+        object Label_0600: TLabel
           Left = 26
           Top = 112
           Width = 40
           Height = 16
           Caption = '06:00 -'
         end
-        object Label8: TLabel
+        object Label_0800: TLabel
           Left = 26
           Top = 234
           Width = 40
           Height = 16
           Caption = '08:00 -'
         end
-        object Label9: TLabel
+        object Label_0700: TLabel
           Left = 26
           Top = 173
           Width = 40
           Height = 16
           Caption = '07:00 -'
         end
-        object Label10: TLabel
+        object Label_1200: TLabel
           Left = 26
           Top = 478
           Width = 40
           Height = 16
           Caption = '12:00 -'
         end
-        object Label11: TLabel
+        object Label_1100: TLabel
           Left = 26
           Top = 417
           Width = 39
           Height = 16
           Caption = '11:00 -'
         end
-        object Label12: TLabel
+        object Label_1000: TLabel
           Left = 26
           Top = 356
           Width = 40
           Height = 16
           Caption = '10:00 -'
         end
-        object Label13: TLabel
+        object Label_0900: TLabel
           Left = 26
           Top = 295
           Width = 40
           Height = 16
           Caption = '09:00 -'
         end
-        object Label14: TLabel
+        object Label_1600: TLabel
           Left = 26
           Top = 722
           Width = 40
           Height = 16
           Caption = '16:00 -'
         end
-        object Label15: TLabel
+        object Label_1500: TLabel
           Left = 26
           Top = 661
           Width = 40
           Height = 16
           Caption = '15:00 -'
         end
-        object Label16: TLabel
+        object Label_1400: TLabel
           Left = 26
           Top = 600
           Width = 40
           Height = 16
           Caption = '14:00 -'
         end
-        object Label17: TLabel
+        object Label_1300: TLabel
           Left = 26
           Top = 539
           Width = 40
           Height = 16
           Caption = '13:00 -'
         end
-        object Label18: TLabel
+        object Label_2100: TLabel
           Left = 26
           Top = 1027
           Width = 40
           Height = 16
           Caption = '21:00 -'
         end
-        object Label19: TLabel
+        object Label_2000: TLabel
           Left = 26
           Top = 966
           Width = 40
           Height = 16
           Caption = '20:00 -'
         end
-        object Label20: TLabel
+        object Label_1900: TLabel
           Left = 26
           Top = 905
           Width = 40
           Height = 16
           Caption = '19:00 -'
         end
-        object Label21: TLabel
+        object Label_1800: TLabel
           Left = 26
           Top = 844
           Width = 40
           Height = 16
           Caption = '18:00 -'
         end
-        object Label22: TLabel
+        object Label_1700: TLabel
           Left = 26
           Top = 783
           Width = 40
           Height = 16
           Caption = '17:00 -'
         end
-        object Label23: TLabel
+        object Label_0000: TLabel
           Left = 26
           Top = 1210
           Width = 40
           Height = 16
           Caption = '00:00 -'
         end
-        object Label24: TLabel
+        object Label_2300: TLabel
           Left = 26
           Top = 1149
           Width = 40
           Height = 16
           Caption = '23:00 -'
         end
-        object Label25: TLabel
+        object Label_2200: TLabel
           Left = 26
           Top = 1088
           Width = 40
           Height = 16
           Caption = '22:00 -'
+        end
+      end
+      object Panel_Titulo_DOM: TPanel
+        Left = 76
+        Top = 7
+        Width = 140
+        Height = 45
+        BevelOuter = bvNone
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 2
+        DesignSize = (
+          140
+          45)
+        object ShapeDiaAtual_DOM: TShape
+          Left = 46
+          Top = 3
+          Width = 48
+          Height = 40
+          Anchors = [akLeft, akTop, akRight, akBottom]
+          Brush.Color = 10997435
+          Pen.Style = psClear
+          Shape = stRoundRect
+          ExplicitWidth = 49
+          ExplicitHeight = 46
+        end
+        object Label_DOM: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 8
+          Width = 134
+          Height = 34
+          Margins.Top = 8
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'DOM'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitTop = 3
+          ExplicitWidth = 135
+          ExplicitHeight = 38
+        end
+      end
+      object Panel_Titulo_SEG: TPanel
+        Left = 227
+        Top = 7
+        Width = 140
+        Height = 45
+        BevelOuter = bvNone
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 3
+        DesignSize = (
+          140
+          45)
+        object ShapeDiaAtual_SEG: TShape
+          Left = 46
+          Top = 3
+          Width = 48
+          Height = 40
+          Anchors = [akLeft, akTop, akRight, akBottom]
+          Brush.Color = 10997435
+          Pen.Style = psClear
+          Shape = stRoundRect
+          ExplicitWidth = 49
+          ExplicitHeight = 46
+        end
+        object Label_SEG: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 8
+          Width = 134
+          Height = 34
+          Margins.Top = 8
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'SEG'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitTop = 3
+          ExplicitWidth = 27
+          ExplicitHeight = 16
+        end
+      end
+      object Panel_Titulo_TER: TPanel
+        Left = 379
+        Top = 7
+        Width = 140
+        Height = 45
+        BevelOuter = bvNone
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 4
+        DesignSize = (
+          140
+          45)
+        object ShapeDiaAtual_TER: TShape
+          Left = 46
+          Top = 3
+          Width = 48
+          Height = 40
+          Anchors = [akLeft, akTop, akRight, akBottom]
+          Brush.Color = 10997435
+          Pen.Style = psClear
+          Shape = stRoundRect
+          ExplicitWidth = 49
+          ExplicitHeight = 46
+        end
+        object Label_TER: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 8
+          Width = 134
+          Height = 34
+          Margins.Top = 8
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'TER'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitTop = 3
+          ExplicitWidth = 25
+          ExplicitHeight = 16
+        end
+      end
+      object Panel_Titulo_QUA: TPanel
+        Left = 529
+        Top = 7
+        Width = 140
+        Height = 45
+        BevelOuter = bvNone
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 5
+        DesignSize = (
+          140
+          45)
+        object ShapeDiaAtual_QUA: TShape
+          Left = 46
+          Top = 3
+          Width = 48
+          Height = 40
+          Anchors = [akLeft, akTop, akRight, akBottom]
+          Brush.Color = 10997435
+          Pen.Style = psClear
+          Shape = stRoundRect
+          ExplicitWidth = 49
+          ExplicitHeight = 46
+        end
+        object Label_QUA: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 8
+          Width = 134
+          Height = 34
+          Margins.Top = 8
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'QUA'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitTop = 3
+          ExplicitWidth = 28
+          ExplicitHeight = 16
+        end
+      end
+      object Panel_Titulo_QUI: TPanel
+        Left = 680
+        Top = 7
+        Width = 140
+        Height = 45
+        BevelOuter = bvNone
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 6
+        DesignSize = (
+          140
+          45)
+        object ShapeDiaAtual_QUI: TShape
+          Left = 46
+          Top = 3
+          Width = 48
+          Height = 40
+          Anchors = [akLeft, akTop, akRight, akBottom]
+          Brush.Color = 10997435
+          Pen.Style = psClear
+          Shape = stRoundRect
+          ExplicitWidth = 49
+          ExplicitHeight = 46
+        end
+        object Label_QUI: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 8
+          Width = 134
+          Height = 34
+          Margins.Top = 8
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'QUI'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitTop = 3
+          ExplicitWidth = 23
+          ExplicitHeight = 16
+        end
+      end
+      object Panel_Titulo_SEX: TPanel
+        Left = 831
+        Top = 7
+        Width = 140
+        Height = 45
+        BevelOuter = bvNone
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 7
+        DesignSize = (
+          140
+          45)
+        object ShapeDiaAtual_SEX: TShape
+          Left = 46
+          Top = 3
+          Width = 48
+          Height = 40
+          Anchors = [akLeft, akTop, akRight, akBottom]
+          Brush.Color = 10997435
+          Pen.Style = psClear
+          Shape = stRoundRect
+          ExplicitWidth = 49
+          ExplicitHeight = 46
+        end
+        object Label_SEX: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 8
+          Width = 134
+          Height = 34
+          Margins.Top = 8
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'SEX'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitTop = 3
+          ExplicitWidth = 26
+          ExplicitHeight = 16
+        end
+      end
+      object Panel_Titulo_SAB: TPanel
+        Left = 982
+        Top = 7
+        Width = 140
+        Height = 45
+        BevelOuter = bvNone
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 8
+        DesignSize = (
+          140
+          45)
+        object ShapeDiaAtual_SAB: TShape
+          Left = 46
+          Top = 3
+          Width = 48
+          Height = 40
+          Anchors = [akLeft, akTop, akRight, akBottom]
+          Brush.Color = 10997435
+          Pen.Style = psClear
+          Shape = stRoundRect
+          ExplicitWidth = 49
+          ExplicitHeight = 46
+        end
+        object Label_SAB: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 8
+          Width = 134
+          Height = 34
+          Margins.Top = 8
+          Align = alClient
+          Alignment = taCenter
+          Caption = 'SAB'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitTop = 3
+          ExplicitWidth = 27
+          ExplicitHeight = 16
         end
       end
     end

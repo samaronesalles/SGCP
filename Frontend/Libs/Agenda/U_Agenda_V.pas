@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.ImageList, Vcl.ImgList, Vcl.WinXCalendars, Vcl.Buttons, Vcl.Grids;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.ImageList, Vcl.ImgList,
+  Vcl.WinXCalendars, Vcl.Buttons, System.DateUtils, Vcl.Grids;
 
 type
   TfrmAgenda_V = class(TForm)
@@ -47,26 +48,47 @@ type
     ScrollBoxMain: TScrollBox;
     PanelIntervaloHoras: TPanel;
     DrawGridEventos: TDrawGrid;
-    Label6: TLabel;
-    Label7: TLabel;
-    Label8: TLabel;
-    Label9: TLabel;
-    Label10: TLabel;
-    Label11: TLabel;
-    Label12: TLabel;
-    Label13: TLabel;
-    Label14: TLabel;
-    Label15: TLabel;
-    Label16: TLabel;
-    Label17: TLabel;
-    Label18: TLabel;
-    Label19: TLabel;
-    Label20: TLabel;
-    Label21: TLabel;
-    Label22: TLabel;
-    Label23: TLabel;
-    Label24: TLabel;
-    Label25: TLabel;
+    Label_0500: TLabel;
+    Label_0600: TLabel;
+    Label_0800: TLabel;
+    Label_0700: TLabel;
+    Label_1200: TLabel;
+    Label_1100: TLabel;
+    Label_1000: TLabel;
+    Label_0900: TLabel;
+    Label_1600: TLabel;
+    Label_1500: TLabel;
+    Label_1400: TLabel;
+    Label_1300: TLabel;
+    Label_2100: TLabel;
+    Label_2000: TLabel;
+    Label_1900: TLabel;
+    Label_1800: TLabel;
+    Label_1700: TLabel;
+    Label_0000: TLabel;
+    Label_2300: TLabel;
+    Label_2200: TLabel;
+    Panel_Titulo_DOM: TPanel;
+    Label_DOM: TLabel;
+    ShapeDiaAtual_DOM: TShape;
+    Panel_Titulo_SEG: TPanel;
+    ShapeDiaAtual_SEG: TShape;
+    Label_SEG: TLabel;
+    Panel_Titulo_TER: TPanel;
+    ShapeDiaAtual_TER: TShape;
+    Label_TER: TLabel;
+    Panel_Titulo_QUA: TPanel;
+    ShapeDiaAtual_QUA: TShape;
+    Label_QUA: TLabel;
+    Panel_Titulo_QUI: TPanel;
+    ShapeDiaAtual_QUI: TShape;
+    Label_QUI: TLabel;
+    Panel_Titulo_SEX: TPanel;
+    ShapeDiaAtual_SEX: TShape;
+    Label_SEX: TLabel;
+    Panel_Titulo_SAB: TPanel;
+    ShapeDiaAtual_SAB: TShape;
+    Label_SAB: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonSairClick(Sender: TObject);
     procedure TimerStartUpTimer(Sender: TObject);
@@ -80,6 +102,8 @@ type
     procedure EditFiltroProfissionalKeyPress(Sender: TObject; var Key: Char);
     procedure EditFiltroPacienteKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
+    procedure DrawGridEventosSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
+    procedure DrawGridEventosDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -102,16 +126,47 @@ end;
 
 procedure TfrmAgenda_V.CalendarViewClick(Sender: TObject);
 var
-  Seg, Dom                     : TDate;
+  Seg, Ter, Qua, Qui, Sex, Sab, Dom                  : TDate;
 
 begin
 
   LabelSemanaSelecionada.Caption:= 'Compomissos da semana: ';
 
-  Uteis.RetornaIntervaloDaSemana(CalendarView.Date, Seg, Dom);
+  RetornaDiasDaSemana (CalendarView.Date, Seg, Ter, Qua, Qui, Sex, Sab, Dom);
 
-  LabelSemanaSelecionada.Caption:= LabelSemanaSelecionada.Caption + FormatDateTime('dd/mm', Seg) + ' a ' + FormatDateTime('dd/mm', Dom);
+  LabelSemanaSelecionada.Caption:= LabelSemanaSelecionada.Caption + FormatDateTime('dd/mm', Dom) + ' a ' + FormatDateTime('dd/mm', Sab);
 
+  Label_DOM.Caption:= 'DOM' + #13 + FormatDateTime('dd', Dom);
+  ShapeDiaAtual_DOM.Visible:= Date() = Dom;
+
+  Label_SEG.Caption:= 'SEG' + #13 + FormatDateTime('dd', Seg);
+  ShapeDiaAtual_SEG.Visible:= Date() = Seg;
+
+  Label_TER.Caption:= 'TER' + #13 + FormatDateTime('dd', Ter);
+  ShapeDiaAtual_TER.Visible:= Date() = Ter;
+
+  Label_QUA.Caption:= 'QUA' + #13 + FormatDateTime('dd', Qua);
+  ShapeDiaAtual_QUA.Visible:= Date() = Qua;
+
+  Label_QUI.Caption:= 'QUI' + #13 + FormatDateTime('dd', Qui);
+  ShapeDiaAtual_QUI.Visible:= Date() = Qui;
+
+  Label_SEX.Caption:= 'SEX' + #13 + FormatDateTime('dd', Sex);
+  ShapeDiaAtual_SEX.Visible:= Date() = Sex;
+
+  Label_SAB.Caption:= 'SAB' + #13 + FormatDateTime('dd', Sab);
+  ShapeDiaAtual_SAB.Visible:= Date() = Sab;
+
+end;
+
+procedure TfrmAgenda_V.DrawGridEventosDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
+begin
+  DrawGridEventos.Canvas.Brush.Color:= clWhite;
+end;
+
+procedure TfrmAgenda_V.DrawGridEventosSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
+begin
+  CanSelect:= FALSE;
 end;
 
 procedure TfrmAgenda_V.EditFiltroPacienteChange(Sender: TObject);
