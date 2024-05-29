@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.ImageList, Vcl.ImgList,
-  Vcl.WinXCalendars, Vcl.Buttons, System.DateUtils, Vcl.Grids;
+  Vcl.WinXCalendars, Vcl.Buttons, System.DateUtils, Vcl.Grids, Vcl.Mask;
 
 type
   TfrmAgenda_V = class(TForm)
@@ -89,6 +89,8 @@ type
     Panel_Titulo_SAB: TPanel;
     ShapeDiaAtual_SAB: TShape;
     Label_SAB: TLabel;
+    Panel_HoraAnalogica_Atual: TPanel;
+    PanelConteudoAgenda: TPanel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonSairClick(Sender: TObject);
     procedure TimerStartUpTimer(Sender: TObject);
@@ -106,6 +108,10 @@ type
     procedure DrawGridEventosDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
   private
     { Private declarations }
+
+    procedure PosicioneLinhaHoraAnalogica (HoraCorrente: TTime);
+    procedure ApliqueVisualConteudoAgenda;
+    function  RetornaPosicaoInicioHorario (Horas, Minutos: Longint): Longint;
   public
     { Public declarations }
   end;
@@ -138,24 +144,31 @@ begin
 
   Label_DOM.Caption:= 'DOM' + #13 + FormatDateTime('dd', Dom);
   ShapeDiaAtual_DOM.Visible:= Date() = Dom;
+  Label_DOM.Hint:= Iff(ShapeDiaAtual_DOM.Visible, 'Data atual', FormatDateTime('dd/mm', Dom));
 
   Label_SEG.Caption:= 'SEG' + #13 + FormatDateTime('dd', Seg);
   ShapeDiaAtual_SEG.Visible:= Date() = Seg;
+  Label_SEG.Hint:= Iff(ShapeDiaAtual_SEG.Visible, 'Data atual', FormatDateTime('dd/mm', Seg));
 
   Label_TER.Caption:= 'TER' + #13 + FormatDateTime('dd', Ter);
   ShapeDiaAtual_TER.Visible:= Date() = Ter;
+  Label_TER.Hint:= Iff(ShapeDiaAtual_TER.Visible, 'Data atual', FormatDateTime('dd/mm', Ter));
 
   Label_QUA.Caption:= 'QUA' + #13 + FormatDateTime('dd', Qua);
   ShapeDiaAtual_QUA.Visible:= Date() = Qua;
+  Label_QUA.Hint:= Iff(ShapeDiaAtual_QUA.Visible, 'Data atual', FormatDateTime('dd/mm', Qua));
 
   Label_QUI.Caption:= 'QUI' + #13 + FormatDateTime('dd', Qui);
   ShapeDiaAtual_QUI.Visible:= Date() = Qui;
+  Label_QUI.Hint:= Iff(ShapeDiaAtual_QUI.Visible, 'Data atual', FormatDateTime('dd/mm', Qui));
 
   Label_SEX.Caption:= 'SEX' + #13 + FormatDateTime('dd', Sex);
   ShapeDiaAtual_SEX.Visible:= Date() = Sex;
+  Label_SEX.Hint:= Iff(ShapeDiaAtual_SEX.Visible, 'Data atual', FormatDateTime('dd/mm', Sex));
 
   Label_SAB.Caption:= 'SAB' + #13 + FormatDateTime('dd', Sab);
   ShapeDiaAtual_SAB.Visible:= Date() = Sab;
+  Label_SAB.Hint:= Iff(ShapeDiaAtual_SAB.Visible, 'Data atual', FormatDateTime('dd/mm', Sab));
 
 end;
 
@@ -259,8 +272,56 @@ begin
   CalendarView.Date:= Date();
 end;
 
+procedure TfrmAgenda_V.ApliqueVisualConteudoAgenda;
+const
+  RowHeight                 = 60;
+
+var
+  Row                                       : Longint;
+  CellRect                                  : TRect;
+
+begin
+
+  DrawGridEventos.RowHeights[0]:= 75;
+  for Row:= 1 to DrawGridEventos.RowCount - 1 do begin // Inicia da 1, para pular o título;
+    DrawGridEventos.RowHeights[Row]:= RowHeight;
+
+    CellRect:= DrawGridEventos.CellRect(0, Row);
+
+    case Row of
+       1: Label_0500.Top:= CellRect.Top - (Label_0500.Height Div 2);
+       2: Label_0600.Top:= CellRect.Top - (Label_0500.Height Div 2);
+       3: Label_0700.Top:= CellRect.Top - (Label_0500.Height Div 2);
+       4: Label_0800.Top:= CellRect.Top - (Label_0500.Height Div 2);
+       5: Label_0900.Top:= CellRect.Top - (Label_0500.Height Div 2);
+       6: Label_1000.Top:= CellRect.Top - (Label_0500.Height Div 2);
+       7: Label_1100.Top:= CellRect.Top - (Label_0500.Height Div 2);
+       8: Label_1200.Top:= CellRect.Top - (Label_0500.Height Div 2);
+       9: Label_1300.Top:= CellRect.Top - (Label_0500.Height Div 2);
+      10: Label_1400.Top:= CellRect.Top - (Label_0500.Height Div 2);
+      11: Label_1500.Top:= CellRect.Top - (Label_0500.Height Div 2);
+      12: Label_1600.Top:= CellRect.Top - (Label_0500.Height Div 2);
+      13: Label_1700.Top:= CellRect.Top - (Label_0500.Height Div 2);
+      14: Label_1800.Top:= CellRect.Top - (Label_0500.Height Div 2);
+      15: Label_1900.Top:= CellRect.Top - (Label_0500.Height Div 2);
+      16: Label_2000.Top:= CellRect.Top - (Label_0500.Height Div 2);
+      17: Label_2100.Top:= CellRect.Top - (Label_0500.Height Div 2);
+      18: Label_2200.Top:= CellRect.Top - (Label_0500.Height Div 2);
+      19: Label_2300.Top:= CellRect.Top - (Label_0500.Height Div 2);
+    end;
+  end;
+
+  Label_0000.Top:= Label_2300.Top + RowHeight;
+
+  Panel_HoraAnalogica_Atual.Left:= DrawGridEventos.Left;
+  Panel_HoraAnalogica_Atual.Width:= DrawGridEventos.Width;
+
+end;
+
 procedure TfrmAgenda_V.FormShow(Sender: TObject);
 begin
+
+  ApliqueVisualConteudoAgenda();
 
   CalendarView.OnClick(Self);
 
@@ -273,8 +334,17 @@ begin
 end;
 
 procedure TfrmAgenda_V.TimerClockTimer(Sender: TObject);
+var
+  Hora                             : TTime;
+
 begin
-  LabelHoraAtual.Caption:= 'Hora atual: ' + FormatDateTime('hh:nn:ss', Now());
+
+  Hora:= Now();
+
+  LabelHoraAtual.Caption:= 'Hora atual: ' + FormatDateTime('hh:nn:ss', Hora);
+
+  PosicioneLinhaHoraAnalogica(Hora);
+
 end;
 
 procedure TfrmAgenda_V.TimerStartUpTimer(Sender: TObject);
@@ -286,4 +356,55 @@ begin
 
 end;
 
+function TfrmAgenda_V.RetornaPosicaoInicioHorario (Horas, Minutos: Longint): Longint;
+var
+  Row, heightCell, pixelInicioHora, Resultado              : Longint;
+  CellRect                                                 : TRect;
+
+begin
+
+  Result:= -1;
+
+  if ((Horas >= 24) AND (Horas <= 4)) then
+    Exit;
+
+  Row:= Horas - 4;           // A partir da hora "05:00", incia a row 0. Porém, queremos o início da célula seguinte.
+  heightCell:= DrawGridEventos.RowHeights[Row];
+
+  CellRect:= DrawGridEventos.CellRect(0, Row);
+  pixelInicioHora:= CellRect.Top + DrawGridEventos.Top - 2;
+
+  Resultado:= pixelInicioHora + Minutos;
+
+  Result:= Resultado;
+
+end;
+
+procedure TfrmAgenda_V.PosicioneLinhaHoraAnalogica (HoraCorrente: TTime);
+var
+  Top, Hora, Minuto                              : Longint;
+
+begin
+
+  Top:= -1;
+
+  Hora:= HourOf(HoraCorrente);
+  Minuto:= MinuteOf(HoraCorrente);
+
+  Panel_HoraAnalogica_Atual.Visible:= FALSE;
+
+  if ((Hora > StrToTime('23:59:00')) AND (Hora < StrToTime('05:00:00'))) then
+    Exit;
+
+  Top:= RetornaPosicaoInicioHorario(Hora, Minuto);
+
+  if Top < 0 then
+    Exit;
+
+  Panel_HoraAnalogica_Atual.Top:= Top;
+  Panel_HoraAnalogica_Atual.Visible:= TRUE;
+
+end;
+
 end.
+
