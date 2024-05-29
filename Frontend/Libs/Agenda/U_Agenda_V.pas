@@ -106,6 +106,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure DrawGridEventosSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
     procedure DrawGridEventosDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   private
     { Private declarations }
 
@@ -136,7 +137,7 @@ var
 
 begin
 
-  LabelSemanaSelecionada.Caption:= 'Compomissos da semana: ';
+  LabelSemanaSelecionada.Caption:= 'Compromissos da semana: ';
 
   RetornaDiasDaSemana (CalendarView.Date, Seg, Ter, Qua, Qui, Sex, Sab, Dom);
 
@@ -270,6 +271,29 @@ end;
 procedure TfrmAgenda_V.FormCreate(Sender: TObject);
 begin
   CalendarView.Date:= Date();
+end;
+
+procedure TfrmAgenda_V.FormMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+var
+  I                                         : Integer;
+
+begin
+
+  Handled := PtInRect(ScrollBoxMain.ClientRect, ScrollBoxMain.ScreenToClient(MousePos));
+
+  if Handled then begin
+    for I := 1 to Mouse.WheelScrollLines do begin
+      try
+        if WheelDelta > 0 then
+          ScrollBoxMain.Perform(WM_VSCROLL, SB_LINEUP, 0)
+        else
+          ScrollBoxMain.Perform(WM_VSCROLL, SB_LINEDOWN, 0);
+      finally
+        ScrollBoxMain.Perform(WM_VSCROLL, SB_ENDSCROLL, 0);
+      end;
+    end;
+  end;
+
 end;
 
 procedure TfrmAgenda_V.ApliqueVisualConteudoAgenda;

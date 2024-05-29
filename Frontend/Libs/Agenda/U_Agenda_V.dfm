@@ -18,6 +18,7 @@ object frmAgenda_V: TfrmAgenda_V
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
+  OnMouseWheel = FormMouseWheel
   OnShow = FormShow
   TextHeight = 16
   object Splitter: TSplitter
@@ -372,9 +373,9 @@ object frmAgenda_V: TfrmAgenda_V
       object LabelSemanaSelecionada: TLabel
         Left = 16
         Top = 39
-        Width = 416
+        Width = 424
         Height = 26
-        Caption = 'Compomissos da semana: 00/00 a 00/00'
+        Caption = 'Compromissos da semana: 00/00 a 00/00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -23
@@ -631,7 +632,6 @@ object frmAgenda_V: TfrmAgenda_V
           TabOrder = 1
           OnDrawCell = DrawGridEventosDrawCell
           OnSelectCell = DrawGridEventosSelectCell
-          ExplicitHeight = 1250
         end
         object Panel_HoraAnalogica_Atual: TPanel
           Left = 70
