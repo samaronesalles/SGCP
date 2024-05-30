@@ -14,12 +14,14 @@ object frmAgenda_V: TfrmAgenda_V
   Font.Name = 'Arial'
   Font.Style = []
   FormStyle = fsMDIChild
+  KeyPreview = True
   Visible = True
   WindowState = wsMaximized
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
   OnMouseWheel = FormMouseWheel
   OnShow = FormShow
   TextHeight = 16
@@ -41,6 +43,7 @@ object frmAgenda_V: TfrmAgenda_V
     Constraints.MinWidth = 300
     ParentBackground = False
     TabOrder = 0
+    TabStop = True
     object LabelHoraAtual: TLabel
       AlignWithMargins = True
       Left = 4
@@ -84,6 +87,7 @@ object frmAgenda_V: TfrmAgenda_V
       OnClick = CalendarViewClick
       ParentFont = False
       TabOrder = 1
+      TabStop = False
     end
     object PanelFiltroAgenda: TPanel
       Left = 1

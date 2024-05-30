@@ -111,6 +111,7 @@ type
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
 
@@ -268,8 +269,8 @@ end;
 
 procedure TfrmAgenda_V.EditFiltroPacienteKeyPress(Sender: TObject; var Key: Char);
 begin
-  if key = #13 then
-    EditFiltroProfissional.SetFocus();
+//  if key = #13 then
+//    EditFiltroProfissional.SetFocus();
 end;
 
 procedure TfrmAgenda_V.EditFiltroProfissionalChange(Sender: TObject);
@@ -319,8 +320,8 @@ end;
 
 procedure TfrmAgenda_V.EditFiltroProfissionalKeyPress(Sender: TObject; var Key: Char);
 begin
-  if key = #13 then
-    EditFiltroPaciente.SetFocus();
+//  if key = #13 then
+//    EditFiltroPaciente.SetFocus();
 end;
 
 procedure TfrmAgenda_V.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -352,6 +353,16 @@ begin
     Self.Refresh_StringGrid();
 
     Exit;
+  end;
+
+end;
+
+procedure TfrmAgenda_V.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+
+  if key = #13 then begin
+    SelectNext(ActiveControl as TWinControl, TRUE, TRUE);
+    Key:= #0;
   end;
 
 end;

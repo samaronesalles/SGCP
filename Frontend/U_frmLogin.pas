@@ -19,6 +19,7 @@ type
     procedure Button_SairClick(Sender: TObject);
     procedure Button_EntrarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -86,6 +87,21 @@ procedure TfrmLogin.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action:= caFree;
   frmLogin:= Nil;
+end;
+
+procedure TfrmLogin.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+
+  if key = #13 then begin
+    SelectNext(ActiveControl as TWinControl, TRUE, TRUE);
+    Key:= #0;
+  end;
+
+  if Key = #27 then begin
+    Key:= #0;
+    Button_Sair.OnClick(Self);
+  end;
+
 end;
 
 procedure TfrmLogin.FormShow(Sender: TObject);

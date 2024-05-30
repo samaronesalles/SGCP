@@ -12,8 +12,10 @@ object frmLogin: TfrmLogin
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsStayOnTop
+  KeyPreview = True
   Position = poMainFormCenter
   OnClose = FormClose
+  OnKeyPress = FormKeyPress
   OnShow = FormShow
   DesignSize = (
     326
@@ -60,7 +62,7 @@ object frmLogin: TfrmLogin
     ImageIndex = 1
     Images = ImageList_Icons
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 3
     TabStop = False
     OnClick = Button_SairClick
   end
@@ -79,8 +81,7 @@ object frmLogin: TfrmLogin
     ImageIndex = 0
     Images = ImageList_Icons
     ParentFont = False
-    TabOrder = 3
-    TabStop = False
+    TabOrder = 2
     OnClick = Button_EntrarClick
   end
   object Edit_Usuario: TEdit
