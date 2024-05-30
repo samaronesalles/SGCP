@@ -99,9 +99,6 @@ object frmAgenda_V: TfrmAgenda_V
       ParentColor = True
       TabOrder = 0
       TabStop = True
-      DesignSize = (
-        348
-        395)
       object LabelTituloFiltro: TLabel
         AlignWithMargins = True
         Left = 8
@@ -197,7 +194,6 @@ object frmAgenda_V: TfrmAgenda_V
           TabOrder = 0
           OnChange = EditFiltroProfissionalChange
           OnExit = EditFiltroProfissionalExit
-          OnKeyPress = EditFiltroProfissionalKeyPress
         end
       end
       object PanelFiltroPaciente: TPanel
@@ -237,16 +233,7 @@ object frmAgenda_V: TfrmAgenda_V
           TabOrder = 0
           OnChange = EditFiltroPacienteChange
           OnExit = EditFiltroPacienteExit
-          OnKeyPress = EditFiltroPacienteKeyPress
         end
-      end
-      object MemoTeste: TMemo
-        Left = 11
-        Top = 160
-        Width = 328
-        Height = 225
-        Anchors = [akLeft, akTop, akRight, akBottom]
-        TabOrder = 2
       end
     end
   end
@@ -297,11 +284,11 @@ object frmAgenda_V: TfrmAgenda_V
         end
         object Bevel1: TBevel
           Left = 11
-          Top = 22
+          Top = 19
           Width = 60
           Height = 2
         end
-        object Shape1: TShape
+        object Shape_legend_NaoConfirmados: TShape
           Left = 11
           Top = 31
           Width = 12
@@ -309,7 +296,7 @@ object frmAgenda_V: TfrmAgenda_V
           Brush.Color = clBlack
           Shape = stCircle
         end
-        object Shape2: TShape
+        object Shape_legend_Confirmados: TShape
           Left = 11
           Top = 49
           Width = 12
@@ -629,7 +616,6 @@ object frmAgenda_V: TfrmAgenda_V
           Top = 0
           Width = 1057
           Height = 1260
-          Cursor = crHandPoint
           ParentCustomHint = False
           TabStop = False
           Align = alClient
@@ -678,7 +664,7 @@ object frmAgenda_V: TfrmAgenda_V
           Visible = False
         end
         object Panel_Titulo_DOM: TPanel
-          Left = 76
+          Left = 75
           Top = 7
           Width = 140
           Height = 45
@@ -727,7 +713,7 @@ object frmAgenda_V: TfrmAgenda_V
           end
         end
         object Panel_Titulo_QUA: TPanel
-          Left = 529
+          Left = 528
           Top = 7
           Width = 140
           Height = 45
@@ -776,7 +762,7 @@ object frmAgenda_V: TfrmAgenda_V
           end
         end
         object Panel_Titulo_QUI: TPanel
-          Left = 680
+          Left = 679
           Top = 7
           Width = 140
           Height = 45
@@ -825,7 +811,7 @@ object frmAgenda_V: TfrmAgenda_V
           end
         end
         object Panel_Titulo_SAB: TPanel
-          Left = 982
+          Left = 981
           Top = 7
           Width = 140
           Height = 45
@@ -874,7 +860,7 @@ object frmAgenda_V: TfrmAgenda_V
           end
         end
         object Panel_Titulo_SEG: TPanel
-          Left = 227
+          Left = 226
           Top = 7
           Width = 140
           Height = 45
@@ -923,7 +909,7 @@ object frmAgenda_V: TfrmAgenda_V
           end
         end
         object Panel_Titulo_SEX: TPanel
-          Left = 831
+          Left = 830
           Top = 7
           Width = 140
           Height = 45
@@ -972,7 +958,7 @@ object frmAgenda_V: TfrmAgenda_V
           end
         end
         object Panel_Titulo_TER: TPanel
-          Left = 379
+          Left = 377
           Top = 7
           Width = 140
           Height = 45

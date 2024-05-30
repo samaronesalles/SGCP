@@ -14,8 +14,8 @@ type
     PanelLegenda: TPanel;
     Label1: TLabel;
     Bevel1: TBevel;
-    Shape1: TShape;
-    Shape2: TShape;
+    Shape_legend_NaoConfirmados: TShape;
+    Shape_legend_Confirmados: TShape;
     Label2: TLabel;
     Label3: TLabel;
     Panel_btnsRight: TPanel;
@@ -92,7 +92,6 @@ type
     Label_SAB: TLabel;
     Panel_HoraAnalogica_Atual: TPanel;
     PanelConteudoAgenda: TPanel;
-    MemoTeste: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonSairClick(Sender: TObject);
     procedure TimerStartUpTimer(Sender: TObject);
@@ -103,8 +102,6 @@ type
     procedure EditFiltroProfissionalExit(Sender: TObject);
     procedure EditFiltroPacienteExit(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure EditFiltroProfissionalKeyPress(Sender: TObject; var Key: Char);
-    procedure EditFiltroPacienteKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure DrawGridEventosSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
     procedure DrawGridEventosDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
@@ -129,10 +126,15 @@ type
     procedure RetorneTodosAgendamentos;
     procedure ApliqueFiltro;
     procedure Refresh_StringGrid;
+    procedure AdicioneAgendamentoNaTela (Agenda: TAgenda_M);
 
     procedure PosicioneLinhaHoraAnalogica (HoraCorrente: TTime);
     procedure ApliqueVisualConteudoAgenda;
     function  RetornaPosicaoInicioHorario (Horas, Minutos: Longint): Longint;
+    function  RetornaColData (Data: TDate): Longint;
+    function  RetornaPosicaoLeftData (const Data: TDate; var Width: Longint): Longint;
+
+    procedure EventoClick (Sender: TObject);
   public
     { Public declarations }
   end;
@@ -151,7 +153,7 @@ var
 
 implementation
 
-uses Uteis, U_frmMain, U_ProfissionalDropList_V, U_PacienteDropList_V;
+uses Uteis, U_frmMain, U_Evento_V, U_ProfissionalDropList_V, U_PacienteDropList_V;
 
 {$R *.dfm}
 
@@ -267,12 +269,6 @@ begin
 
 end;
 
-procedure TfrmAgenda_V.EditFiltroPacienteKeyPress(Sender: TObject; var Key: Char);
-begin
-//  if key = #13 then
-//    EditFiltroProfissional.SetFocus();
-end;
-
 procedure TfrmAgenda_V.EditFiltroProfissionalChange(Sender: TObject);
 begin
   if EditFiltroProfissional.Focused then
@@ -316,12 +312,6 @@ begin
     Self.Refresh_StringGrid();
   End;
 
-end;
-
-procedure TfrmAgenda_V.EditFiltroProfissionalKeyPress(Sender: TObject; var Key: Char);
-begin
-//  if key = #13 then
-//    EditFiltroPaciente.SetFocus();
 end;
 
 procedure TfrmAgenda_V.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -497,7 +487,6 @@ begin
 
   try
     // LimpeAgendamentosNaTela();
-    MemoTeste.Lines.Clear();
 
     FiltrouAlgo:= FALSE;
 
@@ -518,12 +507,105 @@ begin
         Continue;
       end;
 
-      // AdicioneAgendamentoNaTela(Agenda);
-      MemoTeste.Lines.Add(Copy(Agenda.Profissional.Nome, 1, 15) + ' | ' + Copy(Agenda.Paciente.Nome, 1, 15) + ' | ' + FormatDateTime('dd/mm hh:nn', Agenda.Evento_inicio));
+      AdicioneAgendamentoNaTela(Agenda);
     end;
 
   finally
 
+  end;
+
+end;
+
+procedure TfrmAgenda_V.AdicioneAgendamentoNaTela (Agenda: TAgenda_M);
+var
+  Evento_V                                : TEvento_V;
+  Width, MinutosAgendados                 : Longint;
+  RectEvento                              : TRect;
+
+begin
+
+  Evento_V:= Nil;
+
+  Try
+    MinutosAgendados:= MinutesBetween(Agenda.Evento_fim, Agenda.Evento_inicio);
+
+    RectEvento.Top:= RetornaPosicaoInicioHorario(HourOf(Agenda.Evento_inicio), MinuteOf(Agenda.Evento_inicio)) + 2;
+    RectEvento.Left:= RetornaPosicaoLeftData(DateOf(Agenda.Evento_inicio), Width);
+    RectEvento.width:= Width;
+    RectEvento.Height:= MinutosAgendados;
+
+    Evento_V:= TEvento_V.ToObject(PanelConteudoAgenda, U_frmMain.GLB_VERDE_PADRAO, RectEvento, Agenda);
+
+    if Evento_V = Nil then
+      Exit;
+
+    Evento_V.LabelNome.OnClick:= EventoClick;
+    Evento_V.LabelHora.OnClick:= EventoClick;
+
+    Evento_V.Visible:= TRUE;
+    Evento_V.BringToFront();
+
+  Except
+    Evento_V.Free;
+  End;
+
+end;
+
+function TfrmAgenda_V.RetornaColData (Data: TDate): Longint;
+begin
+
+  Case DayOfTheWeek(Data) of
+       DaySunday: Result:= COL_DOM;
+       DayMonday: Result:= COL_SEG;
+      DayTuesday: Result:= COL_TER;
+    DayWednesday: Result:= COL_QUA;
+     DayThursday: Result:= COL_QUI;
+       DayFriday: Result:= COL_SEX;
+     DaySaturday: Result:= COL_SAB;
+  End;
+
+end;
+
+function TfrmAgenda_V.RetornaPosicaoLeftData (const Data: TDate; var Width: Longint): Longint;
+begin
+
+  try
+    Result:= 0;
+    Width:= 0;
+
+    Case DayOfTheWeek(Data) of
+         DaySunday: begin
+                      Result:= Panel_Titulo_DOM.Left;
+                      Width:= Panel_Titulo_DOM.Width;
+                    end;
+         DayMonday: begin
+                      Result:= Panel_Titulo_SEG.Left;
+                      Width:= Panel_Titulo_SEG.Width;
+                    end;
+        DayTuesday: begin
+                      Result:= Panel_Titulo_TER.Left;
+                      Width:= Panel_Titulo_TER.Width;
+                    end;
+      DayWednesday: begin
+                      Result:= Panel_Titulo_QUA.Left;
+                      Width:= Panel_Titulo_QUA.Width;
+                    end;
+       DayThursday: begin
+                      Result:= Panel_Titulo_QUI.Left;
+                      Width:= Panel_Titulo_QUI.Width;
+                    end;
+         DayFriday: begin
+                      Result:= Panel_Titulo_SEX.Left;
+                      Width:= Panel_Titulo_SEX.Width;
+                    end;
+       DaySaturday: begin
+                      Result:= Panel_Titulo_SAB.Left;
+                      Width:= Panel_Titulo_SAB.Width;
+                    end;
+    End;
+
+  except
+    Result:= 0;
   end;
 
 end;
@@ -567,7 +649,7 @@ end;
 
 procedure TfrmAgenda_V.PosicioneLinhaHoraAnalogica (HoraCorrente: TTime);
 var
-  Top, Hora, Minuto                              : Longint;
+  Top, Hora, Minuto                       : Longint;
 
 begin
 
@@ -588,6 +670,18 @@ begin
 
   Panel_HoraAnalogica_Atual.Top:= Top;
   Panel_HoraAnalogica_Atual.Visible:= TRUE;
+
+end;
+
+procedure TfrmAgenda_V.EventoClick (Sender: TObject);
+var
+  idAgenda                         : Longint;
+
+begin
+
+  idAgenda:= TEvento_V(TLabel(Sender).Parent).Tag;
+
+  Uteis.SayInfo(TEvento_V(TLabel(Sender).Parent).Hint + ' - ' + IntToStr(idAgenda));
 
 end;
 

@@ -33,7 +33,8 @@ uses
   U_PacienteDropList_V in 'Libs\Paciente\U_PacienteDropList_V.pas' {frmPacienteDropList_V},
   U_RSA in 'Libs\RSA_CRYPT\U_RSA.pas',
   MEncryptDecryptAES in 'Libs\RSA_CRYPT\MEncryptDecryptAES.pas',
-  U_Agenda_V in 'Libs\Agenda\U_Agenda_V.pas' {frmAgenda_V};
+  U_Agenda_V in 'Libs\Agenda\U_Agenda_V.pas' {frmAgenda_V},
+  U_Evento_V in 'Libs\Agenda\U_Evento_V.pas';
 
 {$R *.res}
 

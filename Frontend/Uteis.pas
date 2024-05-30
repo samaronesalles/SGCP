@@ -5,7 +5,7 @@ interface
 uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
      Vcl.Forms, Vcl.Controls, Vcl.Grids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
      Vcl.Dialogs, System.JSON, System.DateUtils, Winapi.WinInet,
-     System.Variants, Vcl.Graphics, Vcl.ExtCtrls;
+     System.Variants, System.StrUtils, Vcl.Graphics, Vcl.ExtCtrls;
 
 function  ReturnMachineName: String;
 function  MicroDesenvolvimento: Boolean;
@@ -73,6 +73,11 @@ procedure READ_TXTFILE_FIELDS (CaracterSeparador: Char; Linha: String; VAR Field
 function  Qde_Pos (Subst: String; Texto: String): Longint;
 function  LastPos (Substr: String; S: String): Longint;
 function  FORMATPATH (Path: String): String;
+
+procedure RoundCornerOf (Control: TWinControl);
+
+function  RetornaPrimeiroNome (NomeCompleto: String): String;
+function  RetornaPrimeiroMaisUltimoNome (NomeCompleto: String): String;
 
 implementation
 
@@ -1108,5 +1113,66 @@ begin
   Until C > Length(Numero);
 
 END;
+
+procedure RoundCornerOf(Control: TWinControl);
+var
+  R                              : TRect;
+  Rgn                            : HRGN;
+
+begin
+
+ with Control do begin
+   R:= ClientRect;
+   rgn:= CreateRoundRectRgn(R.Left, R.Top, R.Right, R.Bottom, 20, 20);
+
+   Perform (EM_GETRECT, 0, lParam(@r));
+   InflateRect (r, - 4, - 4);
+
+   Perform (EM_SETRECTNP, 0, lParam(@r));
+   SetWindowRgn(Handle, rgn, True);
+
+   Invalidate;
+ end;
+
+end;
+
+function RetornaPrimeiroNome (NomeCompleto: String): String;
+var
+  Nomes                          : TArray<String>;
+
+begin
+
+  Result:= '';
+
+  NomeCompleto:= Trim(NomeCompleto);
+  Nomes:= SplitString(NomeCompleto, ' ');
+
+  if Length(Nomes) = 0 then
+    Exit;
+
+  Result:= Nomes[0];
+
+end;
+
+function RetornaPrimeiroMaisUltimoNome (NomeCompleto: String): String;
+var
+  Nomes                          : TArray<String>;
+  PrimeiroNome, UltimoNome       : String;
+begin
+
+  Result:= '';
+
+  NomeCompleto:= Trim(NomeCompleto);
+  Nomes:= SplitString(NomeCompleto, ' ');
+
+  if Length(Nomes) = 0 then
+    Exit;
+
+  PrimeiroNome:= Nomes[0];
+  UltimoNome:= Nomes[High(Nomes)];
+
+  Result:= PrimeiroNome + ' ' + UltimoNome;
+
+end;
 
 end.
