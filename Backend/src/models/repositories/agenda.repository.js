@@ -61,8 +61,9 @@ module.exports.retorneTodas = async function (profissional_id, paciente_id, inic
         ],
         where: condicao_where,
         order: [
-            ['evento_inicio', 'asc'],
-            ['profissioal_agendado_id', 'asc']
+            ['profissioal_agendado_id', 'asc'],
+            ['evento_inicio', 'asc']
         ],
     })
+
 }
