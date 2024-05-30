@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.ImageList, Vcl.ImgList,
-  Vcl.WinXCalendars, Vcl.Buttons, System.DateUtils, Vcl.Grids, Vcl.Mask;
+  Vcl.WinXCalendars, Vcl.Buttons, System.DateUtils, System.Generics.Collections, Vcl.Grids,
+  Vcl.Mask, U_Agenda_M;
 
 type
   TfrmAgenda_V = class(TForm)
@@ -91,6 +92,7 @@ type
     Label_SAB: TLabel;
     Panel_HoraAnalogica_Atual: TPanel;
     PanelConteudoAgenda: TPanel;
+    MemoTeste: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonSairClick(Sender: TObject);
     procedure TimerStartUpTimer(Sender: TObject);
@@ -107,8 +109,25 @@ type
     procedure DrawGridEventosSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
     procedure DrawGridEventosDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
+
+    FGLB_ListaAgendas                     : TAgendas_List_M;
+    FGLB_ListaFiltro                      : TList<Integer>;
+
+    FGLB_Dom                              : TDate;
+    FGLB_Seg                              : TDate;
+    FGLB_Ter                              : TDate;
+    FGLB_Qua                              : TDate;
+    FGLB_Qui                              : TDate;
+    FGLB_Sex                              : TDate;
+    FGLB_Sab                              : TDate;
+
+    procedure RetorneTodosAgendamentos;
+    procedure ApliqueFiltro;
+    procedure Refresh_StringGrid;
 
     procedure PosicioneLinhaHoraAnalogica (HoraCorrente: TTime);
     procedure ApliqueVisualConteudoAgenda;
@@ -116,6 +135,15 @@ type
   public
     { Public declarations }
   end;
+
+const
+  COL_DOM                    = 0;
+  COL_SEG                    = 1;
+  COL_TER                    = 2;
+  COL_QUA                    = 3;
+  COL_QUI                    = 4;
+  COL_SEX                    = 5;
+  COL_SAB                    = 6;
 
 var
   frmAgenda_V: TfrmAgenda_V;
@@ -133,44 +161,61 @@ end;
 
 procedure TfrmAgenda_V.CalendarViewClick(Sender: TObject);
 var
-  Seg, Ter, Qua, Qui, Sex, Sab, Dom                  : TDate;
+  BkpPeriodo                                     : String;
 
 begin
 
   LabelSemanaSelecionada.Caption:= 'Compromissos da semana: ';
 
-  RetornaDiasDaSemana (CalendarView.Date, Seg, Ter, Qua, Qui, Sex, Sab, Dom);
+  BkpPeriodo:= FormatDateTime('dd/mm/yyyy', Self.FGLB_Dom) + '|' + FormatDateTime('dd/mm/yyyy', Self.FGLB_Sab);
 
-  LabelSemanaSelecionada.Caption:= LabelSemanaSelecionada.Caption + FormatDateTime('dd/mm', Dom) + ' a ' + FormatDateTime('dd/mm', Sab);
+  Uteis.RetornaDiasDaSemana (CalendarView.Date, Self.FGLB_Dom, Self.FGLB_Seg, Self.FGLB_Ter, Self.FGLB_Qua, Self.FGLB_Qui, Self.FGLB_Sex, Self.FGLB_Sab);
 
-  Label_DOM.Caption:= 'DOM' + #13 + FormatDateTime('dd', Dom);
-  ShapeDiaAtual_DOM.Visible:= Date() = Dom;
-  Label_DOM.Hint:= Iff(ShapeDiaAtual_DOM.Visible, 'Data atual', FormatDateTime('dd/mm', Dom));
+  // Não trocou a semana, não precisa fazer nada.
+  if BkpPeriodo = FormatDateTime('dd/mm/yyyy', Self.FGLB_Dom) + '|' + FormatDateTime('dd/mm/yyyy', Self.FGLB_Sab) then
+    Exit;
 
-  Label_SEG.Caption:= 'SEG' + #13 + FormatDateTime('dd', Seg);
-  ShapeDiaAtual_SEG.Visible:= Date() = Seg;
-  Label_SEG.Hint:= Iff(ShapeDiaAtual_SEG.Visible, 'Data atual', FormatDateTime('dd/mm', Seg));
+  LabelSemanaSelecionada.Caption:= LabelSemanaSelecionada.Caption + FormatDateTime('dd/mm', Self.FGLB_Dom) + ' a ' + FormatDateTime('dd/mm', Self.FGLB_Sab);
 
-  Label_TER.Caption:= 'TER' + #13 + FormatDateTime('dd', Ter);
-  ShapeDiaAtual_TER.Visible:= Date() = Ter;
-  Label_TER.Hint:= Iff(ShapeDiaAtual_TER.Visible, 'Data atual', FormatDateTime('dd/mm', Ter));
+  Label_DOM.Caption:= 'DOM' + #13 + FormatDateTime('dd', Self.FGLB_Dom);
+  ShapeDiaAtual_DOM.Visible:= Date() = Self.FGLB_Dom;
+  Label_DOM.Hint:= Iff(ShapeDiaAtual_DOM.Visible, 'Data atual', FormatDateTime('dd/mm', Self.FGLB_Dom));
 
-  Label_QUA.Caption:= 'QUA' + #13 + FormatDateTime('dd', Qua);
-  ShapeDiaAtual_QUA.Visible:= Date() = Qua;
-  Label_QUA.Hint:= Iff(ShapeDiaAtual_QUA.Visible, 'Data atual', FormatDateTime('dd/mm', Qua));
+  Label_SEG.Caption:= 'SEG' + #13 + FormatDateTime('dd', Self.FGLB_Seg);
+  ShapeDiaAtual_SEG.Visible:= Date() = Self.FGLB_Seg;
+  Label_SEG.Hint:= Iff(ShapeDiaAtual_SEG.Visible, 'Data atual', FormatDateTime('dd/mm', Self.FGLB_Seg));
 
-  Label_QUI.Caption:= 'QUI' + #13 + FormatDateTime('dd', Qui);
-  ShapeDiaAtual_QUI.Visible:= Date() = Qui;
-  Label_QUI.Hint:= Iff(ShapeDiaAtual_QUI.Visible, 'Data atual', FormatDateTime('dd/mm', Qui));
+  Label_TER.Caption:= 'TER' + #13 + FormatDateTime('dd', Self.FGLB_Ter);
+  ShapeDiaAtual_TER.Visible:= Date() = Self.FGLB_Ter;
+  Label_TER.Hint:= Iff(ShapeDiaAtual_TER.Visible, 'Data atual', FormatDateTime('dd/mm', Self.FGLB_Ter));
 
-  Label_SEX.Caption:= 'SEX' + #13 + FormatDateTime('dd', Sex);
-  ShapeDiaAtual_SEX.Visible:= Date() = Sex;
-  Label_SEX.Hint:= Iff(ShapeDiaAtual_SEX.Visible, 'Data atual', FormatDateTime('dd/mm', Sex));
+  Label_QUA.Caption:= 'QUA' + #13 + FormatDateTime('dd', Self.FGLB_Qua);
+  ShapeDiaAtual_QUA.Visible:= Date() = Self.FGLB_Qua;
+  Label_QUA.Hint:= Iff(ShapeDiaAtual_QUA.Visible, 'Data atual', FormatDateTime('dd/mm', Self.FGLB_Qua));
 
-  Label_SAB.Caption:= 'SAB' + #13 + FormatDateTime('dd', Sab);
-  ShapeDiaAtual_SAB.Visible:= Date() = Sab;
-  Label_SAB.Hint:= Iff(ShapeDiaAtual_SAB.Visible, 'Data atual', FormatDateTime('dd/mm', Sab));
+  Label_QUI.Caption:= 'QUI' + #13 + FormatDateTime('dd', Self.FGLB_Qui);
+  ShapeDiaAtual_QUI.Visible:= Date() = Self.FGLB_Qui;
+  Label_QUI.Hint:= Iff(ShapeDiaAtual_QUI.Visible, 'Data atual', FormatDateTime('dd/mm', Self.FGLB_Qui));
 
+  Label_SEX.Caption:= 'SEX' + #13 + FormatDateTime('dd', Self.FGLB_Sex);
+  ShapeDiaAtual_SEX.Visible:= Date() = Self.FGLB_Sex;
+  Label_SEX.Hint:= Iff(ShapeDiaAtual_SEX.Visible, 'Data atual', FormatDateTime('dd/mm', Self.FGLB_Sex));
+
+  Label_SAB.Caption:= 'SAB' + #13 + FormatDateTime('dd', Self.FGLB_Sab);
+  ShapeDiaAtual_SAB.Visible:= Date() = Self.FGLB_Sab;
+  Label_SAB.Hint:= Iff(ShapeDiaAtual_SAB.Visible, 'Data atual', FormatDateTime('dd/mm', Self.FGLB_Sab));
+
+  if CalendarView.Focused then begin
+    Self.ApliqueFiltro();
+    Self.Refresh_StringGrid();
+  end;
+
+end;
+
+procedure TfrmAgenda_V.ApliqueFiltro;
+begin
+  Self.FGLB_ListaFiltro.Free();
+  Self.FGLB_ListaFiltro:= Self.FGLB_ListaAgendas.FiltraLista(Str2Num(Label_idProfissional.Caption), Str2Num(Label_idPaciente.Caption), Self.FGLB_Dom, Self.FGLB_Sab);
 end;
 
 procedure TfrmAgenda_V.DrawGridEventosDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
@@ -197,22 +242,27 @@ var
 begin
   inherited;
 
-  if Str2Num(Label_idPaciente.Caption) > 0 then
-    Exit;
+  try
+    if Str2Num(Label_idPaciente.Caption) > 0 then
+      Exit;
 
-  if Trim(EditFiltroPaciente.Text) = '' then
-    Exit;
+    if Trim(EditFiltroPaciente.Text) = '' then
+      Exit;
 
-  JSON_Selecionado:= frmPacienteDropList_V.Execute();
+    JSON_Selecionado:= frmPacienteDropList_V.Execute();
 
-  id:= Str2Num(Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'id'));
-  nome:= Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'nome');
+    id:= Str2Num(Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'id'));
+    nome:= Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'nome');
 
-  if id <= 0 then
-    Exit;
+    if id <= 0 then
+      Exit;
 
-  EditFiltroPaciente.Text:= nome;
-  Label_idPaciente.Caption:= IntToStr(id);
+    EditFiltroPaciente.Text:= nome;
+    Label_idPaciente.Caption:= IntToStr(id);
+  finally
+    Self.ApliqueFiltro();
+    Self.Refresh_StringGrid();
+  end;
 
 end;
 
@@ -236,31 +286,41 @@ var
 begin
   inherited;
 
-  if Str2Num(Label_idProfissional.Caption) > 0 then
-    Exit;
+  Try
+    if Str2Num(Label_idProfissional.Caption) > 0 then
+      Exit;
 
-  if Trim(EditFiltroProfissional.Text) = '' then
-    Exit;
+    if Trim(EditFiltroProfissional.Text) = '' then
+      Exit;
 
-  JSON_Selecionado:= frmProfissionalDropList_V.Execute();
+    JSON_Selecionado:= frmProfissionalDropList_V.Execute();
 
-  id:= Str2Num(Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'id'));
-  nome:= Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'nome');
+    id:= Str2Num(Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'id'));
+    nome:= Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'nome');
 
-  if id <= 0 then
-    Exit;
+    if id <= 0 then
+      Exit;
 
-  EditFiltroProfissional.Text:= nome;
-  Label_idProfissional.Caption:= IntToStr(id);
+    EditFiltroProfissional.Text:= nome;
+    Label_idProfissional.Caption:= IntToStr(id);
+
+    Self.Refresh_StringGrid();
+  Finally
+    if Str2Num(Label_idProfissional.Caption) <= 0 then begin
+      Label_idProfissional.Caption:= IntToStr(frmMain.ProfissionalLogado.Id);
+      EditFiltroProfissional.Text:= frmMain.ProfissionalLogado.Nome;
+    end;
+
+    Self.ApliqueFiltro();
+    Self.Refresh_StringGrid();
+  End;
 
 end;
 
 procedure TfrmAgenda_V.EditFiltroProfissionalKeyPress(Sender: TObject; var Key: Char);
 begin
-
   if key = #13 then
     EditFiltroPaciente.SetFocus();
-
 end;
 
 procedure TfrmAgenda_V.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -268,9 +328,32 @@ begin
   Action:= caFree;
 end;
 
+procedure TfrmAgenda_V.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  Self.FGLB_ListaAgendas.Free();
+  Self.FGLB_ListaFiltro.Free();
+end;
+
 procedure TfrmAgenda_V.FormCreate(Sender: TObject);
 begin
+  Self.FGLB_ListaAgendas:= Nil;
+  Self.FGLB_ListaFiltro:= Nil;
+
   CalendarView.Date:= Date();
+end;
+
+procedure TfrmAgenda_V.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  if Key = VK_F5 then begin
+    Key:= 0;
+
+    Self.RetorneTodosAgendamentos();
+    Self.Refresh_StringGrid();
+
+    Exit;
+  end;
+
 end;
 
 procedure TfrmAgenda_V.FormMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
@@ -282,7 +365,7 @@ begin
   Handled := PtInRect(ScrollBoxMain.ClientRect, ScrollBoxMain.ScreenToClient(MousePos));
 
   if Handled then begin
-    for I := 1 to Mouse.WheelScrollLines do begin
+    for I:= 1 to Mouse.WheelScrollLines do begin
       try
         if WheelDelta > 0 then
           ScrollBoxMain.Perform(WM_VSCROLL, SB_LINEUP, 0)
@@ -310,7 +393,7 @@ begin
   for Row:= 1 to DrawGridEventos.RowCount - 1 do begin // Inicia da 1, para pular o título;
     DrawGridEventos.RowHeights[Row]:= RowHeight;
 
-    CellRect:= DrawGridEventos.CellRect(0, Row);
+    CellRect:= DrawGridEventos.CellRect(COL_DOM, Row);
 
     case Row of
        1: Label_0500.Top:= CellRect.Top - (Label_0500.Height Div 2);
@@ -355,6 +438,8 @@ begin
   Label_idPaciente.Caption:= '0';
   EditFiltroPaciente.Text:= '';
 
+  TimerStartUp.Enabled:= TRUE;
+
 end;
 
 procedure TfrmAgenda_V.TimerClockTimer(Sender: TObject);
@@ -376,7 +461,59 @@ begin
 
   TimerStartUp.Enabled:= FALSE;
 
+  Self.FGLB_ListaAgendas:= TAgendas_List_M.Create();
+  Self.FGLB_ListaFiltro:= TList<Integer>.Create();
+
   EditFiltroProfissional.SetFocus();
+
+  Self.FGLB_ListaAgendas.Clear();
+  Self.FGLB_ListaAgendas.RetornoLista(0, 0, Self.FGLB_Dom, Self.FGLB_Sab);
+
+  Self.FGLB_ListaFiltro.Free();
+  Self.FGLB_ListaFiltro:= Self.FGLB_ListaAgendas.FiltraLista(0, 0, Self.FGLB_Dom, Self.FGLB_Sab);
+
+  Self.Refresh_StringGrid();
+
+end;
+
+procedure TfrmAgenda_V.Refresh_StringGrid;
+var
+  C                                            : integer;
+  FiltrouAlgo                                  : Boolean;
+  Agenda                                       : TAgenda_M;
+
+begin
+
+  try
+    // LimpeAgendamentosNaTela();
+    MemoTeste.Lines.Clear();
+
+    FiltrouAlgo:= FALSE;
+
+    If Self.FGLB_ListaAgendas.Count = 0 Then
+      Exit;
+
+    for C:= 0 to Self.FGLB_ListaAgendas.Count - 1 do begin
+      Agenda:= TAgenda_M(Self.FGLB_ListaAgendas[C]);
+
+      if Agenda = Nil then
+        Continue;
+
+      if NOT (Agenda is TAgenda_M) then
+        Continue;
+
+      if NOT Self.FGLB_ListaFiltro.Contains(Agenda.Id) then begin
+        FiltrouAlgo:= TRUE;
+        Continue;
+      end;
+
+      // AdicioneAgendamentoNaTela(Agenda);
+      MemoTeste.Lines.Add(Copy(Agenda.Profissional.Nome, 1, 15) + ' | ' + Copy(Agenda.Paciente.Nome, 1, 15) + ' | ' + FormatDateTime('dd/mm hh:nn', Agenda.Evento_inicio));
+    end;
+
+  finally
+
+  end;
 
 end;
 
@@ -395,12 +532,25 @@ begin
   Row:= Horas - 4;           // A partir da hora "05:00", incia a row 0. Porém, queremos o início da célula seguinte.
   heightCell:= DrawGridEventos.RowHeights[Row];
 
-  CellRect:= DrawGridEventos.CellRect(0, Row);
+  CellRect:= DrawGridEventos.CellRect(COL_DOM, Row);
   pixelInicioHora:= CellRect.Top + DrawGridEventos.Top - 2;
 
   Resultado:= pixelInicioHora + Minutos;
 
   Result:= Resultado;
+
+end;
+
+procedure TfrmAgenda_V.RetorneTodosAgendamentos;
+begin
+
+  Self.FGLB_ListaAgendas.Clear();
+
+  Self.FGLB_ListaAgendas.RetornoLista(Str2Num(Label_idProfissional.Caption), Str2Num(Label_idPaciente.Caption), FGLB_Dom, FGLB_Sab);
+
+  Self.ApliqueFiltro();
+
+  Self.Refresh_StringGrid();
 
 end;
 

@@ -35,15 +35,15 @@ type
   end;
 
 const
-   COL_ID                = 0;
-   COL_PROFISSIONAL      = 1;
-   COL_PACIENTE          = 2;
-   COL_DATA              = 3;
-   COL_HORA_AGENDADA     = 4;
-   COL_HORA_REALIZADA    = 5;
-   // Colunas invisíveis...
-   COL_STATUS            = 6;
-   COL_IDX_LISTA         = 7;
+  COL_ID                    = 0;
+  COL_PROFISSIONAL          = 1;
+  COL_PACIENTE              = 2;
+  COL_DATA                  = 3;
+  COL_HORA_AGENDADA         = 4;
+  COL_HORA_REALIZADA        = 5;
+  // Colunas invisíveis...
+  COL_STATUS                = 6;
+  COL_IDX_LISTA             = 7;
 
   COR_PENDENTE_CONFIRMACAO  = clBlack;
   COR_CANCELADOS            = clRed;

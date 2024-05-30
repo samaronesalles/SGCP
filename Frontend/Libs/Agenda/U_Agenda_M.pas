@@ -43,6 +43,25 @@ type
     class function ToObject(const JSON: String): TAgenda_M;
   End;
 
+  TAgendas_List_M = class(TObjectList)
+  private
+    FFiltro_ProfissionalId                                                      : Longint;
+    FFiltro_PacienteId                                                          : Longint;
+    FFiltro_InicioDe                                                            : TDateTime;
+    FFiltro_InicioAte                                                           : TDateTime;
+
+    function endpoint_lista (var MetodoHttp: String): String;
+  public
+    constructor Create;
+
+    function RetornoLista (ProfissionalId, PacienteId: Longint; InicioDe, InicioAte: TDateTime): Boolean;
+    function FiltraLista (const ProfissionalId, PacienteId: Longint; InicioDe, InicioAte: TDate): TList<integer>;
+
+    function ToJSON: String;
+
+    class function toList (const JSON: String): TAgendas_List_M;
+  end;
+
 implementation
 
 uses Uteis, U_ConexaoAPI_M, U_ConexaoAPI_V;
@@ -178,6 +197,208 @@ begin
   Except
     Retorno.Free();
     Result:= Nil;
+  End;
+
+end;
+
+{ TAgendas_List_M }
+
+constructor TAgendas_List_M.Create;
+begin
+  Self.FFiltro_ProfissionalId:= 0;
+  Self.FFiltro_PacienteId:= 0;
+  Self.FFiltro_InicioDe:= 0;
+  Self.FFiltro_InicioAte:= 0;
+end;
+
+function TAgendas_List_M.endpoint_lista(var MetodoHttp: String): String;
+var
+  St                                   : String;
+
+begin
+  MetodoHttp:= 'GET';
+
+  St:= 'agenda/lista/[profissional_id]/[paciente_id]/[inicio_de]/[inicio_ate]';
+
+  Uteis.Substitua(St, '[profissional_id]', IntToStr(Self.FFiltro_ProfissionalId));
+  Uteis.Substitua(St, '[paciente_id]', IntToStr(Self.FFiltro_PacienteId));
+  Uteis.Substitua(St, '[inicio_de]', Uteis.DateTime2Str_UTC(Self.FFiltro_InicioDe));
+  Uteis.Substitua(St, '[inicio_ate]', Uteis.DateTime2Str_UTC(Self.FFiltro_InicioAte));
+
+  Result:= St
+end;
+
+function TAgendas_List_M.FiltraLista (const ProfissionalId, PacienteId: Longint; InicioDe, InicioAte: TDate): TList<integer>;
+var
+  C                                                 : Integer;
+  Agenda                                            : TAgenda_M;
+
+begin
+
+  try
+    Result:= TList<integer>.Create;
+
+    for Agenda in Self do begin
+      if NOT Agenda.Ativo then
+        Continue;
+
+      if (ProfissionalId > 0) AND (Agenda.Profissional.Id <> ProfissionalId) then
+        Continue;
+
+      if (PacienteId > 0) AND (Agenda.Paciente.Id <> PacienteId) then
+        Continue;
+
+      if ((InicioDe > 0) AND (InicioAte > 0)) then begin
+        if (Agenda.Evento_inicio < InicioDe) OR (Agenda.Evento_inicio > InicioAte) then
+          Continue;
+      end;
+
+      Result.Add(Agenda.Id);
+    end;
+
+  except
+    raise;
+  end;
+
+end;
+
+function TAgendas_List_M.RetornoLista (ProfissionalId, PacienteId: Longint; InicioDe, InicioAte: TDateTime): Boolean;
+var
+  Endpoint, Metodo                     : String;
+  RespostaAPI                          : TConexaoAPI_M;
+
+  JsonLista                            : String;
+  ListaAgendamentos                    : TAgendas_List_M;
+
+  C                                    : Longint;
+
+begin
+
+  Result:= FALSE;
+
+  RespostaAPI:= Nil;
+
+  JsonLista:= '';
+  ListaAgendamentos:= Nil;
+
+  Try
+    Try
+      Self.FFiltro_ProfissionalId:= ProfissionalId;
+      Self.FFiltro_PacienteId:= PacienteId;
+      Self.FFiltro_InicioDe:= InicioDe;
+      Self.FFiltro_InicioAte:= InicioAte;
+
+      Endpoint:= Self.endpoint_lista(Metodo);
+
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, '', 'Retornando agendamentos. Aguarde!');
+
+      If RespostaAPI = Nil Then
+        Exit;
+
+      If RespostaAPI.StatusCode_HTTP <> 200 Then
+        Exit;
+
+      JsonLista:= RespostaAPI.Data;
+
+      ListaAgendamentos:= TAgendas_List_M.toList(JsonLista);
+
+      If ListaAgendamentos = Nil Then
+        Raise Exception.Create('');
+
+      Self.Clear();
+
+      for C:= 0 to ListaAgendamentos.Count - 1 do begin
+//        Depois alterar para:
+//          1- Remover o "Clear()"
+//          2- Atualizar se já existir;
+//          3- Criar se não existir;
+//          4- Remover se foi excluído
+
+        Self.Add(TAgenda_M(ListaAgendamentos[C]));
+      end;
+
+      Result:= TRUE;
+    Except
+      ListaAgendamentos.Free();
+    End;
+  Finally
+    RespostaAPI.Free();
+  End;
+
+end;
+
+function TAgendas_List_M.ToJSON: String;
+var
+  C                                                                             : Longint;
+  Json                                                                          : String;
+  Item                                                                          : TAgenda_M;
+
+begin
+
+  Json:= '[';
+
+  For C:= 0 To Self.Count - 1 Do Begin
+    If Self[C] = Nil Then
+      Continue;
+
+    Item:= TAgenda_M(Self[C]);
+
+    Json:= Json +
+           Item.ToJSON();
+
+    If (C < Self.Count - 1) Then
+      Json:= Json + ',';
+  End;
+
+  Json:= Json +
+        ']';
+
+  Result:= Json;
+
+end;
+
+class function TAgendas_List_M.toList(const JSON: String): TAgendas_List_M;
+var
+  Retorno                                            : TAgendas_List_M;
+  ListaJsons                                         : TStringlist;
+  Item                                               : TAgenda_M;
+  C                                                  : Longint;
+
+begin
+
+  Retorno:= Nil;
+  ListaJsons:= Nil;
+
+  Try
+    Try
+      ListaJsons:= TStringlist.Create;
+
+      Retorno:= TAgendas_List_M.Create;
+      Retorno.Clear;
+
+      ListaJsons.Text:= JSON;
+
+      If ListaJsons.Count = 0 Then
+        Exit;
+
+      for C:= 0 to ListaJsons.Count - 1 do begin
+        Try
+          Item:= TAgenda_M.ToObject(ListaJsons.Strings[C]);
+
+          Retorno.Add(Item);
+        Except
+          Item.Free();
+          Item:= Nil;
+        End;
+      end;
+
+      Result:= Retorno;
+    Except
+      Retorno.Free();
+      Result:= Nil;
+    End;
+  Finally
+    ListaJsons.Free();
   End;
 
 end;

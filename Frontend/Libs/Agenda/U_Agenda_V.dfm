@@ -17,7 +17,9 @@ object frmAgenda_V: TfrmAgenda_V
   Visible = True
   WindowState = wsMaximized
   OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnMouseWheel = FormMouseWheel
   OnShow = FormShow
   TextHeight = 16
@@ -93,6 +95,9 @@ object frmAgenda_V: TfrmAgenda_V
       ParentColor = True
       TabOrder = 0
       TabStop = True
+      DesignSize = (
+        348
+        395)
       object LabelTituloFiltro: TLabel
         AlignWithMargins = True
         Left = 8
@@ -230,6 +235,14 @@ object frmAgenda_V: TfrmAgenda_V
           OnExit = EditFiltroPacienteExit
           OnKeyPress = EditFiltroPacienteKeyPress
         end
+      end
+      object MemoTeste: TMemo
+        Left = 11
+        Top = 160
+        Width = 328
+        Height = 225
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        TabOrder = 2
       end
     end
   end
@@ -1616,7 +1629,8 @@ object frmAgenda_V: TfrmAgenda_V
       000000000000}
   end
   object TimerStartUp: TTimer
-    Interval = 200
+    Enabled = False
+    Interval = 1
     OnTimer = TimerStartUpTimer
     Left = 74
     Top = 592

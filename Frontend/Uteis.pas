@@ -23,8 +23,8 @@ function  CheckDate(datastr: String): Boolean;
 function  DateTime2Str(dataHora: TDateTime): String;
 function  DateTime2Str_UTC(dataHora: TDateTime): String;
 function  DateTimeUTC2TDatetime(dataHoraSt: String): TDateTime;
-procedure RetornaDiasDaSemana (DataBase: TDate; var Seg, Ter, Qua, Qui, Sex, Sab, Dom: TDate);
-procedure RetornaIntervaloDaSemana (DataBase: TDate; var Seg, Dom: TDate);
+procedure RetornaDiasDaSemana (DataBase: TDate; var Dom, Seg, Ter, Qua, Qui, Sex, Sab: TDate);
+procedure RetornaIntervaloDaSemana (DataBase: TDate; var Dom, Sab: TDate);
 function  RetornaDiaSemanaNaSemana (DataBase: TDate; DiaSemanaDesejado: Word): TDate;
 function  FormatDate(data: String): String;
 
@@ -159,93 +159,93 @@ begin
   End;
 end;
 
-procedure RetornaDiasDaSemana (DataBase: TDate; var Seg, Ter, Qua, Qui, Sex, Sab, Dom: TDate);
+procedure RetornaDiasDaSemana (DataBase: TDate; var Dom, Seg, Ter, Qua, Qui, Sex, Sab: TDate);
 begin
 
+  Dom:= 0;
   Seg:= 0;
   Ter:= 0;
   Qua:= 0;
   Qui:= 0;
   Sex:= 0;
   Sab:= 0;
-  Dom:= 0;
 
   if DataBase <= 0 then
     Exit;
 
   case DayOfTheWeek(DataBase) of
+       DaySunday: begin
+                    Dom:= DataBase;
+                    Seg:= IncDay(DataBase, 1);
+                    Ter:= IncDay(DataBase, 2);
+                    Qua:= IncDay(DataBase, 3);
+                    Qui:= IncDay(DataBase, 4);
+                    Sex:= IncDay(DataBase, 5);
+                    Sab:= IncDay(DataBase, 6);
+                  end;
        DayMonday: begin
+                    Dom:= IncDay(DataBase, -1);
                     Seg:= DataBase;
                     Ter:= IncDay(DataBase, 1);
                     Qua:= IncDay(DataBase, 2);
                     Qui:= IncDay(DataBase, 3);
                     Sex:= IncDay(DataBase, 4);
                     Sab:= IncDay(DataBase, 5);
-                    Dom:= IncDay(DataBase, 6);
                   end;
       DayTuesday: begin
+                    Dom:= IncDay(DataBase, -2);
                     Seg:= IncDay(DataBase, -1);
                     Ter:= DataBase;
                     Qua:= IncDay(DataBase, 1);
                     Qui:= IncDay(DataBase, 2);
                     Sex:= IncDay(DataBase, 3);
                     Sab:= IncDay(DataBase, 4);
-                    Dom:= IncDay(DataBase, 5);
                   end;
     DayWednesday: begin
+                    Dom:= IncDay(DataBase, -3);
                     Seg:= IncDay(DataBase, -2);
                     Ter:= IncDay(DataBase, -1);
                     Qua:= DataBase;
                     Qui:= IncDay(DataBase, 1);
                     Sex:= IncDay(DataBase, 2);
                     Sab:= IncDay(DataBase, 3);
-                    Dom:= IncDay(DataBase, 4);
                   end;
      DayThursday: begin
+                    Dom:= IncDay(DataBase, -4);
                     Seg:= IncDay(DataBase, -3);
                     Ter:= IncDay(DataBase, -2);
                     Qua:= IncDay(DataBase, -1);
                     Qui:= DataBase;
                     Sex:= IncDay(DataBase, 1);
                     Sab:= IncDay(DataBase, 2);
-                    Dom:= IncDay(DataBase, 3);
                   end;
        DayFriday: begin
+                    Dom:= IncDay(DataBase, -5);
                     Seg:= IncDay(DataBase, -4);
                     Ter:= IncDay(DataBase, -3);
                     Qua:= IncDay(DataBase, -2);
                     Qui:= IncDay(DataBase, -1);
                     Sex:= DataBase;
                     Sab:= IncDay(DataBase, 1);
-                    Dom:= IncDay(DataBase, 2);
                   end;
      DaySaturday: begin
+                    Dom:= IncDay(DataBase, -6);
                     Seg:= IncDay(DataBase, -5);
                     Ter:= IncDay(DataBase, -4);
                     Qua:= IncDay(DataBase, -3);
                     Qui:= IncDay(DataBase, -2);
                     Sex:= IncDay(DataBase, -1);
                     Sab:= DataBase;
-                    Dom:= IncDay(DataBase, 1);
-                  end;
-       DaySunday: begin
-                    Seg:= IncDay(DataBase, -6);
-                    Ter:= IncDay(DataBase, -5);
-                    Qua:= IncDay(DataBase, -4);
-                    Qui:= IncDay(DataBase, -3);
-                    Sex:= IncDay(DataBase, -2);
-                    Sab:= IncDay(DataBase, -1);
-                    Dom:= DataBase;
                   end;
   end;
 
 end;
 
-procedure RetornaIntervaloDaSemana (DataBase: TDate; var Seg, Dom: TDate);
+procedure RetornaIntervaloDaSemana (DataBase: TDate; var Dom, Sab: TDate);
 var
-  Ter, Qua, Qui, Sex, Sab       : TDate;
+  Seg, Ter, Qua, Qui, Sex                 : TDate;
 begin
-  RetornaDiasDaSemana (DataBase, Seg, Ter, Qua, Qui, Sex, Sab, Dom);
+  RetornaDiasDaSemana (DataBase, Dom, Seg, Ter, Qua, Qui, Sex, Sab);
 end;
 
 function RetornaDiaSemanaNaSemana (DataBase: TDate; DiaSemanaDesejado: Word): TDate;
@@ -259,16 +259,16 @@ begin
   if DataBase <= 0 then
     Exit;
 
-  RetornaDiasDaSemana (DataBase, Seg, Ter, Qua, Qui, Sex, Sab, Dom);
+  RetornaDiasDaSemana (DataBase, Dom, Seg, Ter, Qua, Qui, Sex, Sab);
 
   case DiaSemanaDesejado of
+       DaySunday: Result:= Dom;
        DayMonday: Result:= Seg;
       DayTuesday: Result:= Ter;
     DayWednesday: Result:= Qua;
      DayThursday: Result:= Qui;
        DayFriday: Result:= Sex;
      DaySaturday: Result:= Sab;
-       DaySunday: Result:= Dom;
   end;
 
 end;
