@@ -12,9 +12,15 @@ type
   private
     FLabelNome                         : TLabel;
     FLabelHora                         : TLabel;
+
+    Fid                                : Longint;
+    Fdi                                : String;
+
   public
     property LabelNome                 : TLabel Read FLabelNome Write FLabelNome;
     property LabelHora                 : TLabel Read FLabelHora Write FLabelHora;
+    property id                        : Longint Read Fid Write Fid;
+    property di                        : String Read Fdi Write Fdi;
 
     destructor Destroy; override;
 
@@ -64,6 +70,8 @@ begin
 
     // TPanel: Evento
     Evento_V:= TEvento_V.Create(Nil);
+    Evento_V.id:= Agenda.Id;
+    Evento_V.di:= Agenda.di;
 
     Evento_V.Name:= 'pnEvento_' + IntToStr(Agenda.Id);
     Evento_V.Tag:= Agenda.Id;

@@ -62,6 +62,10 @@ type
     class function toList (const JSON: String): TAgendas_List_M;
   end;
 
+const
+  COR_AGENDA_CONFIRMADA                 = $00A7CEBB;
+  COR_AGENDA_NAO_CONFIRMADA             = $00E3995B;
+
 implementation
 
 uses Uteis, U_ConexaoAPI_M, U_ConexaoAPI_V;
@@ -236,6 +240,12 @@ var
 begin
 
   try
+    if Self = Nil then
+      Exit;
+
+    if Self.Count = 0 then
+      Exit;
+
     Result:= TList<integer>.Create;
 
     for Agenda in Self do begin

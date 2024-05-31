@@ -14,8 +14,8 @@ type
     PanelLegenda: TPanel;
     Label1: TLabel;
     Bevel1: TBevel;
-    Shape_legend_NaoConfirmados: TShape;
-    Shape_legend_Confirmados: TShape;
+    Shape_legenda_NaoConfirmados: TShape;
+    Shape_legenda_Confirmados: TShape;
     Label2: TLabel;
     Label3: TLabel;
     Panel_btnsRight: TPanel;
@@ -126,6 +126,9 @@ type
     procedure RetorneTodosAgendamentos;
     procedure ApliqueFiltro;
     procedure Refresh_StringGrid;
+
+    function  EventoJaExistenteNaTela (const idEventoProcurado: Longint; var diEvento: String): Boolean;
+    procedure LimpeAgendamentosNaTela;
     procedure AdicioneAgendamentoNaTela (Agenda: TAgenda_M);
 
     procedure PosicioneLinhaHoraAnalogica (HoraCorrente: TTime);
@@ -208,10 +211,8 @@ begin
   ShapeDiaAtual_SAB.Visible:= Date() = Self.FGLB_Sab;
   Label_SAB.Hint:= Iff(ShapeDiaAtual_SAB.Visible, 'Data atual', FormatDateTime('dd/mm', Self.FGLB_Sab));
 
-  if CalendarView.Focused then begin
-    Self.ApliqueFiltro();
-    Self.Refresh_StringGrid();
-  end;
+  Self.ApliqueFiltro();
+  Self.Refresh_StringGrid();
 
 end;
 
@@ -329,6 +330,9 @@ procedure TfrmAgenda_V.FormCreate(Sender: TObject);
 begin
   Self.FGLB_ListaAgendas:= Nil;
   Self.FGLB_ListaFiltro:= Nil;
+
+  Shape_legenda_NaoConfirmados.Brush.Color:= COR_AGENDA_NAO_CONFIRMADA;
+  Shape_legenda_Confirmados.Brush.Color:= COR_AGENDA_CONFIRMADA;
 
   CalendarView.Date:= Date();
 end;
@@ -486,9 +490,12 @@ var
 begin
 
   try
-    // LimpeAgendamentosNaTela();
+    LimpeAgendamentosNaTela();
 
     FiltrouAlgo:= FALSE;
+
+    If Self.FGLB_ListaAgendas = Nil Then
+      Exit;
 
     If Self.FGLB_ListaAgendas.Count = 0 Then
       Exit;
@@ -516,15 +523,64 @@ begin
 
 end;
 
+function TfrmAgenda_V.EventoJaExistenteNaTela (const idEventoProcurado: Longint; var diEvento: String): Boolean;
+var
+  i                          : Integer;
+  child                      : TControl;
+
+begin
+
+  diEvento:= '';
+  Result:= FALSE;
+
+  // Use um loop reverso para evitar problemas ao remover componentes durante a iteração
+  for i:= PanelConteudoAgenda.ControlCount - 1 downto 0 do begin
+    child:= PanelConteudoAgenda.Controls[i];
+
+    if ((child is TEvento_V) AND (TEvento_V(child).id = idEventoProcurado)) then begin
+      diEvento:= TEvento_V(child).di;
+
+      Result:= TRUE;
+      Break;
+    end;
+  end;
+
+end;
+
+procedure TfrmAgenda_V.LimpeAgendamentosNaTela;
+var
+  i                          : Integer;
+  child                      : TControl;
+
+begin
+
+  // Use um loop reverso para evitar problemas ao remover componentes durante a iteração
+  for i:= PanelConteudoAgenda.ControlCount - 1 downto 0 do begin
+    child:= PanelConteudoAgenda.Controls[i];
+
+    if (child is TEvento_V) and (Pos('pnEvento_', child.Name) = 1) then
+      child.Free;
+  end;
+
+end;
+
 procedure TfrmAgenda_V.AdicioneAgendamentoNaTela (Agenda: TAgenda_M);
 var
   Evento_V                                : TEvento_V;
   Width, MinutosAgendados                 : Longint;
+  diEventoJaExistente                     : String;
   RectEvento                              : TRect;
+  Cor                                     : TColor;
 
 begin
 
   Evento_V:= Nil;
+
+  // Se o evento já existir na tela, e não teve alteração, não o recriamos.
+  if EventoJaExistenteNaTela(Agenda.Id, diEventoJaExistente) then begin
+    if Agenda.Di = diEventoJaExistente then
+      Exit;
+  end;
 
   Try
     MinutosAgendados:= MinutesBetween(Agenda.Evento_fim, Agenda.Evento_inicio);
@@ -534,7 +590,9 @@ begin
     RectEvento.width:= Width;
     RectEvento.Height:= MinutosAgendados;
 
-    Evento_V:= TEvento_V.ToObject(PanelConteudoAgenda, U_frmMain.GLB_VERDE_PADRAO, RectEvento, Agenda);
+    Cor:= Iff(Agenda.Evento_confirmado, COR_AGENDA_CONFIRMADA, COR_AGENDA_NAO_CONFIRMADA);
+
+    Evento_V:= TEvento_V.ToObject(PanelConteudoAgenda, Cor, RectEvento, Agenda);
 
     if Evento_V = Nil then
       Exit;
@@ -679,7 +737,7 @@ var
 
 begin
 
-  idAgenda:= TEvento_V(TLabel(Sender).Parent).Tag;
+  idAgenda:= TEvento_V(TLabel(Sender).Parent).id;
 
   Uteis.SayInfo(TEvento_V(TLabel(Sender).Parent).Hint + ' - ' + IntToStr(idAgenda));
 

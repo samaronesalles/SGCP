@@ -288,7 +288,7 @@ object frmAgenda_V: TfrmAgenda_V
           Width = 60
           Height = 2
         end
-        object Shape_legend_NaoConfirmados: TShape
+        object Shape_legenda_NaoConfirmados: TShape
           Left = 11
           Top = 31
           Width = 12
@@ -296,7 +296,7 @@ object frmAgenda_V: TfrmAgenda_V
           Brush.Color = clBlack
           Shape = stCircle
         end
-        object Shape_legend_Confirmados: TShape
+        object Shape_legenda_Confirmados: TShape
           Left = 11
           Top = 49
           Width = 12

@@ -70,9 +70,6 @@ type
     property ProfissionalLogado                         : TProfissional_M Read FProfissionalLogado Write FProfissionalLogado;
   end;
 
-const
-  GLB_VERDE_PADRAO                     = $00A7CEBB;
-
 var
   frmMain: TfrmMain;
 
