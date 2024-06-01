@@ -13,13 +13,13 @@ inherited frmPacienteDetail_V: TfrmPacienteDetail_V
     ExplicitTop = 204
     ExplicitWidth = 507
     inherited ButtonProsseguir: TButton
-      Left = 373
+      Left = 367
       OnClick = ButtonProsseguirClick
-      ExplicitLeft = 367
+      ExplicitLeft = 361
     end
     inherited ButtonCancelar: TButton
-      Left = 258
-      ExplicitLeft = 252
+      Left = 252
+      ExplicitLeft = 246
     end
   end
   inherited pnDetalhe: TPanel
@@ -39,7 +39,7 @@ inherited frmPacienteDetail_V: TfrmPacienteDetail_V
       Top = 70
       Width = 47
       Height = 16
-      Caption = 'Nome *:'
+      Caption = 'Nome: *'
     end
     object Label3: TLabel
       Left = 432
@@ -53,14 +53,14 @@ inherited frmPacienteDetail_V: TfrmPacienteDetail_V
       Top = 126
       Width = 50
       Height = 16
-      Caption = 'E-mail *:'
+      Caption = 'E-mail: *'
     end
     object Label5: TLabel
       Left = 395
       Top = 126
       Width = 53
       Height = 16
-      Caption = 'Celular *:'
+      Caption = 'Celular: *'
     end
     object Label_di: TLabel
       Left = 216

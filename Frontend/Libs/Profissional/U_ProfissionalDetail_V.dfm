@@ -16,13 +16,13 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       513
       56)
     inherited ButtonProsseguir: TButton
-      Left = 392
+      Left = 386
       OnClick = ButtonProsseguirClick
-      ExplicitLeft = 386
+      ExplicitLeft = 380
     end
     inherited ButtonCancelar: TButton
-      Left = 277
-      ExplicitLeft = 271
+      Left = 271
+      ExplicitLeft = 265
     end
   end
   inherited pnDetalhe: TPanel
@@ -42,7 +42,7 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       Top = 70
       Width = 47
       Height = 16
-      Caption = 'Nome *:'
+      Caption = 'Nome: *'
     end
     object Label3: TLabel
       Left = 432
@@ -56,14 +56,14 @@ inherited frmProfissionalDetail_V: TfrmProfissionalDetail_V
       Top = 126
       Width = 50
       Height = 16
-      Caption = 'E-mail *:'
+      Caption = 'E-mail: *'
     end
     object Label5: TLabel
       Left = 395
       Top = 126
       Width = 53
       Height = 16
-      Caption = 'Celular *:'
+      Caption = 'Celular: *'
     end
     object Bevel1: TBevel
       Left = 8

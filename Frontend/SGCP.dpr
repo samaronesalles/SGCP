@@ -34,7 +34,8 @@ uses
   U_RSA in 'Libs\RSA_CRYPT\U_RSA.pas',
   MEncryptDecryptAES in 'Libs\RSA_CRYPT\MEncryptDecryptAES.pas',
   U_Agenda_V in 'Libs\Agenda\U_Agenda_V.pas' {frmAgenda_V},
-  U_Evento_V in 'Libs\Agenda\U_Evento_V.pas';
+  U_Evento_V in 'Libs\Agenda\U_Evento_V.pas',
+  U_AgendaDetail_V in 'Libs\Agenda\U_AgendaDetail_V.pas' {frmAgendaDetail_V};
 
 {$R *.res}
 

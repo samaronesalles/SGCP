@@ -39,7 +39,6 @@ type
     PanelTop: TPanel;
     Panel_TopBtnsRight: TPanel;
     ImageListIcons_42x42: TImageList;
-    SpeedButton_Delete: TSpeedButton;
     SpeedButton_Incluir: TSpeedButton;
     LabelSemanaSelecionada: TLabel;
     Bevel2: TBevel;
@@ -92,6 +91,7 @@ type
     Label_SAB: TLabel;
     Panel_HoraAnalogica_Atual: TPanel;
     PanelConteudoAgenda: TPanel;
+    ButtonFiltrar: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonSairClick(Sender: TObject);
     procedure TimerStartUpTimer(Sender: TObject);
@@ -109,6 +109,9 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure SpeedButton_IncluirClick(Sender: TObject);
+    procedure ButtonFiltrarClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
 
@@ -137,7 +140,7 @@ type
     function  RetornaColData (Data: TDate): Longint;
     function  RetornaPosicaoLeftData (const Data: TDate; var Width: Longint): Longint;
 
-    procedure EventoClick (Sender: TObject);
+    procedure EventoDblClick (Sender: TObject);
   public
     { Public declarations }
   end;
@@ -156,9 +159,15 @@ var
 
 implementation
 
-uses Uteis, U_frmMain, U_Evento_V, U_ProfissionalDropList_V, U_PacienteDropList_V;
+uses Uteis, U_frmMain, U_Evento_V, U_ProfissionalDropList_V, U_PacienteDropList_V, U_AgendaDetail_V;
 
 {$R *.dfm}
+
+procedure TfrmAgenda_V.ButtonFiltrarClick(Sender: TObject);
+begin
+  Self.ApliqueFiltro();
+  Self.Refresh_StringGrid();
+end;
 
 procedure TfrmAgenda_V.ButtonSairClick(Sender: TObject);
 begin
@@ -246,27 +255,22 @@ var
 begin
   inherited;
 
-  try
-    if Str2Num(Label_idPaciente.Caption) > 0 then
-      Exit;
+  if Str2Num(Label_idPaciente.Caption) > 0 then
+    Exit;
 
-    if Trim(EditFiltroPaciente.Text) = '' then
-      Exit;
+  if Trim(EditFiltroPaciente.Text) = '' then
+    Exit;
 
-    JSON_Selecionado:= frmPacienteDropList_V.Execute();
+  JSON_Selecionado:= frmPacienteDropList_V.Execute();
 
-    id:= Str2Num(Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'id'));
-    nome:= Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'nome');
+  id:= Str2Num(Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'id'));
+  nome:= Uteis.ReturnValor_EmJSON(JSON_Selecionado, 'nome');
 
-    if id <= 0 then
-      Exit;
+  if id <= 0 then
+    Exit;
 
-    EditFiltroPaciente.Text:= nome;
-    Label_idPaciente.Caption:= IntToStr(id);
-  finally
-    Self.ApliqueFiltro();
-    Self.Refresh_StringGrid();
-  end;
+  EditFiltroPaciente.Text:= nome;
+  Label_idPaciente.Caption:= IntToStr(id);
 
 end;
 
@@ -302,17 +306,18 @@ begin
     EditFiltroProfissional.Text:= nome;
     Label_idProfissional.Caption:= IntToStr(id);
 
-    Self.Refresh_StringGrid();
   Finally
     if Str2Num(Label_idProfissional.Caption) <= 0 then begin
       Label_idProfissional.Caption:= IntToStr(frmMain.ProfissionalLogado.Id);
       EditFiltroProfissional.Text:= frmMain.ProfissionalLogado.Nome;
     end;
-
-    Self.ApliqueFiltro();
-    Self.Refresh_StringGrid();
   End;
 
+end;
+
+procedure TfrmAgenda_V.FormActivate(Sender: TObject);
+begin
+  Self.WindowState:= TWindowState.wsMaximized;
 end;
 
 procedure TfrmAgenda_V.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -345,6 +350,14 @@ begin
 
     Self.RetorneTodosAgendamentos();
     Self.Refresh_StringGrid();
+
+    Exit;
+  end;
+
+  if Key = VK_INSERT then begin
+    Key:= 0;
+
+    Self.SpeedButton_Incluir.OnClick(Self);
 
     Exit;
   end;
@@ -472,7 +485,7 @@ begin
   EditFiltroProfissional.SetFocus();
 
   Self.FGLB_ListaAgendas.Clear();
-  Self.FGLB_ListaAgendas.RetornoLista(0, 0, Self.FGLB_Dom, Self.FGLB_Sab);
+  Self.FGLB_ListaAgendas.RetornoLista(0, 0, StrToDateTime(DateToStr(Self.FGLB_Dom) + ' 00:00'), StrToDateTime(DateToStr(Self.FGLB_Sab) + ' 23:59'));
 
   Self.FGLB_ListaFiltro.Free();
   Self.FGLB_ListaFiltro:= Self.FGLB_ListaAgendas.FiltraLista(0, 0, Self.FGLB_Dom, Self.FGLB_Sab);
@@ -597,8 +610,8 @@ begin
     if Evento_V = Nil then
       Exit;
 
-    Evento_V.LabelNome.OnClick:= EventoClick;
-    Evento_V.LabelHora.OnClick:= EventoClick;
+    Evento_V.LabelNome.OnDblClick:= EventoDblClick;
+    Evento_V.LabelHora.OnDblClick:= EventoDblClick;
 
     Evento_V.Visible:= TRUE;
     Evento_V.BringToFront();
@@ -697,11 +710,42 @@ begin
 
   Self.FGLB_ListaAgendas.Clear();
 
-  Self.FGLB_ListaAgendas.RetornoLista(Str2Num(Label_idProfissional.Caption), Str2Num(Label_idPaciente.Caption), FGLB_Dom, FGLB_Sab);
+  Self.FGLB_ListaAgendas.RetornoLista(Str2Num(Label_idProfissional.Caption),
+                                      Str2Num(Label_idPaciente.Caption),
+                                      StrToDateTime(DateToStr(Self.FGLB_Dom) + ' 00:00'),
+                                      StrToDateTime(DateToStr(Self.FGLB_Sab) + ' 23:59')
+                                     );
 
   Self.ApliqueFiltro();
 
   Self.Refresh_StringGrid();
+
+end;
+
+procedure TfrmAgenda_V.SpeedButton_IncluirClick(Sender: TObject);
+var
+  NovaAgenda                        : TAgenda_M;
+
+begin
+
+  NovaAgenda:= Nil;
+
+  Try
+    NovaAgenda:= frmAgendaDetail_V.Execute_Novo();
+
+    if NovaAgenda = Nil then
+      raise Exception.Create('');
+
+    if NovaAgenda.Id <= 0 then
+      raise Exception.Create('');
+
+    Self.FGLB_ListaAgendas.Add(NovaAgenda);
+
+    ButtonFiltrar.OnClick(Self);
+
+  Except
+    NovaAgenda.Free;
+  End;
 
 end;
 
@@ -731,15 +775,29 @@ begin
 
 end;
 
-procedure TfrmAgenda_V.EventoClick (Sender: TObject);
+procedure TfrmAgenda_V.EventoDblClick(Sender: TObject);
 var
   idAgenda                         : Longint;
+  Agenda                           : TAgenda_M;
 
 begin
 
   idAgenda:= TEvento_V(TLabel(Sender).Parent).id;
 
-  Uteis.SayInfo(TEvento_V(TLabel(Sender).Parent).Hint + ' - ' + IntToStr(idAgenda));
+  if idAgenda <= 0 then
+    Exit;
+
+  Agenda:= Self.FGLB_ListaAgendas.RetornaAgenda(idAgenda);
+
+  if Agenda = Nil then
+    Exit;
+
+  try
+    frmAgendaDetail_V.Execute_Editar(Agenda);
+  finally
+    Self.RetorneTodosAgendamentos();
+    Self.Refresh_StringGrid();
+  end;
 
 end;
 

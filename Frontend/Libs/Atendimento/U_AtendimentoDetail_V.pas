@@ -178,8 +178,6 @@ begin
       ButtonSalvar.Enabled:= FALSE;
       ButtonSair.Enabled:= FALSE;
 
-      // Self.FGLB_Atendimento_M.Status:= xxxxx;        => Implementar encerramento.
-      // Self.FGLB_Atendimento_M.DataHoraFim:= xxxxx;   => Settar data hora atual, se foi encerrado.
       Self.FGLB_Atendimento_M.Anotacoes:= Uteis.RichEdit_GetText(frmMain.TempDir + FILE_ANOTACOES_RTF, RichEdit_Texto);
 
       If Self.FJson_BkpAtendimentoEditado = Self.FGLB_Atendimento_M.ToJSON(FALSE) Then

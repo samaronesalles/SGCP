@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, System.SysUtils, System.StrUtils, System.Generics.Collections,
-  U_Profissional_M, U_Paciente_M, U_ObjectList;
+  System.DateUtils, U_Profissional_M, U_Paciente_M, U_ObjectList;
 
 type
   TAgenda_M = class(TObject)
@@ -20,6 +20,8 @@ type
     FProfissional                                                               : TProfissional_M;
     FPaciente                                                                   : TPaciente_M;
 
+    function endpoint_Novo(VAR MetodoHttp: String): String;
+    function endpoint_Edicao(VAR MetodoHttp: String): String;
     function endpoint_cancelamento(VAR MetodoHttp: String): String;
   public
     property Id                                                                 : Longint Read FId Write FId;
@@ -54,6 +56,7 @@ type
   public
     constructor Create;
 
+    function RetornaAgenda (const Id: Longint): TAgenda_M;
     function RetornoLista (ProfissionalId, PacienteId: Longint; InicioDe, InicioAte: TDateTime): Boolean;
     function FiltraLista (const ProfissionalId, PacienteId: Longint; InicioDe, InicioAte: TDate): TList<integer>;
 
@@ -150,9 +153,97 @@ begin
 
 end;
 
-function TAgenda_M.Save: Boolean;
+function TAgenda_M.endpoint_Edicao(var MetodoHttp: String): String;
+var
+  St                                   : String;
+
 begin
-  // Código aqui...
+
+  MetodoHttp:= '';
+
+  if Self.FId <= 0 then Begin
+    Result:= Self.endpoint_Novo(MetodoHttp);
+    Exit;
+  End;
+
+  St:= 'agenda/[id]/[di]';
+
+  Uteis.Substitua(St, '[id]', IntToStr(Self.FId));
+  Uteis.Substitua(St, '[di]', Self.Fdi);
+
+  MetodoHttp:= 'PUT';
+  Result:= St;
+
+end;
+
+function TAgenda_M.endpoint_Novo(var MetodoHttp: String): String;
+begin
+  MetodoHttp:= 'POST';
+  Result:= 'agenda';
+end;
+
+function TAgenda_M.Save: Boolean;
+var
+  Novo                                 : Boolean;
+  Endpoint, Metodo, Requisicao         : String;
+  RespostaAPI                          : TConexaoAPI_M;
+  Agenda                               : TAgenda_M;
+
+begin
+
+  Result:= FALSE;
+
+  RespostaAPI:= Nil;
+  Agenda:= Nil;
+
+  Try
+    Try
+      Novo:= Self.FId <= 0;
+
+      if Novo then
+        Endpoint:= Self.endpoint_Novo(Metodo)
+      else
+        Endpoint:= Self.endpoint_Edicao(Metodo);
+
+      Requisicao:= Self.ToJSON();
+
+      RespostaAPI:= frmConexaoAPI_V.Execute(Endpoint, Metodo, Requisicao, 'Salvando agenda. Aguarde!');
+
+      If RespostaAPI = Nil Then
+        Exit;
+
+      If RespostaAPI.StatusCode_HTTP <> 200 Then
+        Exit;
+
+      Agenda:= TAgenda_M.ToObject(RespostaAPI.Data);
+      If Agenda = Nil Then
+        Exit;
+
+      Self.Id:= Agenda.Id;
+      Self.Di:= Agenda.Di;
+      Self.Descricao:= Agenda.Descricao;
+      Self.Observacao:= Agenda.Observacao;
+      Self.Evento_inicio:= Agenda.Evento_inicio;
+      Self.Evento_fim:= Agenda.Evento_fim;
+      Self.Evento_confirmado:= Agenda.Evento_confirmado;
+      Self.Ativo:= Agenda.Ativo;
+
+      Self.Profissional.Free();
+      Self.Profissional:= TProfissional_M.ToObject(Agenda.Profissional.ToJSON());
+
+      Self.Paciente.Free();
+      Self.Paciente:= TPaciente_M.ToObject(Agenda.Paciente.ToJSON());
+
+      Result:= TRUE;
+    Except
+      On E: Exception Do
+        Raise;
+    End;
+  Finally
+    RespostaAPI.Free();
+    Agenda.Free();
+  End;
+
 end;
 
 function TAgenda_M.ToJSON: String;
@@ -160,12 +251,17 @@ begin
   Result:= '{' +
                '"id": ' + IntToStr(Self.FId) + ',' +
                '"di": ' + Uteis.ConverteTextoToJson(Self.FDi) + ',' +
+
+               '"profissional_id": ' + IntToStr(Self.FProfissional.Id) + ',' +
+               '"paciente_id": ' + IntToStr(Self.FPaciente.Id) + ',' +
+
                '"descricao": ' + Uteis.ConverteTextoToJson(Self.FDescricao) + ',' +
                '"observacao": ' + Uteis.ConverteTextoToJson(Self.FObservacao) + ',' +
                '"evento_inicio": ' + Uteis.ConverteTextoToJson(Uteis.DateTime2Str_UTC(Self.FEvento_inicio)) + ',' +
                '"evento_fim": ' + Uteis.ConverteTextoToJson(Uteis.DateTime2Str_UTC(Self.FEvento_fim)) + ',' +
                '"evento_confirmado": ' + Uteis.ConverteBooleanToJson(Self.FEvento_confirmado) + ',' +
                '"ativo": ' + Uteis.ConverteBooleanToJson(Self.FAtivo) + ',' +
+
                '"profissional": ' + Self.FProfissional.ToJSON() + ',' +
                '"paciente": ' + Self.FPaciente.ToJSON() +
            '}';
@@ -259,7 +355,7 @@ begin
         Continue;
 
       if ((InicioDe > 0) AND (InicioAte > 0)) then begin
-        if (Agenda.Evento_inicio < InicioDe) OR (Agenda.Evento_inicio > InicioAte) then
+        if (DateOf(Agenda.Evento_inicio) < InicioDe) OR (DateOf(Agenda.Evento_inicio) > InicioAte) then
           Continue;
       end;
 
@@ -268,6 +364,37 @@ begin
 
   except
     raise;
+  end;
+
+end;
+
+function TAgendas_List_M.RetornaAgenda(const Id: Longint): TAgenda_M;
+var
+  C                                    : Longint;
+  Item                                 : TAgenda_M;
+
+begin
+
+  Result:= Nil;
+
+  if Self.Count = 0 then
+    Exit;
+
+  try
+    For C:= 0 To Self.Count - 1 Do Begin
+      If Self[C] = Nil Then
+        Continue;
+
+      Item:= TAgenda_M(Self[C]);
+      if Item.Id <> Id then
+        Continue;
+
+      Result:= Item;
+      Exit;
+    End;
+
+  finally
+
   end;
 
 end;

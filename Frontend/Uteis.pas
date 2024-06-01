@@ -346,8 +346,24 @@ begin
 end;
 
 function CheckTime(Timestr: String): Boolean;
+var
+  Timesplit                 : TArray<String>;
+
 begin
   try
+    Result:= FALSE;
+
+    Timesplit:= SplitString(Timestr, ':');
+
+    if Length(Timesplit) < 2 then
+      Exit;
+
+    if Length(Trim(Timesplit[0])) <> 2 then
+      Exit;
+
+    if Length(Trim(Timesplit[1])) <> 2 then
+      Exit;
+
     StrToTime(Timestr);
     Result:= TRUE;
   except

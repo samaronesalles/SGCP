@@ -17,6 +17,7 @@ object frmAgenda_V: TfrmAgenda_V
   KeyPreview = True
   Visible = True
   WindowState = wsMaximized
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -235,6 +236,19 @@ object frmAgenda_V: TfrmAgenda_V
           OnExit = EditFiltroPacienteExit
         end
       end
+      object ButtonFiltrar: TButton
+        Left = 264
+        Top = 165
+        Width = 75
+        Height = 27
+        BiDiMode = bdLeftToRight
+        Caption = 'Filtrar'
+        ImageIndex = 2
+        Images = ImageList_Icons
+        ParentBiDiMode = False
+        TabOrder = 2
+        OnClick = ButtonFiltrarClick
+      end
     end
   end
   object PanelMain: TPanel
@@ -388,32 +402,19 @@ object frmAgenda_V: TfrmAgenda_V
         ParentFont = False
       end
       object Panel_TopBtnsRight: TPanel
-        Left = 1031
+        Left = 1064
         Top = 0
-        Width = 120
+        Width = 87
         Height = 88
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
         DesignSize = (
-          120
+          87
           88)
-        object SpeedButton_Delete: TSpeedButton
-          Left = 66
-          Top = 36
-          Width = 42
-          Height = 42
-          Hint = 'Excluir evento selecionado'
-          Anchors = [akRight, akBottom]
-          ImageIndex = 1
-          Images = ImageListIcons_42x42
-          ParentShowHint = False
-          ShowHint = True
-          ExplicitTop = 52
-        end
         object SpeedButton_Incluir: TSpeedButton
-          Left = 15
-          Top = 36
+          Left = 21
+          Top = 38
           Width = 42
           Height = 42
           Hint = 'Incluir novo evento'
@@ -422,7 +423,7 @@ object frmAgenda_V: TfrmAgenda_V
           Images = ImageListIcons_42x42
           ParentShowHint = False
           ShowHint = True
-          ExplicitTop = 52
+          OnClick = SpeedButton_IncluirClick
         end
       end
     end
