@@ -52,12 +52,43 @@ module.exports = {
 
 
             // Montando resultado final...
-            const resposta_final = {
-                agenda: nova_agenda,
-                atendimento: novo_atendimento
-            }
+            const resposta_final = await AgendaRepository.retornePeloID(novo_atendimento.id)
 
             return res.status(200).json(mensagens.resultExternal(1001, false, resposta_final))
+        } catch (error) {
+            return res.status(400).json(mensagens.resultError(error))
+        }
+    },
+
+    async editar(req, res) {
+        try {
+            const { id, di } = req.params
+            const { profissional_id, paciente_id, descricao, observacao, evento_inicio, evento_fim, evento_confirmado } = req.body
+
+            const agendaEncontrada = await AgendaRepository.retornePeloID(id)
+
+            const dados = {
+                profissioal_agendado_id: profissional_id,
+                paciente_agendado_id: paciente_id,
+                di: uteis.new_uuid(),
+                descricao: descricao,
+                observacao: observacao,
+                evento_inicio: evento_inicio,
+                evento_fim: evento_fim,
+                evento_confirmado: evento_confirmado || false,
+                ativo: true
+            }
+
+            await agendaEncontrada.update(dados, {
+                where: {
+                    id: id
+                },
+                returning: true,
+                plain: true
+            });
+
+            return res.status(200).json(mensagens.resultExternal(1001, false, agendaEncontrada))
+
         } catch (error) {
             return res.status(400).json(mensagens.resultError(error))
         }
