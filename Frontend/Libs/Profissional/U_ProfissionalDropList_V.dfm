@@ -1,20 +1,24 @@
 inherited frmProfissionalDropList_V: TfrmProfissionalDropList_V
   Caption = 'Profissional DropList'
   OnClose = FormClose
-  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  ExplicitWidth = 494
+  ExplicitHeight = 491
   TextHeight = 16
   inherited Panel1: TPanel
-    ExplicitTop = 399
-    ExplicitWidth = 489
+    ExplicitTop = 419
+    ExplicitWidth = 476
   end
   inherited Panel2: TPanel
-    ExplicitWidth = 489
-    ExplicitHeight = 399
+    ExplicitWidth = 476
+    ExplicitHeight = 419
     inherited StringGridMain: TStringGrid
+      Width = 480
+      Height = 426
       OnDblClick = StringGridMainDblClick
-      ExplicitWidth = 487
-      ExplicitHeight = 397
+      ExplicitWidth = 480
+      ExplicitHeight = 435
       ColWidths = (
         97
         303)

@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.Themes, U_RSA,
-  Vcl.ExtCtrls, Vcl.WinXCalendars, System.TypInfo, Vcl.StdCtrls, U_Profissional_M;
+  Vcl.ExtCtrls, Vcl.WinXCalendars, System.TypInfo, Vcl.StdCtrls,
+  U_Paciente_M, U_Profissional_M;
 
 type
   TfrmMain = class(TForm)
@@ -38,6 +39,7 @@ type
     procedure Atendimentos1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Agendamentos1Click(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private declarations }
 
@@ -49,6 +51,9 @@ type
 
     FDefaultStyleName                                   : String;
     FProfissionalLogado                                 : TProfissional_M;
+
+    FGLB_ListaPacientes                                 : TPaciente_List_M;
+    FGLB_ListaProfissionais                             : TProfissional_List_M;
 
     procedure SetDefaultStyleName(styleNam: String);
 
@@ -68,6 +73,9 @@ type
 
     property DefaultStyleName                           : String Read FdefaultStyleName Write SetDefaultStyleName;
     property ProfissionalLogado                         : TProfissional_M Read FProfissionalLogado Write FProfissionalLogado;
+
+    property GLB_ListaPacientes                         : TPaciente_List_M Read FGLB_ListaPacientes Write FGLB_ListaPacientes;
+    property GLB_ListaProfissionais                     : TProfissional_List_M Read FGLB_ListaProfissionais Write FGLB_ListaProfissionais;
   end;
 
 var
@@ -163,6 +171,16 @@ begin
   ShowChild(Self, TfrmProfissionais_V, frmProfissionais_V);
 end;
 
+procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+
+  Self.FProfissionalLogado.Free();
+
+  Self.FGLB_ListaPacientes.Free();
+  Self.FGLB_ListaProfissionais.Free();
+
+end;
+
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
 
@@ -177,6 +195,9 @@ begin
   Self.FTempDir:= Self.FMainDir + 'TEMP\';
 
   Self.FProfissionalLogado:= Nil;
+
+  Self.FGLB_ListaPacientes:= TPaciente_List_M.Create();
+  Self.FGLB_ListaProfissionais:= TProfissional_List_M.Create();
 
 end;
 

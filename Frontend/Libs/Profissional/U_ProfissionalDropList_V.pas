@@ -10,15 +10,13 @@ uses
 type
   TfrmProfissionalDropList_V = class(TfrmTemplateForm_DropList)
     procedure FormCreate(Sender: TObject);
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure TimerStartUpTimer(Sender: TObject);
     procedure StringGridMainDblClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
-
-    FGLB_ListaProfissionais                    : TProfissional_List_M;
 
     procedure RetorneTodosProfissionais;
     procedure Refresh_StringGrid;
@@ -78,17 +76,9 @@ begin
   Action:= caFree;
 end;
 
-procedure TfrmProfissionalDropList_V.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-begin
-  inherited;
-  Self.FGLB_ListaProfissionais.Free();
-end;
-
 procedure TfrmProfissionalDropList_V.FormCreate(Sender: TObject);
 begin
   inherited;
-
-  Self.FGLB_ListaProfissionais:= Nil;
 
   Self.StringGridMain.Cells[COL_ID, 0]:= 'Código';
   Self.StringGridMain.ColWidths[COL_ID]:= 65;
@@ -103,6 +93,17 @@ begin
 
 end;
 
+procedure TfrmProfissionalDropList_V.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+
+  if Key = VK_F5 then begin
+    Self.RetorneTodosProfissionais();
+    Self.Refresh_StringGrid();
+  end;
+
+end;
+
 procedure TfrmProfissionalDropList_V.Refresh_StringGrid;
 var
   C, Row                                       : integer;
@@ -114,12 +115,12 @@ begin
 
     Uteis.StringGridDelete_AllRows(StringGridMain);
 
-    If Self.FGLB_ListaProfissionais.Count = 0 Then
+    If frmMain.GLB_ListaProfissionais.Count = 0 Then
       Exit;
 
     Row:= StringGridMain.FixedRows;
-    for C:= 0 to Self.FGLB_ListaProfissionais.Count - 1 do begin
-      Profissional:= TProfissional_M(Self.FGLB_ListaProfissionais[C]);
+    for C:= 0 to frmMain.GLB_ListaProfissionais.Count - 1 do begin
+      Profissional:= TProfissional_M(frmMain.GLB_ListaProfissionais[C]);
 
       if Profissional = Nil then
         Continue;
@@ -144,8 +145,8 @@ end;
 
 procedure TfrmProfissionalDropList_V.RetorneTodosProfissionais;
 begin
-  Self.FGLB_ListaProfissionais.Clear();
-  Self.FGLB_ListaProfissionais.RetornoLista();
+  frmMain.GLB_ListaProfissionais.Clear();
+  frmMain.GLB_ListaProfissionais.RetornoLista();
 end;
 
 procedure TfrmProfissionalDropList_V.StringGridMainDblClick(Sender: TObject);
@@ -176,9 +177,9 @@ procedure TfrmProfissionalDropList_V.TimerStartUpTimer(Sender: TObject);
 begin
   inherited;
 
-  Self.FGLB_ListaProfissionais:= TProfissional_List_M.Create();
+  if frmMain.GLB_ListaProfissionais.Count = 0 then
+    Self.RetorneTodosProfissionais();
 
-  Self.RetorneTodosProfissionais();
   Self.Refresh_StringGrid();
 
 end;

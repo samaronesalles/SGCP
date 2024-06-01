@@ -14,6 +14,7 @@ object frmMain: TfrmMain
   Menu = MainMenu
   Position = poScreenCenter
   WindowState = wsMaximized
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15

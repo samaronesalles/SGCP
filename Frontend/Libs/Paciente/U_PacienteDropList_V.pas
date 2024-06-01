@@ -10,15 +10,13 @@ uses
 type
   TfrmPacienteDropList_V = class(TfrmTemplateForm_DropList)
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure StringGridMainDblClick(Sender: TObject);
     procedure StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TimerStartUpTimer(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
-
-    FGLB_ListaPacientes                    : TPaciente_List_M;
 
     procedure RetorneTodosPacientes;
     procedure Refresh_StringGrid;
@@ -78,17 +76,9 @@ begin
   Action:= caFree;
 end;
 
-procedure TfrmPacienteDropList_V.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-begin
-  inherited;
-  Self.FGLB_ListaPacientes.Free();
-end;
-
 procedure TfrmPacienteDropList_V.FormCreate(Sender: TObject);
 begin
   inherited;
-
-  Self.FGLB_ListaPacientes:= Nil;
 
   Self.StringGridMain.Cells[COL_ID, 0]:= 'Código';
   Self.StringGridMain.ColWidths[COL_ID]:= 65;
@@ -102,6 +92,16 @@ begin
   TimerStartUp.Enabled:= TRUE;
 end;
 
+procedure TfrmPacienteDropList_V.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+
+  if Key = VK_F5 then begin
+    Self.RetorneTodosPacientes();
+    Self.Refresh_StringGrid();
+  end;
+
+end;
+
 procedure TfrmPacienteDropList_V.Refresh_StringGrid;
 var
   C, Row                                       : integer;
@@ -113,12 +113,12 @@ begin
 
     Uteis.StringGridDelete_AllRows(StringGridMain);
 
-    If Self.FGLB_ListaPacientes.Count = 0 Then
+    If frmMain.GLB_ListaPacientes.Count = 0 Then
       Exit;
 
     Row:= StringGridMain.FixedRows;
-    for C:= 0 to Self.FGLB_ListaPacientes.Count - 1 do begin
-      Paciente:= TPaciente_M(Self.FGLB_ListaPacientes[C]);
+    for C:= 0 to frmMain.GLB_ListaPacientes.Count - 1 do begin
+      Paciente:= TPaciente_M(frmMain.GLB_ListaPacientes[C]);
 
       if Paciente = Nil then
         Continue;
@@ -143,8 +143,8 @@ end;
 
 procedure TfrmPacienteDropList_V.RetorneTodosPacientes;
 begin
-  Self.FGLB_ListaPacientes.Clear();
-  Self.FGLB_ListaPacientes.RetornoLista();
+  frmMain.GLB_ListaPacientes.Clear();
+  frmMain.GLB_ListaPacientes.RetornoLista();
 end;
 
 
@@ -175,9 +175,9 @@ procedure TfrmPacienteDropList_V.TimerStartUpTimer(Sender: TObject);
 begin
   inherited;
 
-  Self.FGLB_ListaPacientes:= TPaciente_List_M.Create();
+  if frmMain.GLB_ListaPacientes.Count = 0 then
+    Self.RetorneTodosPacientes();
 
-  Self.RetorneTodosPacientes();
   Self.Refresh_StringGrid();
 
 end;
