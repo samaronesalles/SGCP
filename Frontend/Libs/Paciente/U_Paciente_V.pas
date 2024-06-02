@@ -10,6 +10,7 @@ uses
 
 type
   TfrmPacientes_V = class(TfrmTemplateForm_Main)
+    ButtonImprimirProntuario: TButton;
     procedure ButtonLimparFiltroClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);

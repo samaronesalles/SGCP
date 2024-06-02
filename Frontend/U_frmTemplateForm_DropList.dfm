@@ -21,8 +21,8 @@ object frmTemplateForm_DropList: TfrmTemplateForm_DropList
     Height = 25
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 408
-    ExplicitWidth = 622
+    ExplicitTop = 428
+    ExplicitWidth = 482
     object Label1: TLabel
       Left = 8
       Top = 4
@@ -44,8 +44,8 @@ object frmTemplateForm_DropList: TfrmTemplateForm_DropList
     Height = 437
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 622
-    ExplicitHeight = 408
+    ExplicitWidth = 482
+    ExplicitHeight = 428
     object StringGridMain: TStringGrid
       Left = 1
       Top = 1
@@ -64,8 +64,8 @@ object frmTemplateForm_DropList: TfrmTemplateForm_DropList
       TabOrder = 0
       OnDrawCell = StringGridMainDrawCell
       OnKeyDown = StringGridMainKeyDown
-      ExplicitWidth = 620
-      ExplicitHeight = 406
+      ExplicitWidth = 480
+      ExplicitHeight = 426
       ColWidths = (
         103
         250)
@@ -681,6 +681,7 @@ object frmTemplateForm_DropList: TfrmTemplateForm_DropList
       000000000000}
   end
   object TimerStartUp: TTimer
+    Interval = 50
     OnTimer = TimerStartUpTimer
     Left = 8
     Top = 344

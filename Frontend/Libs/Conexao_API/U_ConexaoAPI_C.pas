@@ -59,7 +59,7 @@ begin
     Thr_API.Resume();
 
     Repeat
-      Uteis.bSleep(50);
+      Uteis.bSleep(10);
     Until Thr_API.Retorno <> Nil;
 
     Result:= Thr_API.Retorno;

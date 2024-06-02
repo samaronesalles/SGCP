@@ -85,7 +85,7 @@ const
 
 implementation
 
-uses U_frmMain, Uteis;
+uses U_frmMain, Uteis, U_ExceptionTratado;
 
 {$R *.dfm}
 
@@ -142,8 +142,33 @@ begin
 end;
 
 procedure TfrmAtendimentoDetail_V.Button3Click(Sender: TObject);
+var
+  FileNameTemp                                         : String;
+
 begin
-  Uteis.SayInfo('Em desenvolvimento');
+
+  FileNameTemp:= 'Rel_Atendimento' + ' ' + 'id=' + IntToStr(Self.FGLB_Atendimento_M.Id) + ' ' + 'di=' + Trim(Self.FGLB_Atendimento_M.Di) + '.RTF';
+
+  Try
+    Try
+      if FileExists (frmMain.TempDir + FileNameTemp) then
+        DeleteFile(frmMain.TempDir + FileNameTemp);
+
+      if NOT RichEdit_SaveToFile (frmMain.TempDir + FileNameTemp, RichEdit_Texto) then
+        raise Exception.Create('');
+
+      Uteis.AbrirArquivoRFT_WORD(frmMain.TempDir + FileNameTemp);
+    Except
+      On E: Exception Do begin
+        if (E is ExceptionTratado) then
+          Uteis.SayError(E.Message)
+        else
+          Uteis.SayError('Ocorreu algum erro ao imprimir o atendimento. Caso o relatório esteja aberto, feche-o e tente novamente.');
+      end;
+    End;
+  Finally
+  End;
+
 end;
 
 procedure TfrmAtendimentoDetail_V.ButtonCancelarClick(Sender: TObject);

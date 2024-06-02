@@ -328,7 +328,12 @@ end;
 procedure TfrmAgenda_V.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   Self.FGLB_ListaAgendas.Free();
-  Self.FGLB_ListaFiltro.Free();
+
+  try
+    FreeAndNil(Self.FGLB_ListaFiltro);
+  except
+  end;
+
 end;
 
 procedure TfrmAgenda_V.FormCreate(Sender: TObject);
