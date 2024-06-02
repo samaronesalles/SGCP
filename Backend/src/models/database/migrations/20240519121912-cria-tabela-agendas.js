@@ -13,14 +13,14 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING,
             },
-            profissioal_criador_id: {
+            profissional_criador_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: { model: 'profissionais', key: 'id' },
                 onUpdate: 'RESTRICT',
                 onDelete: 'RESTRICT',
             },
-            profissioal_agendado_id: {
+            profissional_agendado_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: { model: 'profissionais', key: 'id' },

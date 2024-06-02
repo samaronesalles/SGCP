@@ -46,7 +46,7 @@ module.exports.retorneTodos = async function (profissional_id, paciente_id, inic
     let condicao_where = {}
 
     if (profissional_id > 0)
-        condicao_where["$agenda.profissioal_agendado_id$"] = profissional_id
+        condicao_where["$agenda.profissional_agendado_id$"] = profissional_id
 
     if (paciente_id > 0)
         condicao_where["$agenda.paciente_agendado_id$"] = paciente_id
@@ -80,4 +80,34 @@ module.exports.retorneTodos = async function (profissional_id, paciente_id, inic
         ],
     })
 
+}
+
+module.exports.retornePeloIdAgenda = async function (idAgenda) {
+    const retorno = await AtendimentoModel.findOne({
+        attributes: atributos_Atendimento,
+        include: [
+            {
+                model: AgendasModel, as: 'agenda',
+                attributes: ['id', 'di', 'descricao', 'observacao', 'evento_inicio', 'evento_fim', 'evento_confirmado', 'ativo'],
+                include: [
+                    {
+                        model: ProfissionalModel, as: 'profissional',
+                        attributes: ['id', 'di', 'nome', 'celular', 'email', 'ativo']
+                    },
+                    {
+                        model: PacienteModel, as: 'paciente',
+                        attributes: ['id', 'di', 'nome', 'celular', 'email', 'ativo']
+                    }
+                ]
+            },
+        ],
+        where: {
+            agenda_origem_id: idAgenda,
+        },
+        order: [
+            ['id', 'asc']
+        ],
+    })
+
+    return retorno
 }

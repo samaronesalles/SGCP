@@ -14,8 +14,8 @@ module.exports = {
 
             // Criando agenda...
             const dados_agenda = {
-                profissioal_criador_id: profissional_id, //TODO: Alterar no futuro para usar o id do usuário autenticado na API. Obviamente quando eu implementar a autenticação.
-                profissioal_agendado_id: profissional_id,
+                profissional_criador_id: profissional_id, //TODO: Alterar no futuro para usar o id do usuário autenticado na API. Obviamente quando eu implementar a autenticação.
+                profissional_agendado_id: profissional_id,
                 paciente_agendado_id: paciente_id,
                 di: uteis.new_uuid(),
                 descricao: descricao,
@@ -68,7 +68,7 @@ module.exports = {
             const agendaEncontrada = await AgendaRepository.retornePeloID(id)
 
             const dados = {
-                profissioal_agendado_id: profissional_id,
+                profissional_agendado_id: profissional_id,
                 paciente_agendado_id: paciente_id,
                 di: uteis.new_uuid(),
                 descricao: descricao,

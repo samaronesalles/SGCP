@@ -86,3 +86,39 @@ module.exports.checagem_di = async function (registro, di) {
 
     return 0
 }
+
+module.exports.StrToDateTimeUTC_Valido = function (str) {
+
+    if (!str)
+        return false
+
+    const patterns = [
+        /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})Z$/,
+        /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z$/,
+        /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/
+    ];
+
+    // Check if the string matches any of the valid patterns
+    for (let pattern of patterns) {
+        const match = str.match(pattern);
+        if (match) {
+            const [, year, month, day, hour, minute, second, millisecond] = match.map(Number);
+
+            // Validate date and time components
+            if (
+                year >= 0 &&
+                month >= 1 && month <= 12 &&
+                day >= 1 && day <= 31 &&
+                hour >= 0 && hour <= 23 &&
+                minute >= 0 && minute <= 59 &&
+                (second === undefined || (second >= 0 && second <= 59)) &&
+                (millisecond === undefined || (millisecond >= 0 && millisecond <= 999))
+            ) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+
+};

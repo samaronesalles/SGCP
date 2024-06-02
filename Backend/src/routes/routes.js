@@ -31,8 +31,8 @@ router.put('/pacientes/inativar/:id/:di', pacientesValidation.inativar, paciente
 router.delete('/pacientes/:id/:di', pacientesValidation.exclusaoCad, pacientesController.delete)
 
 // Endpoints "Agenda"...
-router.post('/agenda', agendasValidation.nova, agendasController.nova)
-router.put('/agenda/:id/:di', agendasValidation.editar, agendasController.editar)
+router.post('/agenda', agendasValidation.save, agendasController.nova)
+router.put('/agenda/:id/:di', agendasValidation.editar, agendasValidation.save, agendasController.editar)
 router.get('/agenda/lista/:profissional_id/:paciente_id/:inicio_de/:inicio_ate', agendasController.lista)
 router.get('/agenda/:id', agendasController.getAgenda)
 router.put('/agenda/cancelar/:id/:di', agendasValidation.cancelamento, agendasController.cancelamento)

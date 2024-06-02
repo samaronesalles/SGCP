@@ -32,6 +32,14 @@ module.exports.retornePeloID = async function (id) {
     return retorno
 }
 
+module.exports.retorneUmOpcional = async function (condicao) {
+    const registro = await AgendaModel.findOne({
+        where: condicao,
+    })
+
+    return registro
+}
+
 module.exports.retorneTodas = async function (profissional_id, paciente_id, inicio_de, inicio_ate) {
 
     let condicao_where = {}
@@ -61,7 +69,7 @@ module.exports.retorneTodas = async function (profissional_id, paciente_id, inic
         ],
         where: condicao_where,
         order: [
-            ['profissioal_agendado_id', 'asc'],
+            ['profissional_agendado_id', 'asc'],
             ['evento_inicio', 'asc']
         ],
     })

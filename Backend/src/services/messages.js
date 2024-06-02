@@ -54,9 +54,20 @@ module.exports.messagesDefault = {
     2519: { error: true, message: "O atendimento não pode ser editado, pois encontra-se encerrado." },
     2520: { error: true, message: 'Campo "anotacoes" é obrigatório.' },
     2521: { error: true, message: "Não é possível editar o atendimento, pois sua agenda está cancelada." },
-    // 2522: { error: true, message: "xxxxxx" },
-    // 2520: { error: true, message: "xxxxxx" },
-    // 2521: { error: true, message: "xxxxxx" },
+    2522: { error: true, message: "A data e hora do agendamento não foi preenchida." },
+    2523: { error: true, message: "O profissional selecionado não existe, ou encontra-se inativado" },
+    2524: { error: true, message: "O paciente selecionado não existe, ou encontra-se inativado" },
+    2525: { error: true, message: `Agendamento inválido por "conflito" de horário agendado para o profissional` },
+    2526: { error: true, message: `Agendamento inválido por "conflito" de horário agendado para o paciente` },
+    2527: { error: true, message: "Não é possível cancelar a agenda, pois a mesma já se encontra cancelada" },
+    2528: { error: true, message: "A agenda não pode ser cancelada, pois o atendimento vinculado a mesma encontra-se encerrado" },
+    // 2529: { error: true, message: "xxxxxx" },
+    // 2530: { error: true, message: "xxxxxx" },
+    // 2531: { error: true, message: "xxxxxx" },
+    // 2532: { error: true, message: "xxxxxx" },
+    // 2533: { error: true, message: "xxxxxx" },
+    // 2534: { error: true, message: "xxxxxx" },
+    // 2535: { error: true, message: "xxxxxx" },
 
 
     // 9999 = Reservado para "Retorno desconhecido"
