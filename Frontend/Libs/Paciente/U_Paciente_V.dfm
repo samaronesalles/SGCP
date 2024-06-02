@@ -44,7 +44,7 @@ inherited frmPacientes_V: TfrmPacientes_V
       Images = ImageList_Icons
       ParentBiDiMode = False
       TabOrder = 2
-      Visible = False
+      OnClick = ButtonImprimirProntuarioClick
     end
   end
   inherited Panel1: TPanel

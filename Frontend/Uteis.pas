@@ -67,7 +67,7 @@ procedure StringGridDelete_AllRows (AStringGrid: TStringGrid);
 
 function  RichEdit_SaveToFile (FilePath: String; var RichEdit: TRichEdit): Boolean;
 function  RichEdit_GetText (FilePath: String; var RichEdit: TRichEdit): String;
-procedure RichEdit_SetText(Texto: String; var RichEdit: TRichEdit);
+procedure RichEdit_SetText (Texto: String; var RichEdit: TRichEdit);
 
 function  READ_TXTFILE_FIELD (CaracterSeparador: Char; VAR Linha: String): String;
 procedure READ_TXTFILE_FIELDS (CaracterSeparador: Char; Linha: String; VAR Fields: TStringList);
@@ -83,6 +83,8 @@ function  RetornaPrimeiroMaisUltimoNome (NomeCompleto: String): String;
 
 procedure AbrirArquivoRFT_PDF (FilePath: String);
 procedure AbrirArquivoRFT_WORD (FilePath: String);
+
+procedure StrinArrayAdd(var stArray: TArray<String>; valor: String);
 
 implementation
 
@@ -941,7 +943,7 @@ begin
 
 end;
 
-procedure RichEdit_SetText(Texto: String; var RichEdit: TRichEdit);
+procedure RichEdit_SetText (Texto: String; var RichEdit: TRichEdit);
 var
   Stream                     : TStringStream;
 
@@ -1236,86 +1238,89 @@ end;
 
 procedure AbrirArquivoRFT_PDF (FilePath: String);
 const
-  MarginTop = 50;    // Margem superior em pixels
-  MarginBottom = 50; // Margem inferior em pixels
+  MarginTop                   = 50;    // Margem superior em pixels
+  MarginBottom                = 50; // Margem inferior em pixels
+
 var
-  PDFFilePath: String;
-  PDFDoc: TPdfDocumentGDI;
-  RichEdit: TRichEdit;
-  PageBitmap: TBitmap;
-  PageWidth, PageHeight: Integer;
-  CharRange: TFormatRange;
-  LastChar, CurrentChar: Integer;
-  RenderDC: HDC;
-  PageRect: TRect;
-  ContentWidth, MarginLeft, MarginRight: Integer;
+  PDFFilePath                                    : String;
+  PDFDoc                                         : TPdfDocumentGDI;
+  RichEdit                                       : TRichEdit;
+  PageBitmap                                     : TBitmap;
+  PageWidth, PageHeight                          : Integer;
+  CharRange                                      : TFormatRange;
+  LastChar, CurrentChar                          : Integer;
+  RenderDC                                       : HDC;
+  PageRect                                       : TRect;
+  ContentWidth, MarginLeft, MarginRight          : Integer;
+
 begin
+
   if not FileExists(FilePath) then
     raise ExceptionTratado.Create('Arquivo RFT não encontrado.');
 
   // Caminho para o arquivo PDF temporário
-  PDFFilePath := ChangeFileExt(FilePath, '.pdf');
+  PDFFilePath:= ChangeFileExt(FilePath, '.pdf');
 
   // Criar um TRichEdit para carregar o conteúdo do RTF
-  RichEdit := TRichEdit.Create(nil);
-  PDFDoc := TPdfDocumentGDI.Create;
-  PageBitmap := TBitmap.Create;
+  RichEdit:= TRichEdit.Create(nil);
+  PDFDoc:= TPdfDocumentGDI.Create;
+  PageBitmap:= TBitmap.Create;
+
   try
-    RichEdit.Visible := False;
-    RichEdit.Parent := Application.MainForm;
+    RichEdit.Visible:= False;
+    RichEdit.Parent:= Application.MainForm;
     RichEdit.Lines.LoadFromFile(FilePath);
 
     // Definir tamanho da página A4 em pixels (considerando 96 DPI)
-    PageWidth := 794; // A4 width in pixels
-    PageHeight := 1123; // A4 height in pixels
+    PageWidth:= 794;   // A4 width in pixels
+    PageHeight:= 1123; // A4 height in pixels
 
     // Calcular as margens para centralizar o conteúdo
-    ContentWidth := PageWidth - 2 * 50; // Largura do conteúdo sem margem
-    MarginLeft := (PageWidth - ContentWidth) div 2;
-    MarginRight := MarginLeft;
+    ContentWidth:= PageWidth - 2 * 50; // Largura do conteúdo sem margem
+    MarginLeft:= (PageWidth - ContentWidth) div 2;
+    MarginRight:= MarginLeft;
 
     // Configurar o bitmap para renderizar o conteúdo do TRichEdit
-    PageBitmap.Width := PageWidth;
-    PageBitmap.Height := PageHeight;
+    PageBitmap.Width:= PageWidth;
+    PageBitmap.Height:= PageHeight;
     PageBitmap.Canvas.Font.Assign(RichEdit.Font);
 
     // Inicializar o TFormatRange
     FillChar(CharRange, SizeOf(TFormatRange), 0);
-    RenderDC := PageBitmap.Canvas.Handle;
-    CharRange.hdc := RenderDC;
-    CharRange.hdcTarget := RenderDC;
-    CharRange.rc := Rect(
-      MarginLeft * 1440 div Screen.PixelsPerInch,
-      MarginTop * 1440 div Screen.PixelsPerInch,
-      (PageWidth - MarginRight) * 1440 div Screen.PixelsPerInch,
-      (PageHeight - MarginBottom) * 1440 div Screen.PixelsPerInch);
-    CharRange.rcPage := Rect(
-      0, 0,
-      PageWidth * 1440 div Screen.PixelsPerInch,
-      PageHeight * 1440 div Screen.PixelsPerInch);
+    RenderDC:= PageBitmap.Canvas.Handle;
+    CharRange.hdc:= RenderDC;
+    CharRange.hdcTarget:= RenderDC;
 
-    CurrentChar := 0;
-    LastChar := RichEdit.GetTextLen;
+    CharRange.rc:= Rect (MarginLeft * 1440 div Screen.PixelsPerInch,
+                         MarginTop * 1440 div Screen.PixelsPerInch,
+                         (PageWidth - MarginRight) * 1440 div Screen.PixelsPerInch,
+                         (PageHeight - MarginBottom) * 1440 div Screen.PixelsPerInch
+                        );
+
+    CharRange.rcPage:= Rect(0, 0,
+                            PageWidth * 1440 div Screen.PixelsPerInch,
+                            PageHeight * 1440 div Screen.PixelsPerInch
+                           );
+
+    CurrentChar:= 0;
+    LastChar:= RichEdit.GetTextLen;
 
     // Renderizar cada página do RTF no PDF
-    while CurrentChar < LastChar do
-    begin
+    while CurrentChar < LastChar do begin
       PDFDoc.AddPage;
-
-      CharRange.chrg.cpMin := CurrentChar;
-      CharRange.chrg.cpMax := -1;
+      CharRange.chrg.cpMin:= CurrentChar;
+      CharRange.chrg.cpMax:= -1;
 
       // Renderizar no bitmap
-      PageBitmap.Canvas.FillRect(Rect(0, 0, PageWidth, PageHeight)); // Limpar bitmap
-      CurrentChar := RichEdit.Perform(EM_FORMATRANGE, 1, Longint(@CharRange));
+      PageBitmap.Canvas.FillRect(Rect(0, 0, PageWidth, PageHeight));
+      CurrentChar:= RichEdit.Perform(EM_FORMATRANGE, 1, Longint(@CharRange));
 
       // Desenhar o bitmap no PDF
-      PageRect := Rect(MarginLeft, MarginTop, PageWidth - MarginRight, PageHeight - MarginBottom);
+      PageRect:= Rect(MarginLeft, MarginTop, PageWidth - MarginRight, PageHeight - MarginBottom);
       PDFDoc.VCLCanvas.StretchDraw(PageRect, PageBitmap);
 
-      // Verificar se estamos progredindo; caso contrário, sair do loop para evitar loop infinito
       if CurrentChar <= CharRange.chrg.cpMin then
-        Break; // Evitar loop infinito
+        Break;
     end;
 
     // Salvar o documento PDF
@@ -1330,40 +1335,49 @@ begin
   // Abrir o arquivo PDF no leitor padrão de PDF
   if ShellExecute(0, 'open', PChar(PDFFilePath), nil, nil, SW_SHOWNORMAL) <= 32 then
     raise ExceptionTratado.Create('Não foi possível abrir o arquivo PDF no leitor padrão.');
+
 end;
 
 procedure AbrirArquivoRFT_WORD (FilePath: String);
 var
-  WordPath: String;
-  Reg: TRegistry;
-  CommandLine: String;
+  WordPath                                : String;
+  Reg                                     : TRegistry;
+  CommandLine                             : String;
+
 begin
-  if not FileExists(FilePath) then
+
+  if NOT FileExists(FilePath) then
     raise ExceptionTratado.Create('Arquivo RFT não encontrado.');
 
   // Verifica se o Microsoft Word está instalado
-  Reg := TRegistry.Create(KEY_READ);
+  Reg:= TRegistry.Create(KEY_READ);
   try
-    Reg.RootKey := HKEY_LOCAL_MACHINE;
+    Reg.RootKey:= HKEY_LOCAL_MACHINE;
     if Reg.OpenKeyReadOnly('SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Winword.exe') then
-      WordPath := Reg.ReadString('')
+      WordPath:= Reg.ReadString('')
     else
-      WordPath := ''; // Caminho do Word não encontrado
+      WordPath:= '';
   finally
     Reg.Free;
   end;
 
   // Se o Microsoft Word estiver instalado, abre o arquivo com ele
   if WordPath <> '' then begin
-    CommandLine := '"' + WordPath + '" "' + FilePath + '"';
+    CommandLine:= '"' + WordPath + '" "' + FilePath + '"';
+
     if ShellExecute(0, 'open', PChar(WordPath), PChar('"' + FilePath + '"'), nil, SW_SHOWNORMAL) <= 32 then
       raise ExceptionTratado.Create('Não foi possível abrir o arquivo RFT com o Microsoft Word.');
   end else begin
-    // Caso contrário, abre o arquivo com o WordPad
     if ShellExecute(0, 'open', 'write', PChar(FilePath), nil, SW_SHOWNORMAL) <= 32 then
       raise ExceptionTratado.Create('Não foi possível abrir o arquivo RFT com o WordPad.');
   end;
 
+end;
+
+procedure StrinArrayAdd(var stArray: TArray<String>; valor: String);
+begin
+  SetLength(stArray, Length(stArray) + 1);
+  stArray[High(stArray)] := valor;
 end;
 
 end.

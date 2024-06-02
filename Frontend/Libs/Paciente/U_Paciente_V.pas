@@ -21,6 +21,7 @@ type
     procedure StringGridMainDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
     procedure TimerStartUpTimer(Sender: TObject);
     procedure StringGridMainKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure ButtonImprimirProntuarioClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -46,9 +47,42 @@ var
 
 implementation
 
-uses Uteis, U_PacienteDetail_V;
+uses Uteis, U_PacienteDetail_V, U_Prontuario_C;
 
 {$R *.dfm}
+
+procedure TfrmPacientes_V.ButtonImprimirProntuarioClick(Sender: TObject);
+var
+  Prontuario_C                        : TProntuario_C;
+  ItemLista                           : TPaciente_M;
+  Posicao                             : Longint;
+
+begin
+
+  Prontuario_C:= Nil;
+
+  Posicao:= Str2Num(StringGridMain.Cells[COL_IDX_LISTA, StringGridMain.Row]);
+
+  if Posicao < 0 then
+    Exit;
+
+  if Self.FGLB_ListaPacientes = Nil then
+    Exit;
+
+  if Self.FGLB_ListaPacientes.Count = 0 then
+    Exit;
+
+  ItemLista:= Self.FGLB_ListaPacientes[Posicao];
+
+  try
+    Prontuario_C:= TProntuario_C.Create(ItemLista.Id);
+
+    Prontuario_C.printHistorico();
+  finally
+    Prontuario_C.Free();
+  end;
+
+end;
 
 procedure TfrmPacientes_V.ButtonLimparFiltroClick(Sender: TObject);
 begin

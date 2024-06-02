@@ -187,6 +187,7 @@
             <Form>frmAgendaDetail_V</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Libs\Prontuario\U_Prontuario_C.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
