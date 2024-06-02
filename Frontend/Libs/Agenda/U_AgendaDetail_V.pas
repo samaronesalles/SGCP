@@ -52,6 +52,8 @@ type
   public
     { Public declarations }
 
+    property GLB_Agenda_M                     : TAgenda_M Read FGLB_Agenda_M Write FGLB_Agenda_M;
+
     function Execute_Novo: TAgenda_M;
     function Execute_Editar(VAR Agenda: TAgenda_M): Boolean;
   end;
@@ -70,9 +72,35 @@ uses U_frmMain, Uteis, U_Profissional_M, U_Paciente_M,
 
 procedure TfrmAgendaDetail_V.ButtonCancelarClick(Sender: TObject);
 begin
-  inherited;
 
-  Uteis.SayInfo('Em desenvolvimento');
+  if NOT ButtonProsseguir.Enabled then
+    Exit;
+
+  Try
+    Try
+      ButtonProsseguir.Enabled:= FALSE;
+      ButtonSair.Enabled:= FALSE;
+      ButtonCancelar.Enabled:= FALSE;
+
+      if Uteis.SayQuestion('Cancelar agendamento', 'Deseja realmente cancelar este agendamento?', TMsgDlgType.mtConfirmation, mbYesNo, mrNo, 0) <> mrYes then
+        Exit;
+
+      if NOT Self.FGLB_Agenda_M.CancelarAtendamento() Then
+        Exit;
+
+      Self.Label_di.Caption:= Self.FGLB_Agenda_M.Di;
+
+      frmMain.BufferStr:= Self.FGLB_Agenda_M.ToJSON();
+
+      ModalResult:= mrOk;
+    Except
+      ModalResult:= mrAbort;
+    End;
+  Finally
+    ButtonProsseguir.Enabled:= TRUE;
+    ButtonSair.Enabled:= TRUE;
+    ButtonCancelar.Enabled:= TRUE;
+  End;
 
 end;
 
@@ -96,7 +124,9 @@ begin
       if NOT Self.ValidaCamposObrigatorios() then
         Exit;
 
-      Self.FGLB_Agenda_M:= TAgenda_M.Create();
+      if Self.FGLB_Agenda_M = Nil then
+        Self.FGLB_Agenda_M:= TAgenda_M.Create();
+
       Self.FGLB_Agenda_M.id:= Str2Num(Self.Label_id.Caption);
       Self.FGLB_Agenda_M.Di:= Trim(Self.Label_di.caption);
 
@@ -239,6 +269,8 @@ begin
       if frmAgendaDetail_V = Nil then
         frmAgendaDetail_V:= TfrmAgendaDetail_V.Create(Self);
 
+      frmAgendaDetail_V.GLB_Agenda_M:= Agenda;
+
       frmAgendaDetail_V.ButtonCancelar.Visible:= TRUE;
 
       frmAgendaDetail_V.Label_id.Caption:= IntToStr(Agenda.Id);
@@ -255,6 +287,7 @@ begin
       SetValorToMaskEdit(frmAgendaDetail_V.MaskEdit_Hora_InicioAte, FormatDateTime('hhmm', Agenda.Evento_fim));
       frmAgendaDetail_V.Memo_Observacoes.Text:= Agenda.Observacao;
 
+      frmAgendaDetail_V.CheckBox_Confirmado.Checked:= Agenda.Evento_confirmado;
 
       frmAgendaDetail_V.FJson_BkpAgendaEditada:= Agenda.ToJSON();
 

@@ -13,13 +13,13 @@ inherited frmPacienteDetail_V: TfrmPacienteDetail_V
     ExplicitTop = 204
     ExplicitWidth = 507
     inherited ButtonProsseguir: TButton
-      Left = 367
+      Left = 390
       OnClick = ButtonProsseguirClick
-      ExplicitLeft = 361
+      ExplicitLeft = 390
     end
     inherited ButtonCancelar: TButton
-      Left = 252
-      ExplicitLeft = 246
+      Left = 275
+      ExplicitLeft = 275
     end
   end
   inherited pnDetalhe: TPanel
@@ -114,7 +114,7 @@ inherited frmPacienteDetail_V: TfrmPacienteDetail_V
       TabOrder = 3
     end
     object MaskEditCelular: TMaskEdit
-      Left = 395
+      Left = 393
       Top = 146
       Width = 102
       Height = 24

@@ -4,30 +4,28 @@ inherited frmAgendaDetail_V: TfrmAgendaDetail_V
   ClientWidth = 560
   OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  ExplicitLeft = 3
-  ExplicitTop = 3
   ExplicitWidth = 572
   ExplicitHeight = 450
   TextHeight = 16
   inherited pnBotoes: TPanel
     Top = 356
     Width = 560
-    ExplicitTop = 337
-    ExplicitWidth = 675
+    ExplicitTop = 347
+    ExplicitWidth = 554
     inherited ButtonProsseguir: TButton
-      Left = 438
+      Left = 432
       OnClick = ButtonProsseguirClick
-      ExplicitLeft = 553
+      ExplicitLeft = 426
     end
     inherited ButtonCancelar: TButton
-      Left = 16
+      Left = 10
       Width = 177
       Caption = '&Cancelar agendamento'
-      ExplicitLeft = 16
+      ExplicitLeft = 4
       ExplicitWidth = 177
     end
     object ButtonSair: TButton
-      Left = 315
+      Left = 309
       Top = 13
       Width = 105
       Height = 30
@@ -37,14 +35,14 @@ inherited frmAgendaDetail_V: TfrmAgendaDetail_V
       Images = ImageList_Icons
       TabOrder = 2
       OnClick = ButtonSairClick
+      ExplicitLeft = 303
     end
   end
   inherited pnDetalhe: TPanel
     Width = 560
     Height = 356
-    ExplicitTop = -6
-    ExplicitWidth = 681
-    ExplicitHeight = 346
+    ExplicitWidth = 554
+    ExplicitHeight = 347
     object Label_idPaciente: TLabel
       Left = 315
       Top = 96
@@ -136,7 +134,7 @@ inherited frmAgendaDetail_V: TfrmAgendaDetail_V
     object Label_id: TLabel
       Left = 16
       Top = 2
-      Width = 9
+      Width = 10
       Height = 16
       Caption = 'di'
       Font.Charset = DEFAULT_CHARSET
@@ -209,10 +207,12 @@ inherited frmAgendaDetail_V: TfrmAgendaDetail_V
     object Memo_Observacoes: TMemo
       Left = 16
       Top = 235
-      Width = 528
+      Width = 522
       Height = 105
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 6
+      ExplicitWidth = 516
+      ExplicitHeight = 96
     end
   end
   inherited ImageList_Icons: TImageList

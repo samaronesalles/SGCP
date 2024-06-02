@@ -79,12 +79,14 @@ function TAgenda_M.CancelarAtendamento: Boolean;
 var
   Endpoint, Metodo                     : String;
   RespostaAPI                          : TConexaoAPI_M;
+  Agenda                               : TAgenda_M;
 
 begin
 
   Result:= FALSE;
 
   RespostaAPI:= Nil;
+  Agenda:= Nil;
 
   Try
     Try
@@ -101,11 +103,19 @@ begin
       If RespostaAPI.StatusCode_HTTP <> 200 Then
         Exit;
 
+      Agenda:= TAgenda_M.ToObject(RespostaAPI.Data);
+      If Agenda = Nil Then
+        Exit;
+
+      Self.Di:= Agenda.Di;
+      Self.Ativo:= Agenda.Ativo;
+
       Result:= TRUE;
     Except
     End;
   Finally
     RespostaAPI.Free();
+    Agenda.Free();
   End;
 
 end;
