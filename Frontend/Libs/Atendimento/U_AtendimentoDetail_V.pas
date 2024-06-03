@@ -13,7 +13,7 @@ type
     PanelBotoesTop: TPanel;
     ButtonAplicarTestePHQ: TButton;
     ButtonEncerrarAtendimento: TButton;
-    Button3: TButton;
+    ButtonImprimirAtendimento: TButton;
     PanelBotoesDir: TPanel;
     ButtonSalvar: TButton;
     ButtonSair: TButton;
@@ -38,6 +38,8 @@ type
     ToolButton11: TToolButton;
     RichEdit_Texto: TRichEdit;
     Label_di: TLabel;
+    ButtonImprimirProntuario: TButton;
+    PanelBtnsTopRight: TPanel;
     procedure ButtonSairClick(Sender: TObject);
     procedure ButtonProsseguirClick(Sender: TObject);
     procedure ButtonCancelarClick(Sender: TObject);
@@ -52,7 +54,7 @@ type
     procedure ToolButton10Click(Sender: TObject);
     procedure ToolButton11Click(Sender: TObject);
     procedure ToolButton12Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    procedure ButtonImprimirAtendimentoClick(Sender: TObject);
     procedure ComboBox2KeyPress(Sender: TObject; var Key: Char);
     procedure ComboBox2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -61,6 +63,7 @@ type
     procedure ButtonAplicarTestePHQClick(Sender: TObject);
     procedure ButtonEncerrarAtendimentoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ButtonImprimirProntuarioClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -85,7 +88,7 @@ const
 
 implementation
 
-uses U_frmMain, Uteis, U_ExceptionTratado;
+uses U_frmMain, Uteis, U_ExceptionTratado, U_Prontuario_C;
 
 {$R *.dfm}
 
@@ -141,7 +144,25 @@ begin
 
 end;
 
-procedure TfrmAtendimentoDetail_V.Button3Click(Sender: TObject);
+procedure TfrmAtendimentoDetail_V.ButtonImprimirProntuarioClick(Sender: TObject);
+var
+  Prontuario_C                        : TProntuario_C;
+
+begin
+
+  Prontuario_C:= Nil;
+
+  try
+    Prontuario_C:= TProntuario_C.Create(Self.FGLB_Atendimento_M.Agenda.Paciente.Id);
+
+    Prontuario_C.printHistorico();
+  finally
+    Prontuario_C.Free();
+  end;
+
+end;
+
+procedure TfrmAtendimentoDetail_V.ButtonImprimirAtendimentoClick(Sender: TObject);
 var
   FileNameTemp                                         : String;
 
@@ -335,6 +356,7 @@ procedure TfrmAtendimentoDetail_V.setAtendimentoSomenteLeituraOuNao(SomenteLeitu
 begin
   ButtonAplicarTestePHQ.Enabled:= (NOT SomenteLeitura);
   ButtonEncerrarAtendimento.Enabled:= (NOT SomenteLeitura);
+  ButtonImprimirProntuario.Enabled:= (NOT SomenteLeitura);
   ToolBarTextEditor.Enabled:= (NOT SomenteLeitura);
   RichEdit_Texto.ReadOnly:= SomenteLeitura;
   ButtonSalvar.Enabled:= (NOT SomenteLeitura);

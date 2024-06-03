@@ -1,14 +1,14 @@
 inherited frmPacientes_V: TfrmPacientes_V
   Caption = 'Cadastro de pacientes'
   ClientHeight = 730
-  ClientWidth = 1262
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
-  ExplicitHeight = 768
+  ExplicitLeft = 3
+  ExplicitTop = 3
+  ExplicitWidth = 1274
   TextHeight = 16
   inherited PanelButtons: TPanel
     Top = 660
-    Width = 1262
     ExplicitTop = 651
     inherited PanelLegenda: TPanel
       inherited Shape2: TShape
@@ -29,26 +29,38 @@ inherited frmPacientes_V: TfrmPacientes_V
       end
     end
     inherited Panel_btnsRight: TPanel
+      Left = 840
+      Width = 421
+      ExplicitLeft = 840
+      ExplicitWidth = 421
       inherited ButtonLimparFiltro: TButton
+        Left = 206
         OnClick = ButtonLimparFiltroClick
+        ExplicitLeft = 206
       end
-    end
-    object ButtonImprimirProntuario: TButton
-      Left = 257
-      Top = 21
-      Width = 184
-      Height = 30
-      BiDiMode = bdLeftToRight
-      Caption = '&Prontu'#225'rio do paciente'
-      ImageIndex = 7
-      Images = ImageList_Icons
-      ParentBiDiMode = False
-      TabOrder = 2
-      OnClick = ButtonImprimirProntuarioClick
+      inherited ButtonSair: TButton
+        Left = 326
+        ExplicitLeft = 326
+      end
+      object ButtonImprimirProntuario: TButton
+        Left = 10
+        Top = 21
+        Width = 184
+        Height = 30
+        Hint = 'Imprimir todos os atendimentos encerrados do paciente'
+        BiDiMode = bdLeftToRight
+        Caption = '&Prontu'#225'rio do paciente'
+        ImageIndex = 7
+        Images = ImageList_Icons
+        ParentBiDiMode = False
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 2
+        OnClick = ButtonImprimirProntuarioClick
+      end
     end
   end
   inherited Panel1: TPanel
-    Width = 1262
     Height = 619
     ExplicitHeight = 610
     inherited StringGridMain: TStringGrid
@@ -56,9 +68,6 @@ inherited frmPacientes_V: TfrmPacientes_V
       OnDblClick = StringGridMainDblClick
       ExplicitHeight = 608
     end
-  end
-  inherited Panel_TopButtons: TPanel
-    Width = 1262
   end
   inherited ImageList_Icons: TImageList
     Bitmap = {

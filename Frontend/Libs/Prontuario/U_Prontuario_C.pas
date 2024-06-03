@@ -16,6 +16,7 @@ type
     FRichEditProntuario                                    : TRichEdit;
 
     procedure printCabecalhoAtendimento(Atendimento: TAtendimento_M);
+    procedure RetorneApenasConteudoRichAnotacoes(Anotacoes: String);
   public
     procedure printHistorico;
 
@@ -62,29 +63,49 @@ begin
 end;
 
 procedure TProntuario_C.printCabecalhoAtendimento(Atendimento: TAtendimento_M);
-var
-  PrimeiroAtendimento                                      : Boolean;
-
 begin
 
   if Atendimento = Nil then
     Exit;
 
-  PrimeiroAtendimento:= Self.FTexto.Count = 0;
-
-  Self.FTexto.Add(' ');
-
-  Self.FTexto.Add('{\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Arial;}}');
-  Self.FTexto.Add('{\*\generator Riched20 10.0.22621}\viewkind4\uc1');
-
-  if NOT PrimeiroAtendimento then
-    Self.FTexto.Add('\pard\fs32\lang1046 ================================\par');
-
+  Self.FTexto.Add('\pard\fs32\lang1046 ================================\par');
   Self.FTexto.Add('\ul\b Atendimento Cod.:\ulnone\b0  ' + FillLeft(5, Atendimento.Id) + ' - \ul\b Data:\ulnone\b0  ' + FormatDateTime('dd/mm/yyyy hh:nn', Atendimento.DataHoraIni) + '\par');
   Self.FTexto.Add('\ul\fs28 Profissional:\ulnone  ' + Atendimento.Agenda.Profissional.Nome + '\fs32\par');
   Self.FTexto.Add('---------------------------------------------------------\par');
-  Self.FTexto.Add('\fs28\par');
-  Self.FTexto.Add('}');
+
+end;
+
+procedure TProntuario_C.RetorneApenasConteudoRichAnotacoes(Anotacoes: String);
+var
+  Texto                                                : TStringList;
+
+begin
+
+  Texto:= Nil;
+
+  if Trim(Anotacoes) = '' then
+    Exit;
+
+  try
+    Texto:= TStringList.Create;
+
+    Texto.Text:= Anotacoes;
+
+    if Texto.Count < 3 then
+      Exit;
+
+    Texto.Delete(1);
+    Texto.Delete(0);
+
+    Texto.Delete(Texto.Count - 1);
+    Texto.Delete(Texto.Count - 1);
+
+    Self.FTexto.Text:= Self.FTexto.Text +
+                       Texto.Text;
+
+  finally
+    Texto.Free;
+  end;
 
 end;
 
@@ -109,19 +130,6 @@ begin
 
   Self.FRichEditProntuario.Lines.Clear();
 
-//  Self.printCabecalhoAtendimento(TAtendimento_M(Self.FAtendimentos[0]));
-
-//  for Atendimento in Self.FAtendimentos do begin
-//    Self.printCabecalhoAtendimento(Atendimento);
-//
-//    Self.FTexto.Text:= Self.FTexto.Text +
-//                       Atendimento.Anotacoes;
-//  end;
-
-//  Uteis.RichEdit_SetText(Self.FTexto.GetText(), Self.FRichEditProntuario);
-
-//  if Self.FRichEditProntuario.Lines.Count = 0 then
-//    Exit;
 
   Try
     Try
@@ -130,7 +138,19 @@ begin
       if FileExists (FileNameTemp) then
         DeleteFile(FileNameTemp);
 
-      Self.printCabecalhoAtendimento(TAtendimento_M(Self.FAtendimentos[0]));
+      Self.FTexto.Add('{\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Arial;}}');
+      Self.FTexto.Add('{\*\generator Riched20 10.0.22621}\viewkind4\uc1');
+
+      for Atendimento in Self.FAtendimentos do begin
+        Self.printCabecalhoAtendimento(Atendimento);
+        RetorneApenasConteudoRichAnotacoes(Atendimento.Anotacoes);
+      end;
+
+      Self.FTexto.Add('\fs28\par');
+      Self.FTexto.Add('}');
+
+      if Self.FTexto.Count < 4 then
+        Exit;
 
       Self.FTexto.SaveToStream(MemoryStream);
       MemoryStream.Position:= 0;
