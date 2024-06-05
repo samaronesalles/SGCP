@@ -1,0 +1,5 @@
+PORT=8080
+MONGO_URI=mongodb+srv://samaronesalles:S3302549915e_@cluster0.gnm2xb1.mongodb.net/whatsapp_api?retryWrites=true&w=majority&appName=Cluster0
+TWILIO_ACCOUNT_SID=AC6a2494c114814fbb3fd9dc59ca2aa901
+TWILIO_AUTH_TOKEN=750e99d184016a5761b2bf39b3014113
+TWILIO_WHATSAPP_FROM=whatsapp:+14155238886
