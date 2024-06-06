@@ -13,6 +13,7 @@ const MONGO_URI = process.env.MONGO_URI
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN
 const TWILIO_WHATSAPP_FROM = process.env.TWILIO_WHATSAPP_FROM
+const ENDPOINT_STATUS_CALLBACK = process.env.ENDPOINT_STATUS_CALLBACK
 
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
@@ -21,10 +22,12 @@ mongoose.connect(MONGO_URI, {
 
 const MessageSchema = new mongoose.Schema({
     id: { type: String, required: true },
-    sid: { type: String },
-    status: { type: String, enum: ['enviada', 'respondida'], required: true },
+    twilioSid: { type: String },
+    status: { type: String, enum: ['enviada', 'entregue', 'lida', 'respondida'], required: true },
     envio: {
         datahora: { type: Date, required: true },
+        de: { type: String },
+        para: { type: String },
         mensagem: { type: String, required: true },
     },
     resposta: {
@@ -40,90 +43,93 @@ const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 app.post('/send-message', async (req, res) => {
     const { phoneNumber, messageText } = req.body
 
-    if (!phoneNumber || !messageText) {
+    if (!phoneNumber || !messageText)
         return res.status(400).send({ error: 'Número de telefone e mensagem são obrigatórios' })
-    }
 
     const messageId = uuidv4()
-
-    let message = new Message({
-        id: messageId,
-        sid: "",
-        status: 'enviada',
-        envio: {
-            datahora: new Date(),
-            mensagem: messageText,
-        },
-    })
-
-    await message.save()
 
     const messageBody = {
         to: `whatsapp:${phoneNumber}`,
         from: TWILIO_WHATSAPP_FROM,
         body: messageText,
-        action: [
-            {
-                type: "button",
-                buttons: [
-                    {
-                        type: "reply",
-                        reply: {
-                            id: "yes",
-                            title: "Sim"
-                        }
-                    },
-                    {
-                        type: "reply",
-                        reply: {
-                            id: "no",
-                            title: "Não"
-                        }
-                    }
-                ]
-            }
-        ]
+        statusCallback: ENDPOINT_STATUS_CALLBACK
     }
 
     try {
-        await client
-            .messages
-            .create(messageBody)
-            .then(resposta => {
-                // console.log(resposta)
+        const response = await client.messages.create(messageBody);
 
-                message.sid = resposta.sid
-                message.save()
-            })
+        const message = new Message({
+            id: messageId,
+            twilioSid: response.sid,
+            status: 'enviada',
+            envio: {
+                datahora: new Date(),
+                de: messageBody.from,
+                para: messageBody.to,
+                mensagem: messageText,
+            },
+        })
+
+        await message.save()
 
         res.status(200).send({ id: messageId })
     } catch (error) {
         console.error(error)
         res.status(500).send({ error: 'Erro ao enviar mensagem' })
     }
-});
+})
 
-app.post('/receive-response', async (req, res) => {
-    console.log('entrou em "receive-response"')
+app.post('/status-callback', async (req, res) => {
 
     try {
-        const { SmsMessageSid, Body, From } = req.body;
+        const { MessageSid, MessageStatus } = req.body
 
-        console.error(SmsMessageSid)
-        console.error(Body)
+        const message = await Message.findOne({ twilioSid: MessageSid });
 
-        if (!SmsMessageSid || !Body)
+        let newstatus = ""
+        switch (MessageStatus) {
+            case "sent":
+                newstatus = "enviada"
+                break;
+            case "delivered":
+                newstatus = "entregue"
+                break;
+            case "read":
+                newstatus = "lida"
+                break;
+            default:
+                newstatus = message.status
+                break;
+        }
+
+        if (message) {
+            message.status = newstatus
+            await message.save()
+        }
+
+        res.status(200).send()
+    } catch (error) {
+        console.error(error)
+        res.status(500).send({ error: 'Erro ao processar status callback' })
+    }
+})
+
+app.post('/receive-response', async (req, res) => {
+    try {
+        const { SmsMessageSid, Body, From, To } = req.body
+
+        if (!From || !Body || !To)
             return res.status(400).send({ error: 'Dados insuficientes na resposta' })
 
-        const message = await Message.findOne({ sid: SmsMessageSid })
+        const message = await Message.findOne({ status: 'lida', 'envio.para': From, 'envio.de': To })
 
         if (!message)
             return res.status(404).send({ error: 'Mensagem não encontrada' })
 
-        message.status = 'respondida';
+        message.status = 'respondida'
         message.resposta = {
             datahora: new Date(),
-            mensagem: Body
+            mensagem: Body,
         }
 
         await message.save()
@@ -133,7 +139,7 @@ app.post('/receive-response', async (req, res) => {
         console.error(error)
         res.status(500).send({ error: 'Erro ao registrar resposta' })
     }
-});
+})
 
 app.get('/message-status/:id', async (req, res) => {
     const { id } = req.params
@@ -145,12 +151,12 @@ app.get('/message-status/:id', async (req, res) => {
             return res.status(404).send({ error: 'Mensagem não encontrada' })
         }
 
-        res.status(200).send(message)
+        res.status(200).send(message?.resposta || message)
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: 'Erro ao consultar status da mensagem' })
     }
-});
+})
 
 app.get('/health', async (req, res) => {
     res.status(200).send({ status: "API Online" })
