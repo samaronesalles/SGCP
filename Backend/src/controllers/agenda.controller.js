@@ -1,10 +1,30 @@
 const path = require('path')
+const nodeSchedule = require('node-schedule'); // Usar https://crontab.guru/ para gerar o comando de agendamento...
+// Exemplo diário as 8 da manhã: '0 8 * * *'
+
 const uteis = require(path.resolve(__dirname, '../', 'utils', 'utils.js'))
 const mensagens = require(path.resolve(__dirname, '../', 'services', 'messages.js'))
 
 const AgendaModel = require(path.resolve(__dirname, '../', 'models', 'agenda.model.js'))
 const AtendimentoModel = require(path.resolve(__dirname, '../', 'models', 'atendimento.model.js'))
 const AgendaRepository = require(path.resolve(__dirname, '../', 'models', 'repositories', 'agenda.repository.js'))
+
+const getAgendamentosConfirmados = () => {
+    // TODO Lógica pensada a ser implemenada. Não nesta função, mas aqui a ideia está como um todo.
+
+    // 1º) Buscar do banco de dados agendas que tiveram mensagens de watsapp enviadas, assim vamos obter os IDs destas mensagens;
+    // 2º) Consultar nossa API de envio de mensagem por whatsapp, a situação destes IDs;
+    // 3º) Percorrer cada ID, se este tiver resposta "SIM", vamos atualizar o status da respectiva agenda para "CONFIRMADA";
+    // 4º) Requisitar à nossa API de envio de mensagem por whatsapp, a exclusão desses IDs (todos);
+    // 5º) Retornar do banco de dados agendamentos para o dia seguinte;
+    // 6º) Requisitar à nossa API de envio de mensagem por whatsapp, envio de mensagem para estes pacientes;
+    // 7º) Alavar no banco de dados os IDs ferentes as mensagens enviadas.
+
+    console.log('Hello world!!!')
+}
+
+const job = nodeSchedule.scheduleJob('0 8 * * *', getAgendamentosConfirmados);
+console.log(job.nextInvocation());
 
 module.exports = {
 
