@@ -23,7 +23,7 @@ mongoose.connect(MONGO_URI, {
 const MessageSchema = new mongoose.Schema({
     id: { type: String, required: true },
     twilioSid: { type: String },
-    status: { type: String, enum: ['enviada', 'entregue', 'lida', 'respondida'], required: true },
+    status: { type: String, enum: ['enviada', 'entregue', 'lida', 'respondida', 'falha'], required: true },
     envio: {
         datahora: { type: Date, required: true },
         de: { type: String },
@@ -36,6 +36,28 @@ const MessageSchema = new mongoose.Schema({
     },
 })
 
+const trateNumeroTelefoneTwilio = function (numero) {
+    numero = numero.replace(/\D/g, '');
+
+    // Não sei o motivo, mas Twilio NÃO FUNCIONA se houver o dígito "9" iniciando o número do celular.
+    console.log(numero)
+    console.log(numero.length)
+
+    if ((numero.length === 11) && (numero.charAt(2) === '9'))
+        numero = numero.slice(0, 2) + numero.slice(3)
+
+    console.log(numero)
+
+    // Verificar se o número já começa com o código +55
+    if (!numero.startsWith('55'))
+        numero = '55' + numero;
+
+    // Adicionar o sinal de + ao início do número
+    numero = '+' + numero;
+
+    return numero;
+}
+
 const Message = mongoose.model('Message', MessageSchema)
 
 const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
@@ -44,23 +66,23 @@ app.post('/send-message', async (req, res) => {
     const { phoneNumber, messageText } = req.body
 
     if (!phoneNumber || !messageText)
-        return res.status(400).send({ error: 'Número de telefone e mensagem são obrigatórios' })
+        return res.status(400).send({ error: 'Todos os campos são obrigatórios' })
+
+    let celular = trateNumeroTelefoneTwilio(phoneNumber)
 
     const messageId = uuidv4()
 
     const messageBody = {
-        to: `whatsapp:${phoneNumber}`,
+        to: `whatsapp:${celular}`,
         from: TWILIO_WHATSAPP_FROM,
         body: messageText,
         statusCallback: ENDPOINT_STATUS_CALLBACK
     }
 
     try {
-        const response = await client.messages.create(messageBody);
-
         const message = new Message({
             id: messageId,
-            twilioSid: response.sid,
+            twilioSid: "",
             status: 'enviada',
             envio: {
                 datahora: new Date(),
@@ -70,6 +92,11 @@ app.post('/send-message', async (req, res) => {
             },
         })
 
+        await message.save()
+
+        const response = await client.messages.create(messageBody);
+
+        message.twilioSid = response.sid
         await message.save()
 
         res.status(200).send({ id: messageId })
@@ -96,6 +123,9 @@ app.post('/status-callback', async (req, res) => {
                 break;
             case "read":
                 newstatus = "lida"
+                break;
+            case "failed":
+                newstatus = "falha"
                 break;
             default:
                 newstatus = message.status
@@ -155,6 +185,39 @@ app.get('/message-status/:id', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: 'Erro ao consultar status da mensagem' })
+    }
+})
+
+app.post('/messages-status-ids', async (req, res) => {
+    const { ids } = req.body
+
+    try {
+        const message = await Message.find(
+            { id: { $in: ids } },
+            { id: 1, status: 1, resposta: 1, _id: 0 }
+        )
+
+        res.status(200).send(message)
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: 'Erro ao consultar status da mensagem' })
+    }
+})
+
+app.post('/delete-messages-ids', async (req, res) => {
+    const { ids } = req.body
+
+    try {
+        console.log(ids)
+
+        await Message.deleteMany(
+            { id: { $in: ids } }
+        )
+
+        res.status(200).send({})
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: 'Erro ao excluir logs de mensagens já eviadas' })
     }
 })
 
