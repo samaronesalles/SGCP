@@ -1,32 +1,99 @@
 const path = require('path')
+const moment = require('moment')
 const nodeSchedule = require('node-schedule'); // Usar https://crontab.guru/ para gerar o comando de agendamento...
 // Exemplo diário as 8 da manhã: '0 8 * * *'
 
 const uteis = require(path.resolve(__dirname, '../', 'utils', 'utils.js'))
 const mensagens = require(path.resolve(__dirname, '../', 'services', 'messages.js'))
+const whatsappApi = require(path.resolve(__dirname, '../', 'services', 'whatsapp.api.js'))
 
 const AgendaModel = require(path.resolve(__dirname, '../', 'models', 'agenda.model.js'))
 const AtendimentoModel = require(path.resolve(__dirname, '../', 'models', 'atendimento.model.js'))
 const AgendaRepository = require(path.resolve(__dirname, '../', 'models', 'repositories', 'agenda.repository.js'))
+const AgendaEnvioConfirmacaoRepository = require(path.resolve(__dirname, '../', 'models', 'repositories', 'agenda.envio.confirmacao.repository.js'))
 
-const getAgendamentosConfirmados = () => {
-    // TODO Lógica pensada a ser implemenada. Não nesta função, mas aqui a ideia está como um todo.
+const processeConfirmacoesDeAgendamentos = async () => {
 
-    // 1º) Buscar do banco de dados agendas que tiveram mensagens de watsapp enviadas, assim vamos obter os IDs destas mensagens;
-    // 2º) Consultar nossa API de envio de mensagem por whatsapp, a situação destes IDs;
-    // 3º) Percorrer cada ID, se este tiver resposta "SIM", vamos atualizar o status da respectiva agenda para "CONFIRMADA";
-    // 4º) Requisitar à nossa API de envio de mensagem por whatsapp, a exclusão desses IDs (todos);
-    // 5º) Retornar do banco de dados agendamentos para o dia seguinte;
-    // 6º) Requisitar à nossa API de envio de mensagem por whatsapp, envio de mensagem para estes pacientes;
-    // 7º) Alavar no banco de dados os IDs ferentes as mensagens enviadas.
+    const now = new Date();
 
-    console.log('Hello world!!!')
+    const DataExecucao = now.toLocaleDateString('pt-BR'); // Formato DD/MM/YYYY
+    const HoraExecucao = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); // Formato HH:mm
+
+    // PASSO 1: Retornar do bando de dados os ids das mensagens de whatsapp enviadas;
+    const mensagensEnviadasAnteriormente = await AgendaEnvioConfirmacaoRepository.retorneTodas()
+
+    const idsMsgs = mensagensEnviadasAnteriormente.map(e => e.idMsg)
+
+    // PASSO 2: Consultar nossa API de envio de mensagem por whatsapp, a situação destes IDs. 
+    if (mensagensEnviadasAnteriormente.length > 0) {
+        const situacaoDasMensagens = await whatsappApi.retorneStatusMensagens(idsMsgs)
+
+        // PASSO 2.1: Percorrer cada status retornado e atualizar em banco de dados a situação atual da agenda.
+        for (let situacaoMensagem of situacaoDasMensagens) {
+            if (situacaoMensagem?.status !== "respondida")
+                continue;
+
+            const resposta = situacaoMensagem?.resposta?.mensagem ?? ""
+            if (resposta.toUpperCase() !== "SIM")
+                continue;
+
+            const idMsg = situacaoMensagem.id
+            const idAgenda = mensagensEnviadasAnteriormente.find(mensagem => mensagem.idMsg === idMsg)?.agenda_id ?? 0
+
+            if (idAgenda === 0)
+                continue;
+
+            await AgendaRepository.confirmeSessao(idAgenda)
+        }
+
+        // PASSO 2.2: Excluir do nosso banco de dados, os IDs das mensagens enviadas às agendas que forem retornadas no passo 1
+        await AgendaEnvioConfirmacaoRepository.delete(idsMsgs)
+    }
+
+    // PASSO 3: Excluir TODOS os ids das mensagens de whatsapp enviadas anteriormente.
+    try {
+        whatsappApi.excluirMensagens(idsMsgs)
+    } catch (error) {
+        console.log(`Ao "excluirMensagens()": ${error}`)
+    }
+
+    // PASSO 4: Retornar do banco de dados agendamentos para o dia seguinte
+    const diaSeguinte = moment().add(1, 'days');
+    const inicio_de = diaSeguinte.startOf('day').toDate();
+    const inicio_ate = diaSeguinte.endOf('day').toDate();
+
+    let agendasDiaSeguinte = await AgendaRepository.retorneTodas(0, 0, inicio_de, inicio_ate)
+
+    agendasDiaSeguinte = agendasDiaSeguinte.filter(agenda => (!agenda.evento_confirmado && agenda.ativo))
+
+    // PASSO 5: Requisitar à nossa API de envio de mensagem por whatsapp, envio de mensagem para estes pacientes;
+    if (agendasDiaSeguinte.length > 0) {
+        for (let agenda of agendasDiaSeguinte) {
+            try {
+                const idMsg = await whatsappApi.enviarMensagem(agenda)
+
+                await AgendaEnvioConfirmacaoRepository.insert(agenda.id, idMsg)
+            } catch (error) {
+                console.log(`Em Loop "agendasDiaSeguinte": ${error}`)
+            }
+        }
+    }
+
+    // Concluindo
+    console.log(`"processeConfirmacoesDeAgendamentos()", última execução em: ${DataExecucao} ${HoraExecucao}`)
+    console.log(`Resultado da execução: Sucesso`)
 }
 
-const job = nodeSchedule.scheduleJob('0 8 * * *', getAgendamentosConfirmados);
+const job = nodeSchedule.scheduleJob('0 8 * * *', processeConfirmacoesDeAgendamentos);
 console.log(job.nextInvocation());
 
 module.exports = {
+
+    // async teste(req, res) {
+    //     processeConfirmacoesDeAgendamentos()
+
+    //     return res.status(200).json({})
+    // },
 
     async nova(req, res) {
         try {

@@ -4,6 +4,7 @@ const emailValidator = require('email-validator')
 const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js'))
 const mensagens = require(path.resolve(__dirname, '../', '../', 'services', 'messages.js'))
 const PacienteRepository = require(path.resolve(__dirname, '../', '../', 'models', 'repositories', 'paciente.repository.js'))
+const AgendaRepository = require(path.resolve(__dirname, '../', '../', 'models', 'repositories', 'agenda.repository.js'))
 
 module.exports.cadJaExistente = async function (req, res, next) {
     if (uteis.strEmpty(req.body.email))
@@ -63,7 +64,10 @@ module.exports.exclusaoCad = async function (req, res, next) {
             break;
     }
 
-    // Validar futuramente se registro está sendo usado em outro movimento para não permitir exclusão
+    const agendasDoPaciente = await AgendaRepository.retorneTodas(0, id, 0, 0)
+
+    if (Array.isArray(agendasDoPaciente) || agendasDoPaciente.length > 0)
+        return res.status(400).json(mensagens.resultDefault(2530))
 
     next()
 }

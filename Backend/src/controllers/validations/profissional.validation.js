@@ -5,6 +5,7 @@ const emailValidator = require('email-validator')
 const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js'))
 const mensagens = require(path.resolve(__dirname, '../', '../', 'services', 'messages.js'))
 const ProfissionalRepository = require(path.resolve(__dirname, '../', '../', 'models', 'repositories', 'profissional.repository.js'))
+const AgendaRepository = require(path.resolve(__dirname, '../', '../', 'models', 'repositories', 'agenda.repository.js'))
 
 const camposLoginValidos = function (login, senha) {
     const loginVazio = uteis.strEmpty(login)
@@ -101,7 +102,10 @@ module.exports.exclusaoCad = async function (req, res, next) {
             break;
     }
 
-    // Validar futuramente se registro está sendo usado em outro movimento para não permitir exclusão
+    const agendasDoProfissional = await AgendaRepository.retorneTodas(id, 0, 0, 0)
+
+    if (Array.isArray(agendasDoProfissional) || agendasDoProfissional.length > 0)
+        return res.status(400).json(mensagens.resultDefault(2529))
 
     next()
 }

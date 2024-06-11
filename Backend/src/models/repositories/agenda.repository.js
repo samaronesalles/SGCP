@@ -1,4 +1,6 @@
 const path = require('path')
+const moment = require('moment')
+
 const { Op, Sequelize } = require("sequelize");
 const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js'))
 
@@ -74,4 +76,27 @@ module.exports.retorneTodas = async function (profissional_id, paciente_id, inic
         ],
     })
 
+}
+
+module.exports.confirmeSessao = async function (idAgenda) {
+    try {
+
+        const update = {
+            evento_confirmado: true,
+            di: uteis.new_uuid()
+        }
+
+        const [numeroDeRegistrosAtualizados] = await AgendaModel.update(update, {
+            where: {
+                id: idAgenda
+            }
+        })
+
+        if (numeroDeRegistrosAtualizados === 0)
+            return false
+
+        return true
+    } catch {
+        return false
+    }
 }
