@@ -35,6 +35,7 @@ object frmTemplateForm_DropList: TfrmTemplateForm_DropList
       Font.Name = 'Arial'
       Font.Style = [fsBold]
       ParentFont = False
+      Visible = False
     end
   end
   object Panel2: TPanel

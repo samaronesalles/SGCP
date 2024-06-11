@@ -485,14 +485,12 @@ begin
   TimerStartUp.Enabled:= FALSE;
 
   Self.FGLB_ListaAgendas:= TAgendas_List_M.Create();
-  Self.FGLB_ListaFiltro:= TList<Integer>.Create();
 
   EditFiltroProfissional.SetFocus();
 
   Self.FGLB_ListaAgendas.Clear();
   Self.FGLB_ListaAgendas.RetornoLista(0, 0, StrToDateTime(DateToStr(Self.FGLB_Dom) + ' 00:00'), StrToDateTime(DateToStr(Self.FGLB_Sab) + ' 23:59'));
 
-  Self.FGLB_ListaFiltro.Free();
   Self.FGLB_ListaFiltro:= Self.FGLB_ListaAgendas.FiltraLista(0, 0, Self.FGLB_Dom, Self.FGLB_Sab);
 
   Self.Refresh_StringGrid();

@@ -346,13 +346,13 @@ var
 begin
 
   try
+    Result:= TList<integer>.Create;
+
     if Self = Nil then
       Exit;
 
     if Self.Count = 0 then
       Exit;
-
-    Result:= TList<integer>.Create;
 
     for Agenda in Self do begin
       if NOT Agenda.Ativo then

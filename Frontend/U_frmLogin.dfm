@@ -97,7 +97,7 @@ object frmLogin: TfrmLogin
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    Text = 'sama'
+    Text = 'grazi'
   end
   object Edit_Senha: TEdit
     Left = 16
@@ -113,7 +113,7 @@ object frmLogin: TfrmLogin
     ParentFont = False
     PasswordChar = '*'
     TabOrder = 1
-    Text = '4456'
+    Text = '123'
   end
   object ImageList_Icons: TImageList
     ColorDepth = cd32Bit
