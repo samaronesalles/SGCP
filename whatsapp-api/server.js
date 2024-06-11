@@ -40,9 +40,6 @@ const trateNumeroTelefoneTwilio = function (numero) {
     numero = numero.replace(/\D/g, '');
 
     // Não sei o motivo, mas Twilio NÃO FUNCIONA se houver o dígito "9" iniciando o número do celular.
-    console.log(numero)
-    console.log(numero.length)
-
     if ((numero.length === 11) && (numero.charAt(2) === '9'))
         numero = numero.slice(0, 2) + numero.slice(3)
 
