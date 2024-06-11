@@ -100,6 +100,9 @@ object frmAgenda_V: TfrmAgenda_V
       ParentColor = True
       TabOrder = 0
       TabStop = True
+      DesignSize = (
+        348
+        395)
       object LabelTituloFiltro: TLabel
         AlignWithMargins = True
         Left = 8
@@ -241,6 +244,7 @@ object frmAgenda_V: TfrmAgenda_V
         Top = 165
         Width = 75
         Height = 27
+        Anchors = [akTop, akRight]
         BiDiMode = bdLeftToRight
         Caption = 'Filtrar'
         ImageIndex = 2

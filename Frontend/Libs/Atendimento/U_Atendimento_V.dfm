@@ -36,9 +36,9 @@ inherited frmAtendimentos_V: TfrmAtendimentos_V
       object Label4: TLabel
         Left = 336
         Top = 35
-        Width = 164
+        Width = 160
         Height = 16
-        Caption = 'Conformados n'#227'o realizados'
+        Caption = 'Confirmados n'#227'o realizados'
       end
       object Shape3: TShape
         Left = 315

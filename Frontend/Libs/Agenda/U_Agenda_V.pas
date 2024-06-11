@@ -477,6 +477,11 @@ begin
 
   PosicioneLinhaHoraAnalogica(Hora);
 
+  if (Self.Focused) AND (TimerClock.Interval > 1000) then
+    ButtonFiltrar.OnClick(Self);
+
+  TimerClock.Interval:= ((60 * 1000) * 5); // Depois da tela aberta, vamos atualizar apenas a cada 5 minutos.
+
 end;
 
 procedure TfrmAgenda_V.TimerStartUpTimer(Sender: TObject);
