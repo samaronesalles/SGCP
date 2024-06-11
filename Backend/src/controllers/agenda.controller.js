@@ -197,6 +197,35 @@ module.exports = {
         try {
             const { profissional_id, paciente_id, inicio_de, inicio_ate } = req.params
 
+            const mensagensEnviadasAnteriormente = await AgendaEnvioConfirmacaoRepository.retorneTodas()
+            const idsMsgs = mensagensEnviadasAnteriormente.map(e => e.idMsg)
+
+            // PASSO 1: Consultar nossa API de envio de mensagem por whatsapp, a situação destes IDs. 
+            if (mensagensEnviadasAnteriormente.length > 0) {
+                const situacaoDasMensagens = await whatsappApi.retorneStatusMensagens(idsMsgs)
+
+                // PASSO 1.1: Percorrer cada status retornado e atualizar em banco de dados a situação atual da agenda.
+                for (let situacaoMensagem of situacaoDasMensagens) {
+                    if (situacaoMensagem?.status !== "respondida")
+                        continue;
+
+                    const resposta = situacaoMensagem?.resposta?.mensagem ?? ""
+                    if (resposta.toUpperCase() !== "SIM")
+                        continue;
+
+                    const idMsg = situacaoMensagem.id
+                    const idAgenda = mensagensEnviadasAnteriormente.find(mensagem => mensagem.idMsg === idMsg)?.agenda_id ?? 0
+
+                    if (idAgenda === 0)
+                        continue;
+
+                    await AgendaRepository.confirmeSessao(idAgenda)
+                }
+
+                // PASSO 1.2: Excluir do nosso banco de dados, os IDs das mensagens enviadas às agendas que forem retornadas no passo 1
+                await AgendaEnvioConfirmacaoRepository.delete(idsMsgs)
+            }
+
             let Agendas = await AgendaRepository.retorneTodas(profissional_id, paciente_id, inicio_de, inicio_ate)
 
             return res.status(200).json(mensagens.resultExternal(200, false, Agendas))
