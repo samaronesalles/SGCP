@@ -6,7 +6,7 @@ require('dotenv').config()
 
 const app = express()
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
 
 const PORT = process.env.PORT || 3000
 const MONGO_URI = process.env.MONGO_URI
@@ -37,22 +37,22 @@ const MessageSchema = new mongoose.Schema({
 })
 
 const trateNumeroTelefoneTwilio = function (numero) {
-    numero = numero.replace(/\D/g, '');
-
-    // Não sei o motivo, mas Twilio NÃO FUNCIONA se houver o dígito "9" iniciando o número do celular.
-    if ((numero.length === 11) && (numero.charAt(2) === '9'))
-        numero = numero.slice(0, 2) + numero.slice(3)
-
-    console.log(numero)
+    numero = numero.replace(/\D/g, '')
 
     // Verificar se o número já começa com o código +55
     if (!numero.startsWith('55'))
-        numero = '55' + numero;
+        numero = '55' + numero
+
+    // Não sei o motivo, mas Twilio NÃO FUNCIONA se houver o dígito "9" iniciando o número do celular.
+    if ((numero.length === 13) && (numero.charAt(4) === '9'))
+        numero = numero.slice(0, 4) + numero.slice(5)
 
     // Adicionar o sinal de + ao início do número
-    numero = '+' + numero;
+    numero = '+' + numero
 
-    return numero;
+    console.log(numero)
+
+    return numero
 }
 
 const Message = mongoose.model('Message', MessageSchema)
@@ -91,7 +91,7 @@ app.post('/send-message', async (req, res) => {
 
         await message.save()
 
-        const response = await client.messages.create(messageBody);
+        const response = await client.messages.create(messageBody)
 
         message.twilioSid = response.sid
         await message.save()
@@ -108,25 +108,25 @@ app.post('/status-callback', async (req, res) => {
     try {
         const { MessageSid, MessageStatus } = req.body
 
-        const message = await Message.findOne({ twilioSid: MessageSid });
+        const message = await Message.findOne({ twilioSid: MessageSid })
 
         let newstatus = ""
         switch (MessageStatus) {
             case "sent":
                 newstatus = "enviada"
-                break;
+                break
             case "delivered":
                 newstatus = "entregue"
-                break;
+                break
             case "read":
                 newstatus = "lida"
-                break;
+                break
             case "failed":
                 newstatus = "falha"
-                break;
+                break
             default:
                 newstatus = message.status
-                break;
+                break
         }
 
         if (message) {
@@ -180,7 +180,7 @@ app.get('/message-status/:id', async (req, res) => {
 
         res.status(200).send(message?.resposta || message)
     } catch (error) {
-        console.error(error);
+        console.error(error)
         res.status(500).send({ error: 'Erro ao consultar status da mensagem' })
     }
 })
@@ -196,7 +196,7 @@ app.post('/messages-status-ids', async (req, res) => {
 
         res.status(200).send(message)
     } catch (error) {
-        console.error(error);
+        console.error(error)
         res.status(500).send({ error: 'Erro ao consultar status da mensagem' })
     }
 })
@@ -213,7 +213,7 @@ app.post('/delete-messages-ids', async (req, res) => {
 
         res.status(200).send({})
     } catch (error) {
-        console.error(error);
+        console.error(error)
         res.status(500).send({ error: 'Erro ao excluir logs de mensagens já eviadas' })
     }
 })
