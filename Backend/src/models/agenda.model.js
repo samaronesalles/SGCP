@@ -22,7 +22,7 @@ class Agenda extends Model {
         this.belongsTo(models.Profissional, { foreignKey: 'profissional_agendado_id', as: 'profissional' })
         this.belongsTo(models.Paciente, { foreignKey: 'paciente_agendado_id', as: 'paciente' })
         this.hasOne(models.Atendimento)
-    };
+    }
 
 }
 

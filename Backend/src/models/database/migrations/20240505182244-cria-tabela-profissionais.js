@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
@@ -48,10 +48,10 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE,
             },
-        });
+        })
     },
 
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('profissionais');
+        return queryInterface.dropTable('profissionais')
     }
-};
+}

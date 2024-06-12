@@ -79,7 +79,7 @@ module.exports = {
                 },
                 returning: true,
                 plain: true
-            });
+            })
 
             const status = define_status_atendimento(Atendimento)
 
@@ -109,7 +109,7 @@ module.exports = {
                 },
                 returning: true,
                 plain: true
-            });
+            })
 
             const status = define_status_atendimento(Atendimento)
 

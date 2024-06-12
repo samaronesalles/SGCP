@@ -96,13 +96,13 @@ module.exports.StrToDateTimeUTC_Valido = function (str) {
         /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})Z$/,
         /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z$/,
         /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.(\d{3})Z$/
-    ];
+    ]
 
     // Check if the string matches any of the valid patterns
     for (let pattern of patterns) {
-        const match = str.match(pattern);
+        const match = str.match(pattern)
         if (match) {
-            const [, year, month, day, hour, minute, second, millisecond] = match.map(Number);
+            const [, year, month, day, hour, minute, second, millisecond] = match.map(Number)
 
             // Validate date and time components
             if (
@@ -114,11 +114,11 @@ module.exports.StrToDateTimeUTC_Valido = function (str) {
                 (second === undefined || (second >= 0 && second <= 59)) &&
                 (millisecond === undefined || (millisecond >= 0 && millisecond <= 999))
             ) {
-                return true;
+                return true
             }
         }
     }
 
-    return false;
+    return false
 
-};
+}

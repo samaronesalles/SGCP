@@ -81,9 +81,9 @@ module.exports.edicaoCad = async function (req, res, next) {
     // Checando "di"
     switch (await uteis.checagem_di(registro, di)) {
         case 1: return res.status(400).json(mensagens.resultDefault(1003))
-            break;
+            break
         case 2: return res.status(400).json(mensagens.resultDefault(2000))
-            break;
+            break
     }
 
     next()
@@ -97,9 +97,9 @@ module.exports.exclusaoCad = async function (req, res, next) {
     // Checando "di"
     switch (await uteis.checagem_di(registro, di)) {
         case 1: return res.status(400).json(mensagens.resultDefault(1003))
-            break;
+            break
         case 2: return res.status(400).json(mensagens.resultDefault(2000))
-            break;
+            break
     }
 
     const agendasDoProfissional = await AgendaRepository.retorneTodas(id, 0, 0, 0)
@@ -118,9 +118,9 @@ module.exports.inativar = async function (req, res, next) {
     // Checando "di"
     switch (await uteis.checagem_di(registro, di)) {
         case 1: return res.status(400).json(mensagens.resultDefault(1003))
-            break;
+            break
         case 2: return res.status(400).json(mensagens.resultDefault(2000))
-            break;
+            break
     }
 
     if (!registro.ativo)

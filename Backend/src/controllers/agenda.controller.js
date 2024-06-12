@@ -1,6 +1,6 @@
 const path = require('path')
 const moment = require('moment')
-const nodeSchedule = require('node-schedule'); // Usar https://crontab.guru/ para gerar o comando de agendamento...
+const nodeSchedule = require('node-schedule') // Usar https://crontab.guru/ para gerar o comando de agendamento...
 // Exemplo diário as 8 da manhã: '0 8 * * *'
 
 const uteis = require(path.resolve(__dirname, '../', 'utils', 'utils.js'))
@@ -12,16 +12,9 @@ const AtendimentoModel = require(path.resolve(__dirname, '../', 'models', 'atend
 const AgendaRepository = require(path.resolve(__dirname, '../', 'models', 'repositories', 'agenda.repository.js'))
 const AgendaEnvioConfirmacaoRepository = require(path.resolve(__dirname, '../', 'models', 'repositories', 'agenda.envio.confirmacao.repository.js'))
 
-const processeConfirmacoesDeAgendamentos = async () => {
-
-    const now = new Date();
-
-    const DataExecucao = now.toLocaleDateString('pt-BR'); // Formato DD/MM/YYYY
-    const HoraExecucao = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); // Formato HH:mm
-
-    // PASSO 1: Retornar do bando de dados os ids das mensagens de whatsapp enviadas;
+const atualizeMensagensEnviadasParaConfirmacao = async () => {
+    // PASSO 1: Retornar do bando de dados os ids das mensagens de whatsapp enviadas
     const mensagensEnviadasAnteriormente = await AgendaEnvioConfirmacaoRepository.retorneTodas()
-
     const idsMsgs = mensagensEnviadasAnteriormente.map(e => e.idMsg)
 
     // PASSO 2: Consultar nossa API de envio de mensagem por whatsapp, a situação destes IDs. 
@@ -31,42 +24,55 @@ const processeConfirmacoesDeAgendamentos = async () => {
         // PASSO 2.1: Percorrer cada status retornado e atualizar em banco de dados a situação atual da agenda.
         for (let situacaoMensagem of situacaoDasMensagens) {
             if (situacaoMensagem?.status !== "respondida")
-                continue;
+                continue
 
             const resposta = situacaoMensagem?.resposta?.mensagem ?? ""
             if (resposta.toUpperCase() !== "SIM")
-                continue;
+                continue
 
             const idMsg = situacaoMensagem.id
             const idAgenda = mensagensEnviadasAnteriormente.find(mensagem => mensagem.idMsg === idMsg)?.agenda_id ?? 0
 
             if (idAgenda === 0)
-                continue;
+                continue
 
             await AgendaRepository.confirmeSessao(idAgenda)
         }
 
-        // PASSO 2.2: Excluir do nosso banco de dados, os IDs das mensagens enviadas às agendas que forem retornadas no passo 1
-        await AgendaEnvioConfirmacaoRepository.delete(idsMsgs)
+        // PASSO 2.2: Excluir do nosso banco de dados, os IDs das mensagens enviadas às agendas que forem retornadas no passo 1. E, excluir TODOS
+        //            os ids das mensagens de whatsapp enviadas anteriormente.
+        try {
+            await AgendaEnvioConfirmacaoRepository.delete(idsMsgs)
+            await whatsappApi.excluirMensagens(idsMsgs)
+        } catch (error) {
+            console.log(`Ao "excluirMensagens()": ${error}`)
+        }
     }
+}
 
-    // PASSO 3: Excluir TODOS os ids das mensagens de whatsapp enviadas anteriormente.
-    try {
-        whatsappApi.excluirMensagens(idsMsgs)
-    } catch (error) {
-        console.log(`Ao "excluirMensagens()": ${error}`)
-    }
+const processeConfirmacoesDeAgendamentos = async () => {
 
-    // PASSO 4: Retornar do banco de dados agendamentos para o dia seguinte
-    const diaSeguinte = moment().add(1, 'days');
-    const inicio_de = diaSeguinte.startOf('day').toDate();
-    const inicio_ate = diaSeguinte.endOf('day').toDate();
+    console.log("processeConfirmacoesDeAgendamentos()")
+
+    const now = new Date()
+
+    const DataExecucao = now.toLocaleDateString('pt-BR') // Formato DD/MM/YYYY
+    const HoraExecucao = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) // Formato HH:mm
+
+    // PASSO 1: Retorna mensagens enviadas solicitando confirmação, confere o status atual das mesmas e confirma os agendamentos que o 
+    //          usuário respondeu "SIM" na mensagem. Em seguida, exclui do banco de dados estas mensagens.
+    await atualizeMensagensEnviadasParaConfirmacao()
+
+    // PASSO 2: Retornar do banco de dados agendamentos para o dia seguinte
+    const diaSeguinte = moment().add(1, 'days')
+    const inicio_de = diaSeguinte.startOf('day').toDate()
+    const inicio_ate = diaSeguinte.endOf('day').toDate()
 
     let agendasDiaSeguinte = await AgendaRepository.retorneTodas(0, 0, inicio_de, inicio_ate)
 
     agendasDiaSeguinte = agendasDiaSeguinte.filter(agenda => (!agenda.evento_confirmado && agenda.ativo))
 
-    // PASSO 5: Requisitar à nossa API de envio de mensagem por whatsapp, envio de mensagem para estes pacientes;
+    // PASSO 3: Requisitar à nossa API de envio de mensagem por whatsapp, envio de mensagem para estes pacientes
     if (agendasDiaSeguinte.length > 0) {
         for (let agenda of agendasDiaSeguinte) {
             try {
@@ -79,21 +85,24 @@ const processeConfirmacoesDeAgendamentos = async () => {
         }
     }
 
-    // Concluindo
+    // Concluindo...
     console.log(`"processeConfirmacoesDeAgendamentos()", última execução em: ${DataExecucao} ${HoraExecucao}`)
     console.log(`Resultado da execução: Sucesso`)
+
 }
 
-const job = nodeSchedule.scheduleJob('0 8 * * *', processeConfirmacoesDeAgendamentos);
-console.log(job.nextInvocation());
+const job = nodeSchedule.scheduleJob('0 8 * * *', processeConfirmacoesDeAgendamentos)
+console.log(job.nextInvocation())
 
 module.exports = {
 
-    // async teste(req, res) {
-    //     processeConfirmacoesDeAgendamentos()
+    async teste(req, res) {
+        console.log("Entrou em teste()")
 
-    //     return res.status(200).json({})
-    // },
+        res.status(200).json({})
+
+        await processeConfirmacoesDeAgendamentos()
+    },
 
     async nova(req, res) {
         try {
@@ -132,7 +141,7 @@ module.exports = {
                 // Necessário excluir a agenda se o atencimento falhar
                 await AgendaModel.destroy({
                     where: { id: dados_agenda.id, }
-                });
+                })
 
                 throw new Error(mensagens.translateMessage(2516))
             }
@@ -172,7 +181,7 @@ module.exports = {
                 },
                 returning: true,
                 plain: true
-            });
+            })
 
             return res.status(200).json(mensagens.resultExternal(1001, false, agendaEncontrada))
 
@@ -197,35 +206,11 @@ module.exports = {
         try {
             const { profissional_id, paciente_id, inicio_de, inicio_ate } = req.params
 
-            const mensagensEnviadasAnteriormente = await AgendaEnvioConfirmacaoRepository.retorneTodas()
-            const idsMsgs = mensagensEnviadasAnteriormente.map(e => e.idMsg)
+            // PASSO 1: Retorna mensagens enviadas solicitando confirmação, confere o status atual das mesmas e confirma os agendamentos que o
+            //          usuário respondeu "SIM" na mensagem. Em seguida, exclui do banco de dados estas mensagens.
+            await atualizeMensagensEnviadasParaConfirmacao()
 
-            // PASSO 1: Consultar nossa API de envio de mensagem por whatsapp, a situação destes IDs. 
-            if (mensagensEnviadasAnteriormente.length > 0) {
-                const situacaoDasMensagens = await whatsappApi.retorneStatusMensagens(idsMsgs)
-
-                // PASSO 1.1: Percorrer cada status retornado e atualizar em banco de dados a situação atual da agenda.
-                for (let situacaoMensagem of situacaoDasMensagens) {
-                    if (situacaoMensagem?.status !== "respondida")
-                        continue;
-
-                    const resposta = situacaoMensagem?.resposta?.mensagem ?? ""
-                    if (resposta.toUpperCase() !== "SIM")
-                        continue;
-
-                    const idMsg = situacaoMensagem.id
-                    const idAgenda = mensagensEnviadasAnteriormente.find(mensagem => mensagem.idMsg === idMsg)?.agenda_id ?? 0
-
-                    if (idAgenda === 0)
-                        continue;
-
-                    await AgendaRepository.confirmeSessao(idAgenda)
-                }
-
-                // PASSO 1.2: Excluir do nosso banco de dados, os IDs das mensagens enviadas às agendas que forem retornadas no passo 1
-                await AgendaEnvioConfirmacaoRepository.delete(idsMsgs)
-            }
-
+            // PASSO 2: Retorna finalmene a lista de agendas.
             let Agendas = await AgendaRepository.retorneTodas(profissional_id, paciente_id, inicio_de, inicio_ate)
 
             return res.status(200).json(mensagens.resultExternal(200, false, Agendas))
@@ -251,7 +236,7 @@ module.exports = {
                 },
                 returning: true,
                 plain: true
-            });
+            })
 
             return res.status(200).json(mensagens.resultExternal(1001, false, Agenda))
 

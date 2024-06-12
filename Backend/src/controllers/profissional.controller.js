@@ -72,7 +72,7 @@ module.exports = {
                 },
                 returning: true,
                 plain: true
-            });
+            })
 
             profissionalEncontrado.password = uteis.decrypt(password)
 
@@ -91,7 +91,7 @@ module.exports = {
                 where: {
                     id: id,
                 }
-            });
+            })
 
             return res.status(200).json(mensagens.resultDefault(1002))
 
@@ -114,7 +114,7 @@ module.exports = {
             await profissionalEncontrado.update(dados, {
                 returning: true,
                 plain: true
-            });
+            })
 
             return res.status(200).json(mensagens.resultExternal(200, false, profissionalEncontrado))
 
@@ -137,7 +137,7 @@ module.exports = {
             await profissionalEncontrado.update(dados, {
                 returning: true,
                 plain: true
-            });
+            })
 
             return res.status(200).json(mensagens.resultExternal(200, false, profissionalEncontrado))
 

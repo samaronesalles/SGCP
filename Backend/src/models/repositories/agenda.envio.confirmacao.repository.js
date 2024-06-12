@@ -1,5 +1,5 @@
 const path = require('path')
-const { Op, Sequelize } = require("sequelize");
+const { Op, Sequelize } = require("sequelize")
 const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js'))
 
 const AgendaConfirmacaoEnvio = require(path.resolve(__dirname, '../', 'agenda.envio.confirmacao.model.js'))

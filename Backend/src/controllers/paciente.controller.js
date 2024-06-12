@@ -62,7 +62,7 @@ module.exports = {
                 },
                 returning: true,
                 plain: true
-            });
+            })
 
             return res.status(200).json(mensagens.resultExternal(1001, false, pacienteEncontrado))
 
@@ -79,7 +79,7 @@ module.exports = {
                 where: {
                     id: id,
                 }
-            });
+            })
 
             return res.status(200).json(mensagens.resultDefault(1002))
 
@@ -102,7 +102,7 @@ module.exports = {
             await pacienteEncontrado.update(dados, {
                 returning: true,
                 plain: true
-            });
+            })
 
             return res.status(200).json(mensagens.resultExternal(200, false, pacienteEncontrado))
 
@@ -125,7 +125,7 @@ module.exports = {
             await pacienteEncontrado.update(dados, {
                 returning: true,
                 plain: true
-            });
+            })
 
             return res.status(200).json(mensagens.resultExternal(200, false, pacienteEncontrado))
 

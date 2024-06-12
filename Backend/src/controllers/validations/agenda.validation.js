@@ -1,5 +1,5 @@
 const path = require('path')
-const { Op, Sequelize } = require("sequelize");
+const { Op, Sequelize } = require("sequelize")
 
 const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js'))
 const mensagens = require(path.resolve(__dirname, '../', '../', 'services', 'messages.js'))
@@ -120,9 +120,9 @@ module.exports.editar = async function (req, res, next) {
     // Checando "di"
     switch (await uteis.checagem_di(registro, di)) {
         case 1: return res.status(400).json(mensagens.resultDefault(1003))
-            break;
+            break
         case 2: return res.status(400).json(mensagens.resultDefault(2000))
-            break;
+            break
     }
 
     next()
@@ -137,9 +137,9 @@ module.exports.cancelamento = async function (req, res, next) {
     // Checando "di"
     switch (await uteis.checagem_di(registro, di)) {
         case 1: return res.status(400).json(mensagens.resultDefault(1003))
-            break;
+            break
         case 2: return res.status(400).json(mensagens.resultDefault(2000))
-            break;
+            break
     }
 
     if (!registro.ativo)

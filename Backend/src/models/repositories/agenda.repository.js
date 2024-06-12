@@ -1,7 +1,7 @@
 const path = require('path')
 const moment = require('moment')
 
-const { Op, Sequelize } = require("sequelize");
+const { Op, Sequelize } = require("sequelize")
 const uteis = require(path.resolve(__dirname, '../', '../', 'utils', 'utils.js'))
 
 const PacienteModel = require(path.resolve(__dirname, '../', 'paciente.model.js'))
@@ -53,8 +53,8 @@ module.exports.retorneTodas = async function (profissional_id, paciente_id, inic
         condicao_where["$paciente.id$"] = paciente_id
 
     if ((inicio_de && inicio_ate) && (Date.parse(inicio_de) > 0 && Date.parse(inicio_ate) > 0)) {
-        const data_vencimento = { [Op.between]: [inicio_de, inicio_ate] };
-        condicao_where["evento_inicio"] = data_vencimento;
+        const data_vencimento = { [Op.between]: [inicio_de, inicio_ate] }
+        condicao_where["evento_inicio"] = data_vencimento
     }
 
     return await AgendaModel.findAll({

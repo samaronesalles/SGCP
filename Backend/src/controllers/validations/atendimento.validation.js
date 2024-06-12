@@ -13,9 +13,9 @@ module.exports.editar = async function (req, res, next) {
     // Checando "di"
     switch (await uteis.checagem_di(registro, di)) {
         case 1: return res.status(400).json(mensagens.resultDefault(1003))
-            break;
+            break
         case 2: return res.status(400).json(mensagens.resultDefault(2000))
-            break;
+            break
     }
 
     if (registro?.datahora_fim > 0)
@@ -39,9 +39,9 @@ module.exports.encerrar = async function (req, res, next) {
     // Checando "di"
     switch (await uteis.checagem_di(registro, di)) {
         case 1: return res.status(400).json(mensagens.resultDefault(1003))
-            break;
+            break
         case 2: return res.status(400).json(mensagens.resultDefault(2000))
-            break;
+            break
     }
 
     if (!datahora_fim)

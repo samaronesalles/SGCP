@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require('axios')
 
 module.exports = {
 
@@ -59,7 +59,7 @@ module.exports = {
                 reject(respostaFinal)
             }
 
-        });
+        })
     },
 
     makePost(url, endpoint, tokenType, accessToken, body, contentType) {
@@ -84,7 +84,7 @@ module.exports = {
                     axiosConfig["headers"] = { "Authorization": AUTHORIZATION }
                 }
 
-                let data = BODY;
+                let data = BODY
                 if (CONTENT_TYPE.match(/form-urlencoded/)) {
                     data = Object.keys(BODY)
                         .map((key) => `${key}=${encodeURIComponent(BODY[key])}`)
@@ -129,7 +129,7 @@ module.exports = {
 
                 reject(respostaFinal)
             }
-        });
+        })
 
     },
 
@@ -155,11 +155,11 @@ module.exports = {
                     axiosConfig["headers"] = { "Authorization": AUTHORIZATION }
                 }
 
-                let data = BODY;
+                let data = BODY
                 if (CONTENT_TYPE.match(/form-urlencoded/)) {
                     data = Object.keys(BODY)
                         .map((key) => `${key}=${encodeURIComponent(BODY[key])}`)
-                        .join('&');
+                        .join('&')
                 }
 
                 axios.put(URL, data, axiosConfig)
