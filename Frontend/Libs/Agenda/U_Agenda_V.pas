@@ -117,6 +117,7 @@ type
 
     FGLB_ListaAgendas                     : TAgendas_List_M;
     FGLB_ListaFiltro                      : TList<Integer>;
+    FGLB_HoraProxRefreshAutomatico        : TDateTime;
 
     FGLB_Dom                              : TDate;
     FGLB_Seg                              : TDate;
@@ -153,6 +154,8 @@ const
   COL_QUI                    = 4;
   COL_SEX                    = 5;
   COL_SAB                    = 6;
+
+  MIN_REFRESH_AUTO           = 5;
 
 var
   frmAgenda_V: TfrmAgenda_V;
@@ -344,6 +347,8 @@ begin
   Shape_legenda_NaoConfirmados.Brush.Color:= COR_AGENDA_NAO_CONFIRMADA;
   Shape_legenda_Confirmados.Brush.Color:= COR_AGENDA_CONFIRMADA;
 
+  Self.FGLB_HoraProxRefreshAutomatico:= 0;
+
   CalendarView.Date:= Date();
 end;
 
@@ -477,10 +482,15 @@ begin
 
   PosicioneLinhaHoraAnalogica(Hora);
 
-  if (Self.Focused) AND (TimerClock.Interval > 1000) then
-    ButtonFiltrar.OnClick(Self);
+  if ((Self.FGLB_HoraProxRefreshAutomatico > 0) AND (Now() >= Self.FGLB_HoraProxRefreshAutomatico)) then begin
+    // Só vai atualizar se estiver visualizando a SEMANA ATUAL
+    if ((Date() >= Self.FGLB_Dom) AND (Date() <= Self.FGLB_Sab)) then begin
+      Self.RetorneTodosAgendamentos();
+      Self.Refresh_StringGrid();
+    end;
 
-  TimerClock.Interval:= ((60 * 1000) * 5); // Depois da tela aberta, vamos atualizar apenas a cada 5 minutos.
+    Self.FGLB_HoraProxRefreshAutomatico:= IncMinute(Now(), MIN_REFRESH_AUTO);
+  end;
 
 end;
 
@@ -497,6 +507,8 @@ begin
   Self.FGLB_ListaAgendas.RetornoLista(0, 0, StrToDateTime(DateToStr(Self.FGLB_Dom) + ' 00:00'), StrToDateTime(DateToStr(Self.FGLB_Sab) + ' 23:59'));
 
   Self.FGLB_ListaFiltro:= Self.FGLB_ListaAgendas.FiltraLista(0, 0, Self.FGLB_Dom, Self.FGLB_Sab);
+
+  Self.FGLB_HoraProxRefreshAutomatico:= IncMinute(Now(), MIN_REFRESH_AUTO);
 
   Self.Refresh_StringGrid();
 

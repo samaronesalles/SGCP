@@ -3,17 +3,20 @@ inherited frmPacientes_V: TfrmPacientes_V
   ClientHeight = 730
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
-  ExplicitLeft = 3
-  ExplicitTop = 3
-  ExplicitWidth = 1274
+  ExplicitWidth = 1268
+  ExplicitHeight = 768
   TextHeight = 16
   inherited PanelButtons: TPanel
-    Top = 660
-    ExplicitTop = 651
+    Top = 637
+    Height = 93
+    ExplicitTop = 637
+    ExplicitHeight = 93
     inherited PanelLegenda: TPanel
       inherited Shape2: TShape
-        Left = 99
-        ExplicitLeft = 99
+        Left = 9
+        Top = 58
+        ExplicitLeft = 9
+        ExplicitTop = 58
       end
       inherited Label2: TLabel
         Width = 35
@@ -21,31 +24,40 @@ inherited frmPacientes_V: TfrmPacientes_V
         ExplicitWidth = 35
       end
       inherited Label3: TLabel
-        Left = 120
+        Left = 30
+        Top = 56
         Width = 43
         Caption = 'Inativos'
-        ExplicitLeft = 120
+        ExplicitLeft = 30
+        ExplicitTop = 56
         ExplicitWidth = 43
       end
     end
     inherited Panel_btnsRight: TPanel
-      Left = 840
+      Left = 834
       Width = 421
-      ExplicitLeft = 840
+      Height = 91
+      ExplicitLeft = 828
       ExplicitWidth = 421
       inherited ButtonLimparFiltro: TButton
         Left = 206
+        Top = 48
         OnClick = ButtonLimparFiltroClick
         ExplicitLeft = 206
+        ExplicitTop = 48
       end
       inherited ButtonSair: TButton
-        Left = 326
-        ExplicitLeft = 326
+        Left = 320
+        Top = 48
+        Width = 91
+        ExplicitLeft = 320
+        ExplicitTop = 48
+        ExplicitWidth = 91
       end
       object ButtonImprimirProntuario: TButton
-        Left = 10
-        Top = 21
-        Width = 184
+        Left = 206
+        Top = 12
+        Width = 205
         Height = 30
         Hint = 'Imprimir todos os atendimentos encerrados do paciente'
         BiDiMode = bdLeftToRight
@@ -61,12 +73,22 @@ inherited frmPacientes_V: TfrmPacientes_V
     end
   end
   inherited Panel1: TPanel
-    Height = 619
+    Height = 596
+    ExplicitWidth = 1250
     ExplicitHeight = 610
     inherited StringGridMain: TStringGrid
-      Height = 617
+      Width = 1254
+      Height = 594
       OnDblClick = StringGridMainDblClick
+      ExplicitWidth = 1248
       ExplicitHeight = 608
+    end
+  end
+  inherited Panel_TopButtons: TPanel
+    ExplicitWidth = 1250
+    inherited Panel_TopBtnsRight: TPanel
+      Left = 1138
+      ExplicitLeft = 1132
     end
   end
   inherited ImageList_Icons: TImageList

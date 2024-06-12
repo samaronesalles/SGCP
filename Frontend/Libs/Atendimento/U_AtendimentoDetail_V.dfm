@@ -13,16 +13,16 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
   inherited pnBotoes: TPanel
     Top = 637
     Width = 791
-    ExplicitTop = 641
-    ExplicitWidth = 791
+    ExplicitTop = 628
+    ExplicitWidth = 785
     DesignSize = (
       791
       56)
     object Label_di: TLabel [0]
       Left = 227
       Top = 16
-      Width = 26
-      Height = 28
+      Width = 10
+      Height = 16
       Caption = 'di'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 8388863
@@ -306,16 +306,17 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
     TabOrder = 2
     ExplicitWidth = 785
     object ButtonAplicarTestePHQ: TButton
-      Left = 16
+      Left = 174
       Top = 22
       Width = 145
       Height = 25
       Caption = '&Aplicar teste PHQ-9'
       TabOrder = 0
+      Visible = False
       OnClick = ButtonAplicarTestePHQClick
     end
     object ButtonEncerrarAtendimento: TButton
-      Left = 176
+      Left = 16
       Top = 22
       Width = 145
       Height = 25
@@ -331,9 +332,7 @@ inherited frmAtendimentoDetail_V: TfrmAtendimentoDetail_V
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitLeft = 624
-      ExplicitTop = 16
-      ExplicitHeight = 41
+      ExplicitLeft = 599
       object ButtonImprimirAtendimento: TButton
         Left = 73
         Top = 22
