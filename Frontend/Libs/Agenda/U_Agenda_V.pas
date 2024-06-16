@@ -223,6 +223,8 @@ begin
   ShapeDiaAtual_SAB.Visible:= Date() = Self.FGLB_Sab;
   Label_SAB.Hint:= Iff(ShapeDiaAtual_SAB.Visible, 'Data atual', FormatDateTime('dd/mm', Self.FGLB_Sab));
 
+  Self.RetorneTodosAgendamentos();
+
   Self.ApliqueFiltro();
   Self.Refresh_StringGrid();
 
@@ -728,6 +730,9 @@ end;
 procedure TfrmAgenda_V.RetorneTodosAgendamentos;
 begin
 
+  if Self.FGLB_ListaAgendas = Nil then
+    exit;
+
   Self.FGLB_ListaAgendas.Clear();
 
   Self.FGLB_ListaAgendas.RetornoLista(Str2Num(Label_idProfissional.Caption),
@@ -735,6 +740,8 @@ begin
                                       StrToDateTime(DateToStr(Self.FGLB_Dom) + ' 00:00'),
                                       StrToDateTime(DateToStr(Self.FGLB_Sab) + ' 23:59')
                                      );
+
+  Self.FGLB_HoraProxRefreshAutomatico:= IncMinute(Now(), MIN_REFRESH_AUTO);
 
   Self.ApliqueFiltro();
 

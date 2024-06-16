@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
   Left = 0
   Top = 0
-  Caption = 'SGCP - Sistema gerencial de consult'#243'rios psi'
+  Caption = 'SGCP - Sistema de Gest'#227'o Cl'#237'nica Psi'
   ClientHeight = 575
   ClientWidth = 933
   Color = clBtnFace
@@ -102,6 +102,7 @@ object frmMain: TfrmMain
       Caption = '&Sobre'
       object Sobre2: TMenuItem
         Caption = 'Sobre...'
+        OnClick = Sobre2Click
       end
     end
   end

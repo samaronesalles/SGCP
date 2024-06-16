@@ -40,6 +40,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure Agendamentos1Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure Sobre2Click(Sender: TObject);
   private
     { Private declarations }
 
@@ -146,6 +147,14 @@ begin
     end;
 
   LockWindowUpdate(0);
+end;
+
+procedure TfrmMain.Sobre2Click(Sender: TObject);
+begin
+  Uteis.SayInfo('SGCP - Sistema de Gestão Clínica Psi' + #13 + #13 +
+                'Desenvolvido por: Samarone Salles' + #13 +
+                'samaronesalles@gmail.com'
+                );
 end;
 
 procedure TfrmMain.Agendamentos1Click(Sender: TObject);

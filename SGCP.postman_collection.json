@@ -961,7 +961,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"profissional_id\": 1,\r\n    \"paciente_id\": 5,\r\n    \"descricao\": \"Terapia Felipe 18/05 08:30\",\r\n    \"observacao\": \"Teste de agendamento de terapia para algum paciente\",\r\n    \"evento_inicio\": \"2024-05-18T08:30Z\",\r\n    \"evento_fim\": \"2024-05-18T09:10Z\",\r\n    \"evento_confirmado\": false\r\n}",
+							"raw": "{\r\n    \"profissional_id\": 1,\r\n    \"paciente_id\": 5,\r\n    \"descricao\": \"Terapia Felipe 15/06 08:30\",\r\n    \"observacao\": \"\",\r\n    \"evento_inicio\": \"2024-06-15T08:30Z\",\r\n    \"evento_fim\": \"2024-06-15T09:10Z\",\r\n    \"evento_confirmado\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1269,6 +1269,113 @@
 							"body": "{\n    \"statusCode\": 1001,\n    \"error\": false,\n    \"data\": {\n        \"id\": 2,\n        \"di\": \"628d8535-9bca-400f-a791-03cf4905183b\",\n        \"descricao\": \"Terapia Samarone 18/05 12:00\",\n        \"observacao\": \"Samarone avisou que poderá chegar atrasado\",\n        \"evento_inicio\": \"2024-05-18T12:00:00.000Z\",\n        \"evento_fim\": \"2024-05-18T12:40:00.000Z\",\n        \"evento_confirmado\": true,\n        \"ativo\": false,\n        \"profissional\": {\n            \"id\": 4,\n            \"di\": \"0d27ecc9-0061-4194-af95-1ed2b3b6da01\",\n            \"nome\": \"Camila santos\",\n            \"celular\": \"31984557788\",\n            \"email\": \"camila@gmail.com\",\n            \"ativo\": true\n        },\n        \"paciente\": {\n            \"id\": 6,\n            \"di\": \"08633c14-5088-4584-a50f-0595004c0297\",\n            \"nome\": \"Samarone Salles\",\n            \"celular\": \"31985131406\",\n            \"email\": \"samaronesalle@gmail.com\",\n            \"ativo\": true\n        },\n        \"updatedAt\": \"2024-05-23T11:03:29.985Z\"\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "agendas.editar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profissional_id\": 2,\r\n    \"paciente_id\": 5,\r\n    \"descricao\": \"Consulta de Felipe 18/05/2024 14:00\",\r\n    \"observacao\": \"alteração de atendimento teste\",\r\n    \"evento_inicio\": \"2024-05-30T14:00Z\",\r\n    \"evento_fim\": \"2024-05-30T15:30Z\",\r\n    \"evento_confirmado\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}agenda/1/970fc401-2053-458f-a4f4-f1a7de79a627",
+							"host": [
+								"{{base_url}}agenda"
+							],
+							"path": [
+								"1",
+								"970fc401-2053-458f-a4f4-f1a7de79a627"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"profissional_id\": 2,\r\n    \"paciente_id\": 5,\r\n    \"descricao\": \"Consulta de Felipe 18/05/2024 14:00\",\r\n    \"observacao\": \"alteração de atendimento teste\",\r\n    \"evento_inicio\": \"2024-05-30T14:00Z\",\r\n    \"evento_fim\": \"2024-05-30T15:30Z\",\r\n    \"evento_confirmado\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}agenda/1/970fc401-2053-458f-a4f4-f1a7de79a627",
+									"host": [
+										"{{base_url}}agenda"
+									],
+									"path": [
+										"1",
+										"970fc401-2053-458f-a4f4-f1a7de79a627"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "751"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2ef-qpK6xgwPAa6jHXfHlA1vMi6wDlU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 01 Jun 2024 16:40:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 1001,\n    \"error\": false,\n    \"data\": {\n        \"id\": 1,\n        \"di\": \"838be6ec-fcb2-403c-ae14-3e16eb7f0f74\",\n        \"descricao\": \"Consulta de Felipe 18/05/2024 14:00\",\n        \"observacao\": \"alteração de atendimento teste\",\n        \"evento_inicio\": \"2024-05-30T14:00:00.000Z\",\n        \"evento_fim\": \"2024-05-30T15:30:00.000Z\",\n        \"evento_confirmado\": false,\n        \"ativo\": true,\n        \"profissional\": {\n            \"id\": 2,\n            \"di\": \"391d4136-a1d2-40e3-821a-ea1feefa285e\",\n            \"nome\": \"Samarone Portinare Salles de Ávila Costa\",\n            \"celular\": \"31922513632\",\n            \"email\": \"samaronesalles@gmail.com\",\n            \"ativo\": true\n        },\n        \"paciente\": {\n            \"id\": 5,\n            \"di\": \"6ba3239a-a615-4c31-bb97-1e9aa144501d\",\n            \"nome\": \"Felipe Rodrigues\",\n            \"celular\": \"31968512488\",\n            \"email\": \"felipe@gmail.com\",\n            \"ativo\": false\n        },\n        \"profissioal_agendado_id\": 2,\n        \"paciente_agendado_id\": 5,\n        \"updatedAt\": \"2024-06-01T16:40:16.445Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "teste",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}teste",
+							"host": [
+								"{{base_url}}teste"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1438,7 +1545,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"id\": 1,\r\n        \"di\": \"992c673e-1ff6-44cc-b33c-840049c2660a\",\r\n        \"datahora_inicio\": \"2024-05-18T08:30:00.000Z\",\r\n        \"datahora_fim\": null,\r\n        \"anotacoes\": null,\r\n        \"agenda\": {\r\n            \"id\": 1,\r\n            \"di\": \"970fc401-2053-458f-a4f4-f1a7de79a627\",\r\n            \"descricao\": \"Terapia Felipe 18/05 08:30\",\r\n            \"observacao\": \"Teste de agendamento de terapia para algum paciente\",\r\n            \"evento_inicio\": \"2024-05-18T08:30:00.000Z\",\r\n            \"evento_fim\": \"2024-05-18T09:10:00.000Z\",\r\n            \"evento_confirmado\": false,\r\n            \"ativo\": false,\r\n            \"profissional\": {\r\n                \"id\": 2,\r\n                \"di\": \"391d4136-a1d2-40e3-821a-ea1feefa285e\",\r\n                \"nome\": \"Samarone Portinare Salles de Ávila Costa\",\r\n                \"celular\": \"31922513632\",\r\n                \"email\": \"samaronesalles@gmail.com\",\r\n                \"ativo\": true\r\n            },\r\n            \"paciente\": {\r\n                \"id\": 5,\r\n                \"di\": \"6ba3239a-a615-4c31-bb97-1e9aa144501d\",\r\n                \"nome\": \"Felipe Rodrigues\",\r\n                \"celular\": \"31968512488\",\r\n                \"email\": \"felipe@gmail.com\",\r\n                \"ativo\": false\r\n            }\r\n        },\r\n        \"status\": 2\r\n    }",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"di\": \"992c673e-1ff6-44cc-b33c-840049c2660a\",\r\n    \"datahora_inicio\": \"2024-05-18T08:30:00.000Z\",\r\n    \"datahora_fim\": null,\r\n    \"anotacoes\": \"sssss\",\r\n    \"agenda\": {\r\n        \"id\": 1,\r\n        \"di\": \"970fc401-2053-458f-a4f4-f1a7de79a627\",\r\n        \"descricao\": \"Terapia Felipe 18/05 08:30\",\r\n        \"observacao\": \"Teste de agendamento de terapia para algum paciente\",\r\n        \"evento_inicio\": \"2024-05-18T08:30:00.000Z\",\r\n        \"evento_fim\": \"2024-05-18T09:10:00.000Z\",\r\n        \"evento_confirmado\": false,\r\n        \"ativo\": false,\r\n        \"profissional\": {\r\n            \"id\": 2,\r\n            \"di\": \"391d4136-a1d2-40e3-821a-ea1feefa285e\",\r\n            \"nome\": \"Samarone Portinare Salles de Ávila Costa\",\r\n            \"celular\": \"31922513632\",\r\n            \"email\": \"samaronesalles@gmail.com\",\r\n            \"ativo\": true\r\n        },\r\n        \"paciente\": {\r\n            \"id\": 5,\r\n            \"di\": \"6ba3239a-a615-4c31-bb97-1e9aa144501d\",\r\n            \"nome\": \"Felipe Rodrigues\",\r\n            \"celular\": \"31968512488\",\r\n            \"email\": \"felipe@gmail.com\",\r\n            \"ativo\": false\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1446,13 +1553,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}atendimentos/2/fcb73499-2e56-494c-a286-4c27d6f02270",
+							"raw": "{{base_url}}atendimentos/1/5b394f83-ccec-46f8-ba21-d8509f050240",
 							"host": [
 								"{{base_url}}atendimentos"
 							],
 							"path": [
-								"2",
-								"fcb73499-2e56-494c-a286-4c27d6f02270"
+								"1",
+								"5b394f83-ccec-46f8-ba21-d8509f050240"
 							]
 						}
 					},

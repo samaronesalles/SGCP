@@ -896,7 +896,7 @@ end;
 
 function MicroDesenv_Temporario: Boolean;
 const
-  DiaDeValidade = '17/06/2024';
+  DiaDeValidade = '10/06/2024';
 begin
   Result:= ((MicroDesenvolvimento()) AND (StrToDateDef(Hoje(), 0) <= StrToDateDef(DiaDeValidade, 0)));
 end;
